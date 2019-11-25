@@ -3,3 +3,14 @@
 ################################################################################
 
 /.vs
+/LohCohCore/.vs
+/LohCohCore/obj
+/lohcoh-core/.vs
+/lohcoh-core/bin
+/lohcoh-core/obj
+/lohcoh-docs/.vs
+/lohcoh-docs/bin
+/lohcoh-docs/obj
+/lohcoh-graphql/.vs
+/lohcoh-graphql/bin
+/lohcoh-graphql/obj

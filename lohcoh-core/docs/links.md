@@ -1,0 +1,14 @@
+﻿# Links
+
+## dotnet architecture 
+[Sample ASP.NET Core 3.0 reference application](https://github.com/dotnet-architecture/eShopOnWeb), 
+demonstrating a layered application architecture with monolithic deployment model. 
+[Download 130+ page eBook PDF from docs folder.](https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/index)
+
+
+## Technical Information
+[Overview of ASP.NET Application Parts](https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/app-parts?view=aspnetcore-3.0)
+This library 
+
+[Microsoft Feature Flags](https://github.com/microsoft/FeatureManagement-Dotnet)
+  An library for managing feature flags.  
