@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lohcoh-graphql", "lohcoh-gr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lohcoh-docs", "lohcoh-docs\lohcoh-docs.csproj", "{2B666E7F-6742-496C-9542-3066A8F6528D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lohcoh-modeling", "lohcoh-modeling\lohcoh-modeling.csproj", "{515B15E8-1562-4B38-B92A-53BC0A459317}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{2B666E7F-6742-496C-9542-3066A8F6528D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B666E7F-6742-496C-9542-3066A8F6528D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B666E7F-6742-496C-9542-3066A8F6528D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{515B15E8-1562-4B38-B92A-53BC0A459317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{515B15E8-1562-4B38-B92A-53BC0A459317}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{515B15E8-1562-4B38-B92A-53BC0A459317}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{515B15E8-1562-4B38-B92A-53BC0A459317}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{AD671980-7D55-4DEE-9454-A7A5328686EF} = {4A401480-52F7-4F99-9A34-1A96AD0D7F36}
 		{033C82A8-463F-4E85-A500-0C2BFE7E4FEF} = {4A401480-52F7-4F99-9A34-1A96AD0D7F36}
 		{2B666E7F-6742-496C-9542-3066A8F6528D} = {4A401480-52F7-4F99-9A34-1A96AD0D7F36}
+		{515B15E8-1562-4B38-B92A-53BC0A459317} = {4A401480-52F7-4F99-9A34-1A96AD0D7F36}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19D08D48-2819-44A3-860C-D6E43748AA10}

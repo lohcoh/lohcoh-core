@@ -12,3 +12,9 @@ This library
 
 [Microsoft Feature Flags](https://github.com/microsoft/FeatureManagement-Dotnet)
   An library for managing feature flags.  
+
+## Related Products
+
+[Box](http://box.com)
+
+[Window Forms made extensive use of design-time attributes](https://flylib.com/books/en/1.41.1/)

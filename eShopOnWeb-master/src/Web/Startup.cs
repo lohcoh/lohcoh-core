@@ -24,7 +24,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
-using Lohcoh.GraphQL;
 
 namespace Microsoft.eShopWeb.Web
 {
@@ -134,11 +133,9 @@ namespace Microsoft.eShopWeb.Web
                 config.Path = "/allservices";
             });
 
-            services.AddLohcohGraphQL(build => {
-                build.AddSchemaFromDbContext<CatalogContext>(options =>
-                {
-                    options.Root= "catalog";
-                });
+            services.AddLohcohSchema<CatalogSchema>(options =>
+            {
+                options.Root = "catalog";
             });
 
             _services = services; // used to debug registered services
