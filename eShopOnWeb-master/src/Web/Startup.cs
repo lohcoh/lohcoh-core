@@ -133,11 +133,6 @@ namespace Microsoft.eShopWeb.Web
                 config.Path = "/allservices";
             });
 
-            services.AddLohcohSchema<CatalogSchema>(options =>
-            {
-                options.Root = "catalog";
-            });
-
             _services = services; // used to debug registered services
         }
 

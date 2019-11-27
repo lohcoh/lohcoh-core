@@ -13,7 +13,11 @@ This library
 [Microsoft Feature Flags](https://github.com/microsoft/FeatureManagement-Dotnet)
   An library for managing feature flags.  
 
+
+
 ## Related Products
+
+[A description of using attributes in domain driven design](https://www.researchgate.net/publication/311980398_Domain-driven_design_patterns_A_metadata-based_approach)
 
 [Box](http://box.com)
 

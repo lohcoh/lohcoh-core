@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Lohcoh.Core.Startup;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddLohcoh(this IServiceCollection services)
         {
             services.AddSingleton(new Lohcoh.Core.LohcohCoreModule());
+            new LohcohStartup().Start();
             return services;
         }
     }

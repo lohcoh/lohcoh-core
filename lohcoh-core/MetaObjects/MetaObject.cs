@@ -25,7 +25,7 @@ namespace Lohcoh.Core.MetaObjects
 
         public TTypedMetaObject As<TTypedMetaObject>()
         {
-            TTypedMetaObject v= null;
+            TTypedMetaObject v= (TTypedMetaObject)new object();
             return v;
         }
     }

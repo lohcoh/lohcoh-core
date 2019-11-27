@@ -2,7 +2,7 @@
 using Ardalis.GuardClauses;
 using System;
 using System.Collections.Generic;
-using Lohcoh.Modeling.Domain;
+using Lohcoh.Modeling;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate
 {

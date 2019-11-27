@@ -1,3 +1,3 @@
 ﻿# lohcoh-modeling
 
-Defines .NET Attributes for modeling applications.
+Defines Attributes for modeling applications.
