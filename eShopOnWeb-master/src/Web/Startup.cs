@@ -133,6 +133,8 @@ namespace Microsoft.eShopWeb.Web
                 config.Path = "/allservices";
             });
 
+            services.AddLohcoh<eShopOnWebModule>();
+
             _services = services; // used to debug registered services
         }
 
@@ -233,6 +235,8 @@ namespace Microsoft.eShopWeb.Web
                 endpoints.MapHealthChecks("home_page_health_check");
                 endpoints.MapHealthChecks("api_health_check");
             });
+
+            app.UseLohCode();
         }
     }
 }

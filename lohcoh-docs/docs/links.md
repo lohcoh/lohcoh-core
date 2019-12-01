@@ -10,10 +10,14 @@ demonstrating a layered application architecture with monolithic deployment mode
 [Overview of ASP.NET Application Parts](https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/app-parts?view=aspnetcore-3.0)
 This library 
 
+A library for managing feature flags: 
 [Microsoft Feature Flags](https://github.com/microsoft/FeatureManagement-Dotnet)
-  An library for managing feature flags.  
 
+[Good reference for ef core](https://www.learnentityframeworkcore.com/dbcontext)
 
+[A Model-Driven Approach to Graphical User Interface Runtime Adaptation](http://ceur-ws.org/Vol-641/paper_15.pdf)
+  
+[More info on DDD design in eShopOnWeb](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implemenation-entity-framework-core)
 
 ## Related Products
 

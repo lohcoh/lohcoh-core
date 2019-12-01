@@ -15,7 +15,7 @@ namespace Lohcoh.Core
 
             // If the denoted type is not a subclass of LohcohModule then ignore.
             // It could be that someone else is reusing this attribute for thier own purposes, that seems legit.
-            if (moduleType.IsAssignableFrom(typeof(LohcohModule)))
+            if (moduleType.IsAssignableFrom(typeof(LcModule)))
             {
                 this.ModuleType = moduleType;
             }

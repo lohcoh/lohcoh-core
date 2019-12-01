@@ -2,7 +2,7 @@
 
 lohcoh-core is a simple module and metatdata facility.
 
-### Why lohcoh needs a module and metadata system
+## Why lohcoh needs a module and metadata system
 
 lohcoh is meant to be a development platform that reduces the effort required to create software of all kinds, 
 but mostly line of business applications.  
@@ -13,7 +13,7 @@ and customized.
 Therefore, lohcoh is designed to support change.  
 Lohcoh depends heavily on two patterns that help when designing for change:
 
-#### Microkernel Pattern 
+### Microkernel Pattern 
 The Microkernel pattern applies to software systems that must be able to adapt to changing system requirements. 
 It separates a minimal functional core from extended functionality and customer-specific parts. 
 The microkernel also serves as a socket for plugging in such extensions and coordinating their
@@ -21,7 +21,7 @@ collaboration.  lohcoh doesn't have a full-blown microkernel, lohcoh is not inte
 adding functionality, like an IDE.  
 lohcoh has a mininimal Module API that is needed for the system to discover its parts.
 
-#### Reflection Pattern
+### Reflection Pattern
 
 The Reflection pattern provides a mechanism for changing structure and behavior of software systems dynamically. 
 In this pattern, an application is split into two parts. 
@@ -30,7 +30,7 @@ A base level includes the application logic.
 Its implementation builds on the meta level. 
 Changes to information kept in the meta level affect subsequent base-level behavior.  
 
-This is the main purpose of the lohcoh-core module, it discovers all the metadata embedded in the system 
+This is the main purpose of the lohcoh-core module, it discovers all the metadata embedded in an application 
 and provides a facility for other modules to query that data.  
 
 Libraries should not have to know the details of where metadata is saved and how to fetch it, so lohcoh-core does all that.
@@ -42,28 +42,37 @@ lohcoh gathers information from many places and makes it available in a common f
 lohcoh-core gathers metadata from many sources and makes it available to other modules 
 using a very simple query facility similar to GraphQL.  
 
+## Exposing metadata
 
-#### Adding new sources of metadata
+There are endless ways to get metadata into lohcoh's metadata repository because new metadata providers can 
+be plugged into lohcoh-core.  
+The most common way of exposing the metadata in a system is to add an attribute to c# class.
+For instance, in the code below, the [IsAggregate] attribute identifies the OrderItem class 
+as a DDD aggregate.  
+At startup, lohcoh will discover the IsAggregate annotation and call the handler for the 
+IsAggregate attribute.
+The attribute handler will put an instance of Lohcoh.Modeling.Aggregate into the lohcoh registry, which 
+will be used later by other modules to create database tables for the entiry, create GraphQL schema 
+typos, CRUD mutations, a form for viewing and editing, etc.
 
-Modules can extend lohcoh-core with thier own sources of metadata.
+	[IsAggregate]
+    public class OrderItem : BaseEntity
+    {
+        public CatalogItemOrdered ItemOrdered { get; private set; }
+        public decimal UnitPrice { get; private set; }
+        public int Units { get; private set; }
 
-As an example...   
+        private OrderItem()
+        {
+            // required by EF
+        }
 
-Suppose we want create a module that will add a main navigation menu to an application.
-How will the developer tell the system what menu items should be included?  
+        public OrderItem(CatalogItemOrdered itemOrdered, decimal unitPrice, int units)
+        {
+            ItemOrdered = itemOrdered;
+            UnitPrice = unitPrice;
+            Units = units;
+        }
+    }
 
-There are many possibilities...
-- configuration file
-- a convention, like defining classes in a folder that denote menu items.
-- Adding Attributes to classes.
-
-The lohcoh way of implementing this menu is to have the module that implements the menu define a 
-type that represents a menu item, let's call this type 'MainNavigationMenuItem'.  
-Other modules can define menu items in what ever way they want, in a configuration file, using annotations, whatever.  
-Modules that provide menu items might need to add a dependency on a module that provides a metadata provider to lohcoh-core so 
-that lohcoh-core can discover the menu items, if lohcoh-core doesn't already have a suitable provider.
-At startup, lohcoh-core discovers the menu items and adds 'MainNavigationMenuItem' metadata objects that 
-represent the menu items to the system's metadata.  
-Then, at runtime, the module that implements the menu will query lohcoh-core to get a list of all the menu items 
-that should be included on the menu.
 

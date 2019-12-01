@@ -16,3 +16,16 @@
 /lohcoh-graphql/obj
 /lohcoh-modeling/obj
 /lohcoh-modeling/bin/Debug/netstandard2.1
+/Meta.Domain/obj
+/Lohcode.Application.Interface.GraphQL/bin/Debug/netcoreapp3.1
+/Lohcode.Application.Interface.GraphQL/obj
+/Lohcode.DDD.Classic.Implementation/bin/Debug/netcoreapp3.1
+/Lohcode.DDD.Classic.Implementation/obj
+/LohCode.Test/bin/Debug/netcoreapp3.0
+/LohCode.Test/obj
+/Lohcore.eShopOnWeb/obj
+/Meta.API/obj
+/Meta.Application/obj
+/Meta.Core/obj
+/Meta.Domain/bin/Debug
+/Meta.Infrastructure/obj

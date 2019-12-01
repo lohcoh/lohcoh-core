@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netstandard2.1</TargetFramework>
+		<TargetFramework>netstandard2.0</TargetFramework>
 		<RootNamespace>Microsoft.eShopWeb.ApplicationCore</RootNamespace>
-		<LangVersion>8.0</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -12,6 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\lohcoh-graphql\lohcoh-graphql.csproj" />
 	  <ProjectReference Include="..\..\..\lohcoh-modeling\lohcoh-modeling.csproj" />
 	</ItemGroup>
 
