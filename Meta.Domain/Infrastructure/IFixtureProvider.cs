@@ -4,11 +4,17 @@ using System.Threading.Tasks;
 namespace Meta.Domain
 {
     /// <summary>
-    /// Populates Repositories with default data
+    /// A Fixture Provider populates persistent storage with default data
+    /// 
+    /// Fixture implementations are contributed by developers.
+    /// Fixture classes must be marked with this interface.
+    /// 
     /// </summary>
     public interface IFixtureProvider
     {
         Task Seed<TContext>(TContext dbContext);
 
     }
+
+
 }

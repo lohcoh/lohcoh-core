@@ -16,8 +16,8 @@ namespace Meta.Domain
     ///     aspects like authorization, transaction management, and audit logging.
     /// - use Entities and Domain Services 
     /// 
-    /// IApplicationService is just a wrapper around a native .NET Core service implementation.
-    /// Use the native types to discover the query and mutation operations provided.
+    /// IApplicationService is just a wrapper around a native ASP.NET Core Controller implementation.
+    /// Use the implementation type to discover the query and mutation operations provided.
     /// 
     /// Since application services will be used from the client (Blazor), an 
     /// Application Service MUST have an interface and an implemention.

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Meta.Domain
+namespace Microsoft.eShopWeb.ApplicationCore.Interfaces
 {
     public interface ISpecification<T>
     {

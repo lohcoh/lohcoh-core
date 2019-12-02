@@ -30,6 +30,15 @@ namespace Lohcode.eShopOnWeb
             await _basketRepository.Update(basket);
         }
 
+        public async Task AddItemToBasket(int basketId, int catalogItemId, decimal price, int quantity = 1)
+        {
+            var basket = await _basketRepository.GetByIdAsync(basketId);
+
+            basket.AddItem(catalogItemId, price, quantity);
+
+            await _basketRepository.UpdateAsync(basket);
+        }
+
         public async Task DeleteBasketAsync(int basketId)
         {
             var basket = await _basketRepository.GetById(basketId);

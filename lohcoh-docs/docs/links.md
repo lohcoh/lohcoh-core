@@ -26,3 +26,6 @@ A library for managing feature flags:
 [Box](http://box.com)
 
 [Window Forms made extensive use of design-time attributes](https://flylib.com/books/en/1.41.1/)
+
+### DDD Frameworks
+http://seedstack.org/docs/business/policies/
