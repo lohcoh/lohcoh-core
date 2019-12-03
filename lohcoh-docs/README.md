@@ -2,36 +2,25 @@
 
 ## lowcode : metadata driven, UI component library for ASP.NET.
 
+lowcode is a Blazor-based, metadata driven, UI component library for ASP.NET.
+
 lowcode eliminates the need to manually create basic UI elements like forms, data tables, search panels, etc.
-Instead, lowcode can create provide these UI elements using schema metadata from an augmented OpenApi/Swagger document.
+Instead, lowcode can provide these UI elements using metadata from an augmented OpenApi/Swagger document.
 
-lohcode's metadata-driven components can be used in your existing Blazor-based UI.
-Conversely, lowcode can create a complete application UI and you can embed your existing component's into lowcode's UI.
+lohcode's metadata-driven components can be used in your existing Razor Pages and MVC apps.
+Conversely, lowcode can create a complete application UI and you can embed your existing Blazor components into lowcode's UI.
 
-lowcode contains an extensible backend configration library that scans your application's assemblies at startup and adds metadata to your OpenApi/Swagger document.
-Developers can create thier own metadata-driven components by adding thier own metadata provider to the backend 
-and creating components that leverage that metadata.
+lowcode contains an extensible backend configration library that scans your application's artifacts and assemblies at startup and adds metadata to your OpenApi/Swagger document.
+Developers can create thier own metadata-driven components by adding thier own metadata provider to the backend and creating UI components that leverage that metadata.
 
-The framework automatically provided all other layers and aspects of the application, including...
-- database migrations
-- repositories
-- GraphQL API 
-- User Interface with...
-	- authentication 
-	- navigation 
-	- search forms
-	- data tables
-	- forms for editing
-	- permission based access to all UI elements, including navigation, forms, and search pages.
-	- User administration UI
-
-### server...
-- GraphQL queries are handled by the framework.
-- GraphQL mutation are routed to controllers
-- By default, CRUD mutations are handled by the framework but can be redirected to user-defind controllers
-- metadata.  metadata is design time data that should be globally accessible.
-	Contribution points are metadata.
-	The GraphQL API exposes metadata inside the 'metadata' GraphQL root field
+lowcode can automatically provided many kinds of UI elements, including...
+- forms for editing, include validation
+- data tables 
+- search forms
+- navigation 
+- login form 
+- permission based access to all UI elements, including navigation, forms, and search pages.
+- User administration UI
 
 ### client...
 - All content display is type driven.  Uno uses tags like...
