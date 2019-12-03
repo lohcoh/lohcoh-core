@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Meta.Domain
+namespace Lohcode.DDD
 {
 
     /// <summary>

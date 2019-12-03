@@ -1,6 +1,6 @@
 ﻿
 using Ardalis.GuardClauses;
-using Meta.Domain;
+using Lohcode.Domain;
 using System.Collections.Generic;
 
 namespace Lohcode.eShopOnWeb

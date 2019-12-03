@@ -1,5 +1,5 @@
 ﻿using Lohcode.DDD.Classic.Implementation;
-using Meta.Domain;
+using Lohcode.Domain;
 
 /// <summary>
 /// NOTE:  Adding my own classes to a third-party module seems wrong, but 

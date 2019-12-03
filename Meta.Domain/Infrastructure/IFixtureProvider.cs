@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Meta.Domain
+namespace Lohcode.DDD
 {
     /// <summary>
     /// A Fixture Provider populates persistent storage with default data

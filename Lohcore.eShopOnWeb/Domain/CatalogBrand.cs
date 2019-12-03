@@ -1,10 +1,11 @@
 ﻿
 
-using Meta.Domain;
+using Lohcode.Domain;
 
 namespace Lohcode.eShopOnWeb
 {
-    public class CatalogBrand : BaseEntity, IAggregateRoot
+    [AggregateRoot]
+    public class CatalogBrand : EShopOnWebEntity
     {
         public string Brand { get; set; }
     }

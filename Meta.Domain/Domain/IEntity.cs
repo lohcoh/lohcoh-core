@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Meta.Domain
+namespace Lohcode.DDD
 {
     /// <summary>
     /// Entity classes must be marked with this interface.
@@ -9,8 +9,8 @@ namespace Meta.Domain
     /// Repositories are used to create, update, delete, and query entities 
     /// in persistent storage.
     /// </summary>
-    public interface IEntity
+    public interface IEntity<TKey>
     {
-        int Id { get; set; }
+        TKey Id { get; set; }
     }
 }

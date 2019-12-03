@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Lohcode.DDD.Classic.Implementation;
-using Meta.Domain;
+using Lohcode.Domain;
 using Lohcode.ApplicationAPI.GraphQL;
 
 namespace Lohcode.eShopOnWeb

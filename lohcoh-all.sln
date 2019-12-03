@@ -35,7 +35,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lohcode.DDD.Classic.Metamod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lohcode.DDD.Classic.Implementation", "Lohcode.DDD.Classic.Implementation\Lohcode.DDD.Classic.Implementation.csproj", "{2DD9F102-A12B-44B0-9026-961AFE796B4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lohcode.eShopOnWeb", "Lohcore.eShopOnWeb\Lohcode.eShopOnWeb.csproj", "{FAF76952-3B92-4370-9B37-B13A4F7543CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lohcode.eShopOnWeb.Application", "Lohcore.eShopOnWeb\Lohcode.eShopOnWeb.Application.csproj", "{FAF76952-3B92-4370-9B37-B13A4F7543CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lohcode.ApplicationAPI.GraphQL", "Lohcode.Application.Interface.GraphQL\Lohcode.ApplicationAPI.GraphQL.csproj", "{6C6CCFF1-6711-40CC-BDC4-97E85F83F2AF}"
 EndProject

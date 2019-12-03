@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Meta.Domain
+namespace Lohcode.DDD
 {
     /// <summary>
     /// Application Services execute thier business functions within a unit of work.

@@ -2,7 +2,7 @@
 using Ardalis.GuardClauses;
 using System;
 using System.Collections.Generic;
-using Meta.Domain;
+using Lohcode.Domain;
 
 namespace Lohcode.eShopOnWeb
 {

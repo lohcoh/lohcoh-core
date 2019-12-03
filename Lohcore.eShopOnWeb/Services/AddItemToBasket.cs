@@ -1,4 +1,4 @@
-﻿using Meta.Domain;
+﻿using Lohcode.Domain;
 
 namespace Lohcode.eShopOnWeb
 {
