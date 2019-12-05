@@ -1,6 +1,6 @@
 using System;
 
-namespace Lohcode.Application.Interface.GraphQL
+namespace Lohcode.eShopOnWeb.Gateway
 {
     public class WeatherForecast
     {

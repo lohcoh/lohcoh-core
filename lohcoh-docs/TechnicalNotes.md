@@ -1,5 +1,19 @@
 ﻿# Technical Notes
 
+## One Possible Implementation: UI Model + Context = metadata
+
+Basic Workflow...
+- Create UI Model using lohcode Blazor components
+- On Startup in Blazor app, 
+
+### Inspired by
+	[MetaUI](https://www.metaui.io/) is a good eample of how to design a metadata-driven UI  
+	[This article](https://hacks.mozilla.org/2017/08/inside-a-super-fast-css-engine-quantum-css-aka-stylo/) shows 
+	how a rule engine (that applies selectors to a DOM) works.
+	
+
+
+
 ## Metadata Providers
 
 ### Metadata Initialization

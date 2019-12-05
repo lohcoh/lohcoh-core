@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Lohcode.Application.Interface.GraphQL.Controllers
+namespace Lohcode.eShopOnWeb.Gateway.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GraphQLController : ControllerBase
+    public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<GraphQLController> _logger;
+        private readonly ILogger<WeatherForecastController> _logger;
 
-        public GraphQLController(ILogger<GraphQLController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
         }
