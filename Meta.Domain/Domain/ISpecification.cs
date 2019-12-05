@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Microsoft.eShopWeb.ApplicationCore.Interfaces
+namespace Lohcode.DDD
 {
     public interface ISpecification<T>
     {

@@ -10,9 +10,4 @@
 		<PackageReference Include="System.Security.Claims" Version="4.3.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\..\..\lohcoh-graphql\lohcoh-graphql.csproj" />
-	  <ProjectReference Include="..\..\..\lohcoh-modeling\lohcoh-modeling.csproj" />
-	</ItemGroup>
-
 </Project>

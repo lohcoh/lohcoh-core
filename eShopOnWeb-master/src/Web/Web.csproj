@@ -38,8 +38,6 @@
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\lohcoh-core\lohcoh-core.csproj" />
-    <ProjectReference Include="..\..\..\lohcoh-graphql\lohcoh-graphql.csproj" />
     <ProjectReference Include="..\ApplicationCore\ApplicationCore.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>

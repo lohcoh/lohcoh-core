@@ -33,11 +33,15 @@ For the first cut, the simplist possible model of a standard DDD application wil
 
 ### Marker interfaces vs Attributes
 
-In the .NET world, Attributes are preferred over marker interfaces.
-However, I would prefer the type safety that comes with interfaces, so I have 
-opted to use marker interfaces to identify the model parts in code.
+Attributes.  Because the marker interface is essentially a way of enhancing a type with 
+some kind of semantics from some other context.  Put another way, the clients that will check 
+for the marker interface belong to a different 'bounded context'.
+Theerfore, adding a marker interface pollutes a class with an interface from another context.
 
-#### How marker interfaces are used
+UNLESS!!!!  The marker interface actually belongs to the current context.  THEN it's OK.
+
+
+#### Associating implementations with model elements
 The interfaces defined in Lohcode's metamodel can be segregated into two categories...
 - The model interface defines an application part that can be implemented by the framework.
 - The model framework defines an application part that MUST be implemented by a developer.

@@ -2,12 +2,9 @@
 using Ardalis.GuardClauses;
 using System;
 using System.Collections.Generic;
-using Lohcoh.Modeling;
-using Lohcoh.GraphQL;
 
 namespace Microsoft.eShopWeb.ApplicationCore.Entities.OrderAggregate
 {
-    [Entity, Schema]
     public class Order : BaseEntity, IAggregateRoot
     {
         private Order()

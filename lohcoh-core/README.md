@@ -52,8 +52,8 @@ as a DDD aggregate.
 At startup, lohcoh will discover the IsAggregate annotation and call the handler for the 
 IsAggregate attribute.
 The attribute handler will put an instance of Lohcoh.Modeling.Aggregate into the lohcoh registry, which 
-will be used later by other modules to create database tables for the entiry, create GraphQL schema 
-typos, CRUD mutations, a form for viewing and editing, etc.
+will be used later by other modules to create database tables for the entities, 
+create GraphQL schema, create CRUD mutations, create forms for viewing and editing, etc.
 
 	[IsAggregate]
     public class OrderItem : BaseEntity

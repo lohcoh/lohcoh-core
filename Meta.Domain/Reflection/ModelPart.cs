@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Lohcode.DDD.Classic.Metamodel.Reflection
+namespace Lohcode.DDD
 {
     /// <summary>
     /// All application parts are implemented by other assemblies.

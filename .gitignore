@@ -29,3 +29,7 @@
 /Meta.Core/obj
 /Meta.Domain/bin/Debug
 /Meta.Infrastructure/obj
+/Lohcore.eShopOnWeb.Presentation/bin/Debug/netcoreapp3.1
+/Lohcore.eShopOnWeb.Presentation/obj
+/Lohcode.eShopOnWeb.Gateway/obj
+/Lohcode.eShopOnWeb.Gateway/bin/Debug/netcoreapp3.1

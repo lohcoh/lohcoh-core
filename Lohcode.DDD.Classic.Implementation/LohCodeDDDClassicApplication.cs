@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Meta.Domain;
+using Lohcode.Domain;
 
 namespace Lohcode.DDD.Classic.Implementation
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Meta.Domain
+namespace Lohcode.DDD
 {
     /// <summary>
     /// Message bus for the Application.
