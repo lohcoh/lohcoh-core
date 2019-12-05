@@ -5,6 +5,9 @@
 demonstrating a layered application architecture with monolithic deployment model. 
 [Download 130+ page eBook PDF from docs folder.](https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/index)
 
+[Here's a good example](https://wildermuth.com/2018/01/10/Re-thinking-Running-Migrations-and-Seeding-in-ASP-NET-Core-2-0) of why convention-driven APIs are magical crap that nobdy can figure out.
+This guy, obviouslt an expert .NET core developer, made two attempts configure EF seeding and failed until he figured out the conventions encoded into the .NET core startup APIs.
+
 
 ## Technical Information
 [Overview of ASP.NET Application Parts](https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/app-parts?view=aspnetcore-3.0)
@@ -26,6 +29,9 @@ A library for managing feature flags:
 [Box](http://box.com)
 
 [Window Forms made extensive use of design-time attributes](https://flylib.com/books/en/1.41.1/)
+
+
+https://camel.apache.org/manual/latest/roundRobin-eip.html
 
 ### DDD Frameworks
 http://seedstack.org/docs/business/policies/
