@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Lohcode.eShopOnWeb.Presentation.Shared
 {
     public partial class ElementFor<TOptions> : ComponentBase
-        where TOptions: SiteOptions
+        where TOptions: PartSpecification
     {
         private bool collapseNavMenu = true;
         private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;

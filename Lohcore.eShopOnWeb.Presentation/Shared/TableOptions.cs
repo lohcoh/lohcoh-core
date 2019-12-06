@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Lohcode.eShopOnWeb.Presentation.Shared
 {
-    public class TableOptions : SiteOptions
+    public class TableOptions : PartSpecification
     {
         public TableOptions() 
         {

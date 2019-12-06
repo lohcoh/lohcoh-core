@@ -1,36 +1,21 @@
-# lohcode
-
-## names
-
-### Available
-loecode
-lowkode
-lokoh
-locoh
-
-### Taken
-loco
-lokode
-locode
+# lowkode
 
 
+## lowkode : metadata driven, UI component library for ASP.NET.
 
+lowkode is a Blazor-based, metadata driven, UI component library for ASP.NET Core.
 
-## lohcode : metadata driven, UI component library for ASP.NET.
+lowkode eliminates the need to manually create basic UI elements like forms, data tables, search panels, etc.
+Instead, lowkode can provide these UI elements using metadata from an augmented OpenApi/Swagger document.
 
-lohcode is a Blazor-based, metadata driven, UI component library for ASP.NET.
+lowkode's metadata-driven components can be used in your existing Razor Pages and MVC apps.
+Conversely, lowkode can create a complete application UI and you can embed your existing Blazor components into lowkode's UI.
 
-lohcode eliminates the need to manually create basic UI elements like forms, data tables, search panels, etc.
-Instead, lohcode can provide these UI elements using metadata from an augmented OpenApi/Swagger document.
-
-lohcode's metadata-driven components can be used in your existing Razor Pages and MVC apps.
-Conversely, lohcode can create a complete application UI and you can embed your existing Blazor components into lohcode's UI.
-
-lohcode contains an extensible backend configration library that scans your application's artifacts and assemblies at startup and adds metadata to your OpenApi/Swagger document.
-In the browser, lohcode uses this metadata on the assemble a custom UI.
+lowkode contains an extensible backend configuration library that scans your application's artifacts and assemblies at startup and adds metadata to your OpenApi/Swagger document.
+In the browser, lowkode uses this metadata to assemble a custom UI.
 Developers can create thier own metadata-driven components by adding thier own metadata provider to the backend and creating UI components that leverage that metadata.
 
-lohcode can automatically provided many kinds of UI elements, including...
+lowkode can automatically provided many kinds of UI elements, including...
 - forms for editing, include validation
 - data tables 
 - search forms
@@ -53,7 +38,7 @@ lohcode can automatically provided many kinds of UI elements, including...
 These tags delegate to components that have been contributed to the system.
 The justification for this tag scheme is threefold....
 	- Avoids creating dependency on a particlar component library.
-	- components can be easily replaced or customized.
+	- component implementations can be easily replaced or customized.
 	- Different contexts can be bound to different UIs.
 	So, entire UI or subsets of components can be customized for client device, tenant, or user.
 - Need CMS layout strategy.  Gridsome docs have a clear explanation of the UI system.
@@ -87,3 +72,23 @@ A package of extended compoennts is probably the easiest to produce.
 - CMS extension for Lowco.  Grav-like
 - CRM.  Like Composity or zoho
 - Must at some point have workflow 
+
+
+
+## names
+
+I kinda like 'lowkode'.
+I like that when you google lowkode it displays dome results for 'low-code'
+
+### Available
+loecode
+lowkode
+lokoh
+locoh
+
+### Taken
+loco
+lokode
+locode
+
+

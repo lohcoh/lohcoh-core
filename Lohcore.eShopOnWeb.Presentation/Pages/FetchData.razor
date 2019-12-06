@@ -1,7 +1,7 @@
 ﻿@page "/fetchdata"
 
 @using Lohcode.eShopOnWeb.Presentation.Data
-@using Lohcode.eShopOnWeb.Sh
+@using Lohcode.eShopOnWeb.Presentation.Shared
 @inject WeatherForecastService ForecastService
 
 
@@ -15,7 +15,7 @@
 }
 else
 {
-    <DisplayTable forType=@typeof(WeatherForecast) value=@forecasts></DisplayTable>
+    <DisplayTable modelType=@typeof(WeatherForecast) value=@forecasts></DisplayTable>
     <table class="table">
         <thead>
             <tr>
