@@ -1,19 +1,36 @@
-# lowcode
+# lohcode
 
-## lowcode : metadata driven, UI component library for ASP.NET.
+## names
 
-lowcode is a Blazor-based, metadata driven, UI component library for ASP.NET.
+### Available
+loecode
+lowkode
+lokoh
+locoh
 
-lowcode eliminates the need to manually create basic UI elements like forms, data tables, search panels, etc.
-Instead, lowcode can provide these UI elements using metadata from an augmented OpenApi/Swagger document.
+### Taken
+loco
+lokode
+locode
+
+
+
+
+## lohcode : metadata driven, UI component library for ASP.NET.
+
+lohcode is a Blazor-based, metadata driven, UI component library for ASP.NET.
+
+lohcode eliminates the need to manually create basic UI elements like forms, data tables, search panels, etc.
+Instead, lohcode can provide these UI elements using metadata from an augmented OpenApi/Swagger document.
 
 lohcode's metadata-driven components can be used in your existing Razor Pages and MVC apps.
-Conversely, lowcode can create a complete application UI and you can embed your existing Blazor components into lowcode's UI.
+Conversely, lohcode can create a complete application UI and you can embed your existing Blazor components into lohcode's UI.
 
-lowcode contains an extensible backend configration library that scans your application's artifacts and assemblies at startup and adds metadata to your OpenApi/Swagger document.
+lohcode contains an extensible backend configration library that scans your application's artifacts and assemblies at startup and adds metadata to your OpenApi/Swagger document.
+In the browser, lohcode uses this metadata on the assemble a custom UI.
 Developers can create thier own metadata-driven components by adding thier own metadata provider to the backend and creating UI components that leverage that metadata.
 
-lowcode can automatically provided many kinds of UI elements, including...
+lohcode can automatically provided many kinds of UI elements, including...
 - forms for editing, include validation
 - data tables 
 - search forms
@@ -23,19 +40,22 @@ lowcode can automatically provided many kinds of UI elements, including...
 - User administration UI
 
 ### client...
-- All content display is type driven.  Uno uses tags like...
-	- <Label value="@customer.Name">, <Label value="@customer">
-	- <Editor value="@model">, <Editor value="@customer.Name">
-	- <Form value="@model.FirstName">
-	- <Card value="@model">
-	- <Datagrid value="@customerList">
-	- <Navigation value="@mainMenuItems"> - some components are populated by metadata contributions
+- All content display is type driven.  examples...
+	- <EditForm forType=@typeof(Customer) value=@customer/>  
+		This displays an entire form for editing a Customer
+	- <Card forType=@typeof(Customer) value=@customer/>  
+		Displays a view-only, abbreviated view of a Customer
+	- <DisplayTable forType=@typeof(Customer) value="@customerList">
+		Displays a view-only table of customers
+	- <Navigation forType=@typeof(NavigationMenuItem) value="@mainMenuItems"> 
+		Some components are populated by metadata contributions
+
 These tags delegate to components that have been contributed to the system.
 The justification for this tag scheme is threefold....
 	- Avoids creating dependency on a particlar component library.
 	- components can be easily replaced or customized.
 	- Different contexts can be bound to different UIs.
-	So, entire UI or compnents can be customized for client device, tenant, or user.
+	So, entire UI or subsets of components can be customized for client device, tenant, or user.
 - Need CMS layout strategy.  Gridsome docs have a clear explanation of the UI system.
 Visual Studio Code is an example of how contribution points should work.
 - CSS: Use [Styled Components](https://www.styled-components.com/)

@@ -1,8 +1,9 @@
 ﻿@page "/fetchdata"
 
 @using Lohcode.eShopOnWeb.Presentation.Data
+@using Lohcode.eShopOnWeb.Sh
 @inject WeatherForecastService ForecastService
-@inject BlueprintService BlueprintService
+
 
 <h1>Weather forecast</h1>
 
@@ -14,7 +15,7 @@
 }
 else
 {
-    <TableFor value=@forecasts blueprint=@forecastsBlueprint></TableFor>
+    <DisplayTable forType=@typeof(WeatherForecast) value=@forecasts></DisplayTable>
     <table class="table">
         <thead>
             <tr>
@@ -39,9 +40,7 @@ else
 }
 
 @code {
-
-    private TableBlueprint forecastsBlueprint = TableBlueprint.ForDisplay<WeatherForecast>();
-
+  
     private WeatherForecast[] forecasts;
 
     protected override async Task OnInitializedAsync()

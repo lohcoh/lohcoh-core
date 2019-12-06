@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Lohcode.eShopOnWeb.Presentation.Shared
 {
-    public partial class TableFor : ElementFor<TableOptions>
+    public partial class DisplayTable : ElementFor<TableOptions>
     {
     }
 }
