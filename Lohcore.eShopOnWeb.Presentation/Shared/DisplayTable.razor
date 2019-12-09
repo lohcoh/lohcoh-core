@@ -1,20 +1,24 @@
 ﻿@using Lowkode.Client.Core
+@using Microsoft.AspNetCore.Components.Rendering
 @typeparam TModel
 @inherits PlaceholderComponent<TModel>
 @inject  IPartProvider PartProvider
 
+@DisplayTableTemplate
+
 @code {
 
-        [Parameter]
-        public IReadOnlyList<TModel> Items { get; set; }
+    [Parameter]
+    public virtual IReadOnlyList<TModel> Items { get; set; }
 
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
+    RenderFragment DisplayTableTemplate { get; set; }
 
-            var partSpecification= new PartSpecification(typeof(TModel), null);
-            var part= PartProvider.GetRequiredComponent(partSpecification);
+    protected override async Task OnInitializedAsync()
+    {
+        var partSpecification= new PartSpecification(this, typeof(TModel), null);
+        var part= await PartProvider.GetRequiredComponentAsync<TModel>(partSpecification);
 
-        }
+        DisplayTableTemplate = part.ToRenderFragment();
+    }
 
 }

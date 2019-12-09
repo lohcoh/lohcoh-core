@@ -7,7 +7,13 @@ using System.Threading.Tasks;
 
 namespace Lowkode.Client.Core
 {
+    public abstract class PlaceholderComponent : ComponentBase
+    {
+
+    }
+
     /// <summary>
+    /// Base class for all 'placeholder' components.
     /// The primary purpose of this component is to provide the parameters and other API 
     /// that most placeholder components require to make modeling as easy as possible.
     /// </summary>
@@ -16,7 +22,7 @@ namespace Lowkode.Client.Core
     ///     TModel denotes the type of the object to display.
     ///     TModel plays a primary role in determiing what a component displays.
     /// </typeparam>
-    public class PlaceholderComponent<TModel> : ComponentBase
+    public class PlaceholderComponent<TModel> : PlaceholderComponent
     {
         bool? _required;
 

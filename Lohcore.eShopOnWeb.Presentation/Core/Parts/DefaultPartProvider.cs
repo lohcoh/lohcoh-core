@@ -9,9 +9,11 @@ namespace Lowkode.Client.Core
 {
     public class DefaultPartProvider : IPartProvider
     {
-        public Task<ComponentBase> GetRequiredComponent(PartSpecification partSpecification)
+        public Task<PartComponent<TModel>> GetRequiredComponentAsync<TModel>(PartSpecification partSpecification)
         {
-            return Task.FromResult<ComponentBase>(new DefaultPartComponent());
+            var part = new DefaultPartComponent<TModel>();
+            part.PlaceholderComponent = partSpecification.PlaceholderComponent;
+            return Task.FromResult<PartComponent<TModel>>(part);
         }
     }
 }

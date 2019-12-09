@@ -14,6 +14,6 @@ namespace Lowkode.Client.Core
         /// </summary>
         /// <param name="partSpecification"></param>
         /// <returns></returns>
-        Task<ComponentBase> GetRequiredComponent(PartSpecification partSpecification);
+        Task<PartComponent<TModel>> GetRequiredComponentAsync<TModel>(PartSpecification partSpecification);
     }
 }

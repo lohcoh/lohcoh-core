@@ -75,11 +75,17 @@ namespace Lowkode.Client.Core
         /// </summary>
         /// <param name="componentType"></param>
         /// <param name="modelType"></param>
-        public PartSpecification(Type componentType, IModelBinding modelBinding)
+        public PartSpecification(PlaceholderComponent placeholderComponent, Type componentType, IModelBinding modelBinding)
         {
+            this.PlaceholderComponent = placeholderComponent;
             this.ModelBinding = modelBinding;
             this.ComponentType = componentType;
         }
+
+        /// <summary>
+        /// The placeholder where the part will be inserted
+        /// </summary>
+        public PlaceholderComponent PlaceholderComponent { get; set; }
 
         /// <summary>
         /// The Type of the view model to be displayed by this element.
