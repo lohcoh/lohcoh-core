@@ -14,7 +14,7 @@ namespace Lohcode.eShopOnWeb.Presentation.Shared
     {        
         /// <summary>
         /// lowkode components are place-holders for UI parts that are created at runtime.
-        /// A lowcode component gives the UI engine a 'specification' of the part that it needs and 
+        /// A lowkode component gives the UI engine a 'specification' of the part that it needs and 
         /// the engine returns a part that fulfills the specification.
         /// The most basic parts of a specification are...
         /// - What kind of objects does the part display?
