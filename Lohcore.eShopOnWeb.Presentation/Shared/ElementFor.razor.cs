@@ -1,13 +1,13 @@
 ﻿
 
+using Lowkode.Client.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
 namespace Lohcode.eShopOnWeb.Presentation.Shared
 {
-    public partial class ElementFor<TOptions> : ComponentBase
-        where TOptions: PartSpecification
+    public partial class ElementFor<TComponent, TModel> : ComponentBase
     {
         private bool collapseNavMenu = true;
         private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -15,24 +15,14 @@ namespace Lohcode.eShopOnWeb.Presentation.Shared
         {
         }
 
-        object _value= null;
-        [Parameter] public object value { 
-            get=>_value; 
-            set {
-                _value= value;
-            }
-        }
+        public PartSpecification PartSpecification {  get; }
 
-        TOptions _options = default(TOptions);
+        object _value= null;
+        [Parameter] public IModelBinding ModelBinding { get; set; }
+
+        bool? _options;
         [Parameter]
-        public TOptions options
-        {
-            get => _options;
-            set
-            {
-                _options = value;
-            }
-        }
+        public bool? required {  get; set; }
 
         protected void ToggleNavMenu()
         {

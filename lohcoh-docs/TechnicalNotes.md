@@ -27,3 +27,26 @@ Basic Workflow...
 The design of Configuration types should mirror the OpenApi schema
 
 ## Component Delegates
+
+## component specifications
+
+https://developer.mozilla.org/en-US/docs/Archive/Mozilla/Firefox/Style_System_Overview
+
+Specifications are used to find a backing component for a lowkode placeholder, and customize it.
+
+
+
+
+2
+
+"About Face 3: The Essentials of Interaction Design", by Alan Cooper, has various chapters dedicated to user interface elements. The book uses these categories that I personally find appropiate and exhaustive:
+
+Controls
+Imperative controls (buttons, hyperlinks...)
+Selection controls (check boxes, lists...)
+Entry controls (spinneres, text edit...)
+Display controls (scroll bars, splitters...)
+Menus
+Toolbars
+Dialogs
+Errors, alerts and confirmations

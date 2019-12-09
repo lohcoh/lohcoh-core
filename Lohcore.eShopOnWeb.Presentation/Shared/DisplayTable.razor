@@ -1,7 +1,11 @@
-﻿@inherits ElementFor<TableOptions>
-
-<h3>TableFor</h3>
+﻿@using Lowkode.Client.Core
+@typeparam TModel
+@inherits PlaceholderComponent<TModel>
+@inject  IPartProvider PartProvider
 
 @code {
+
+        [Parameter]
+        public IReadOnlyList<TModel> Items { get; set; }
 
 }
