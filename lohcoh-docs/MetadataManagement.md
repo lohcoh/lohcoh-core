@@ -1,4 +1,4 @@
-# lowkode
+# lowkode metadata management
 
 
 ## lowkode : metadata driven, UI component library for ASP.NET.
