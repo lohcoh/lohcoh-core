@@ -8,4 +8,13 @@
         [Parameter]
         public IReadOnlyList<TModel> Items { get; set; }
 
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            var partSpecification= new PartSpecification(typeof(TModel), null);
+            var part= PartProvider.GetRequiredComponent(partSpecification);
+
+        }
+
 }
