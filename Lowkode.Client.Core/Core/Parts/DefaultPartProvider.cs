@@ -1,9 +1,6 @@
-﻿using Lohcode.eShopOnWeb.Presentation.Core.Parts;
-using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Lowkode.Client.Core.Core;
+using Lowkode.Client.Core.Core.Parts;
 
 namespace Lowkode.Client.Core
 {
