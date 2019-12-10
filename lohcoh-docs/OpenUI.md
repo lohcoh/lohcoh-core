@@ -1,6 +1,6 @@
 ﻿# OpenUI
 
-OpenUI is our name for our OpenAPI extension for describing web-based UIs.
+OpenUI is our name for our OpenAPI extensions for describing web-based UIs.
 
 ## Concept
 OpenAPI is used to describe everything a third-party needs to consume your REST web services.  

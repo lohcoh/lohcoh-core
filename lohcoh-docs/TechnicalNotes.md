@@ -7,12 +7,23 @@ Basic Workflow...
 - On Startup in Blazor app, 
 
 ### Inspired by
-	[MetaUI](https://www.metaui.io/) is a good eample of how to design a metadata-driven UI  
+	[MetaUI](https://www.metaui.io/) is an OK example of how to design a metadata-driven UI but it's WAY complicated
 	[This article](https://hacks.mozilla.org/2017/08/inside-a-super-fast-css-engine-quantum-css-aka-stylo/) shows 
 	how a rule engine (that applies selectors to a DOM) works.
 	
+## Customization Stories
+- Add an item to a navigation menu for a particular customer
+- Highlight a number in a table if it's above a certain number
+	- Rule-driven pipe (angular pipe)?
+- Change form layout based on customer
+- Call different endpoint based on tenant
+- Enable features if user paid for Enterprise Edition
 
-
+## Metadata processing
+Need to keep lowkode simple and understandable.
+It's difficult to understand rule engines, especially forward-chaining engines.
+Right now I'm thinking that component implementations query the LowkodeRepository with LINQ.
+After an set of results is built the results can be customized with pipeline transformers, ala Apache Cocoon.
 
 ## Metadata Providers
 
