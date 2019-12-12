@@ -29,9 +29,10 @@ Developers can create thier own metadata-driven components by adding thier own m
 to the backend and creating UI components that leverage that metadata.
 
 ##  How does lowkode work?
-Here's a very quick overview of how lowcode works.
+Here's a very quick overview of how lowcode works.  
+
 In this section we will create a basic form for displaying a Customer.
-Then we'll add validation and required field decorations to the form without writing code.
+Then we'll add validation and required field decorations to the form by annotating the domain types.
 And then we'll improve the layout the form, again without writing any code.
 We'll start with this C# definition of a Customer...
 

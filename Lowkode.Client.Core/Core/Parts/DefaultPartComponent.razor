@@ -1,5 +1,4 @@
 ﻿@using  Lowkode.Client.Core
-@using Lohcode.eShopOnWeb.Presentation.Data
 @typeparam TModel
 @inherits PartComponent<TModel>
 
@@ -13,13 +12,17 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var forecast in (Items as IReadOnlyList<WeatherForecast>))
+        @foreach (var forecast in (Items as IReadOnlyList<TModel>))
         {
+            DateTime DateF= (DateTime)forecast.GetType().GetProperties().First(p=>p.Name == "Date").GetMethod.Invoke(forecast, null);
+            int TemperatureC= (int)forecast.GetType().GetProperties().First(p=>p.Name == "TemperatureC").GetMethod.Invoke(forecast, null);
+            int TemperatureF= (int)forecast.GetType().GetProperties().First(p=>p.Name == "TemperatureF").GetMethod.Invoke(forecast, null);
+            string Summary= (string)forecast.GetType().GetProperties().First(p=>p.Name == "Summary").GetMethod.Invoke(forecast, null);
             <tr>
-                <td>@forecast.Date.ToShortDateString()</td>
-                <td>@forecast.TemperatureC</td>
-                <td>@forecast.TemperatureF</td>
-                <td>@forecast.Summary</td>
+                <td>@DateF.ToShortDateString()</td>
+                <td>@TemperatureC</td>
+                <td>@TemperatureF</td>
+                <td>@Summary</td>
             </tr>
         }
     </tbody>
@@ -31,7 +34,7 @@
     override public PlaceholderComponent PlaceholderComponent {
         set {
             _placeholder = value;
-            var items= ((DisplayTable<WeatherForecast>)_placeholder).Items;
+            var items= ((DisplayTable<TModel>)_placeholder).Items;
             Items = (IReadOnlyList<TModel>)items;
         }
     }
