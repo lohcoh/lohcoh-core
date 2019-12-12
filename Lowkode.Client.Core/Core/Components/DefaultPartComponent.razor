@@ -1,6 +1,7 @@
 ﻿@using  Lowkode.Client.Core
 @typeparam TModel
 @inherits PartComponent<TModel>
+@inject ILowkodeExplorer lowkodeExplorer
 
 <table class="table">
     <thead>
@@ -30,7 +31,7 @@
 
 @code {
 
-    PlaceholderComponent _placeholder;
+        PlaceholderComponent _placeholder;
     override public PlaceholderComponent PlaceholderComponent {
         set {
             _placeholder = value;
@@ -38,6 +39,8 @@
             Items = (IReadOnlyList<TModel>)items;
         }
     }
+
+    public OpenAPI
 
     public IReadOnlyList<TModel> _items;
     public IReadOnlyList<TModel> Items {
@@ -53,6 +56,13 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
+
+        var schema= lowkodeExplorer.Query((openAPI) =>
+        {
+            return openAPI.Components.Schemas.First(s => s.Key == nameof(TModel)).Value;
+        });
+
+        schema.
     }
 
 }

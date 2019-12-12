@@ -8,6 +8,8 @@
 	document.  In the future the repository will be extended to allow query transformations 
 	to be plugged into the query processing.
 
+	idea:  
+
 - rewrite DisplayTable to use OpenAPI and eliminate all hard-coded text and data
 
 - rewrite FetchData.razor to eliminate hard-coded data fetching

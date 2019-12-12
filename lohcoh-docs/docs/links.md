@@ -24,6 +24,9 @@ A library for managing feature flags:
 
 ## Related Products
 
+[React library that creates forms from JSON schemas](https://uniforms.tools/docs/uth-bridge-concept)
+[Another react forms from schema generator, popular](https://github.com/rjsf-team/react-jsonschema-form)
+
 [A lowcode development tool based on Vue](retool.com)
 
 [A description of using attributes in domain driven design](https://www.researchgate.net/publication/311980398_Domain-driven_design_patterns_A_metadata-based_approach)

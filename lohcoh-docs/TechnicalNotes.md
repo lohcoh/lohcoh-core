@@ -7,7 +7,7 @@ Basic Workflow...
 - On Startup in Blazor app, 
 
 ### Inspired by
-	[MetaUI](https://www.metaui.io/) is an OK example of how to design a metadata-driven UI but it's WAY complicated
+	[MetaUI](https://www.metaui.io/) is an OK example of how to design a metadata-driven UI, but it's WAY complicated.
 	[This article](https://hacks.mozilla.org/2017/08/inside-a-super-fast-css-engine-quantum-css-aka-stylo/) shows 
 	how a rule engine (that applies selectors to a DOM) works.
 	

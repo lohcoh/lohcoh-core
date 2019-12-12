@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Lowkode.Client.Core.Core;
-using Lowkode.Client.Core.Core.Parts;
+using Lowkode.Client.Core.Core.Components;
 
 namespace Lowkode.Client.Core
 {

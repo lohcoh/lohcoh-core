@@ -17,7 +17,8 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static void AddLowkodeClient(this IServiceCollection services)
         {
-            services.AddSingleton<IPartProvider>(new DefaultPartProvider());
+            services.AddSingleton<IPartProvider, DefaultPartProvider>();
+            services.AddSingleton<ILowkodeExplorer, LowkodeExplorer>();
         }
     }
 }
