@@ -77,6 +77,11 @@
 
         _schema = lowkodeExplorer.Query((openAPI) =>
         {
+            // this is a better way of doing queries.
+            // The query methods are given expressions and the lowkode explorer is responsible for executing 
+            // the query.
+            // This gives the explorer the ability to filter the results based on any contributed filter and customizations.
+            // return LowkodeExplorer.Query(doc => doc.Components.Schemas).First(s => s.Key == nameof(TModel)).Value
             return openAPI.Components.Schemas.First(s => s.Key == nameof(TModel)).Value;
         });
 
