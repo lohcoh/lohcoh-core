@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Core\Rules\" />
+    <Folder Include="Common\" />
   </ItemGroup>
 
 </Project>

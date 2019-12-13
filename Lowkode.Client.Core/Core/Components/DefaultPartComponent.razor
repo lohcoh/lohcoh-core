@@ -7,64 +7,66 @@
 <table class="table">
     <thead>
         <tr>
-            @foreach (var property in _properties)
+            @foreach (var header in ColumnHeaders)
             {
-                <th>property.Key</th>
+                <th>header</th>
             }
         </tr>
     </thead>
     <tbody>
-        @foreach (var forecast in (Items as IReadOnlyList<TModel>))
+        @foreach (var row in RowValues)
         {
             <tr>
-                @foreach (var property in _properties)
+                @foreach (var value in row)
                 {
-                    string value = "";
-                    var propertyInfo = forecast.GetType().GetProperties().First(p => p.Name == property.Key);
-                    if (propertyInfo != null)
-                    {
-                        value = (string)propertyInfo.GetMethod.Invoke(forecast, null);
-                    }
-                    <th>@value</th>
+                    <td>@value</td>
                 }
             </tr>
         }
         @*
-        DateTime DateF = (DateTime)forecast.GetType().GetProperties().First(p => p.Name == "Date").GetMethod.Invoke(forecast, null);
-        int TemperatureC = (int)forecast.GetType().GetProperties().First(p => p.Name == "TemperatureC").GetMethod.Invoke(forecast, null);
-        int TemperatureF = (int)forecast.GetType().GetProperties().First(p => p.Name == "TemperatureF").GetMethod.Invoke(forecast, null);
-        string Summary = (string)forecast.GetType().GetProperties().First(p => p.Name == "Summary").GetMethod.Invoke(forecast, null);
-        <tr>
-            <td>@DateF.ToShortDateString()</td>
-            <td>@TemperatureC</td>
-            <td>@TemperatureF</td>
-            <td>@Summary</td>
-        </tr>            
+            DateTime DateF = (DateTime)forecast.GetType().GetProperties().First(p => p.Name == "Date").GetMethod.Invoke(forecast, null);
+            int TemperatureC = (int)forecast.GetType().GetProperties().First(p => p.Name == "TemperatureC").GetMethod.Invoke(forecast, null);
+            int TemperatureF = (int)forecast.GetType().GetProperties().First(p => p.Name == "TemperatureF").GetMethod.Invoke(forecast, null);
+            string Summary = (string)forecast.GetType().GetProperties().First(p => p.Name == "Summary").GetMethod.Invoke(forecast, null);
+            <tr>
+                <td>@DateF.ToShortDateString()</td>
+                <td>@TemperatureC</td>
+                <td>@TemperatureF</td>
+                <td>@Summary</td>
+            </tr>
         *@
     </tbody>
 </table>
 
 @code {
 
+    List<string> ColumnHeaders = new List<string>();
+    List<List<string>> RowValues = new List<List<string>>();
+
+
     OpenApiSchema _schema;
     IDictionary<string, OpenApiSchema> _properties;
 
     PlaceholderComponent _placeholder;
-    override public PlaceholderComponent PlaceholderComponent {
-        set {
+    override public PlaceholderComponent PlaceholderComponent
+    {
+        set
+        {
             _placeholder = value;
-            var items= ((DisplayTable<TModel>)_placeholder).Items;
+            var items = ((DisplayTable<TModel>)_placeholder).Items;
             Items = (IReadOnlyList<TModel>)items;
         }
     }
 
     public IReadOnlyList<TModel> _items;
-    public IReadOnlyList<TModel> Items {
+    public IReadOnlyList<TModel> Items
+    {
         get
         {
             return _items;
         }
-        set {
+        set
+        {
             _items = value;
         }
     }
@@ -78,7 +80,28 @@
             return openAPI.Components.Schemas.First(s => s.Key == nameof(TModel)).Value;
         });
 
-        _properties= _schema.Properties;
+        _properties = _schema.Properties;
+
+        foreach (var property in _properties)
+        {
+            ColumnHeaders.Add(property.Key);
+        }
+
+        foreach (var forecast in (Items as IReadOnlyList<TModel>))
+        {
+            var rowValues= new List<string>();
+            foreach (var property in _properties)
+            {
+                string value = "";
+                var propertyInfo = forecast.GetType().GetProperties().First(p => p.Name == property.Key);
+                if (propertyInfo != null)
+                {
+                    value = (string)propertyInfo.GetMethod.Invoke(forecast, null);
+                }
+                rowValues.Add(value);
+            }
+            RowValues.Add(rowValues);
+        }
 
     }
 

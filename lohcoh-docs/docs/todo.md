@@ -11,7 +11,7 @@
 - rewrite DisplayTable to use OpenAPI and eliminate all hard-coded text and data
 	- need to add 'title' annotations to property definitions in swagger.json so as to 
 	generate labels for the Weather forecast display.
-	- NOTE: Foll
+	- NOTE: Follow 
 
 - rewrite FetchData.razor to eliminate hard-coded data fetching
 
