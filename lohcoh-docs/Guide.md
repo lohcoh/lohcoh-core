@@ -8,7 +8,9 @@
 ### Creator Components
 
 #### Lowkode OpenAPI Queries
-	Creator components query the Lowkode API repository for metadata.
+	Creator components query the Lowkode OpenAPI repository for metadata.
+	lowkode follows the schema extensions as defined by the [react-jsonschema-form project](https://github.com/rjsf-team/react-jsonschema-form)
+
 	API queries include a 'context'.  
 	A context is a dictionary that contains metadata objects indexed by type.  
 	The context is used to customize query results for the specific context.
