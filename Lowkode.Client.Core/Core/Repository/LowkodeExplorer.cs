@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.OpenApi.Models;
 
 
@@ -19,15 +16,15 @@ namespace Lowkode.Client.Core
     /// </summary>
     public class LowkodeExplorer : ILowkodeExplorer
     {
-        OpenApiDocument openApiDocument;
-        public LowkodeExplorer(ISwaggerProvider swagger)
+        Task<OpenApiDocument> openApiDocument;
+        public LowkodeExplorer(IOpenApiProvider openApiProvider)
         {
-            this.openApiDocument = swagger.GetSwagger("My API");
+            this.openApiDocument = openApiProvider.GetDocument();
         }
 
         TResult ILowkodeExplorer.Query<TResult>(Func<OpenApiDocument, TResult> query)
         {
-            return query(openApiDocument);
+            return query(openApiDocument.Result);
         }
     }
 }

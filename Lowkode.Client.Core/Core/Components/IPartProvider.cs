@@ -9,11 +9,8 @@ namespace Lowkode.Client.Core
     public interface IPartProvider
     {
         /// <summary>
-        /// Creates a UI component from the given part specification.
-        /// 
+        /// This method returns a RenderFragment that will render the content component denoted by the given content specification.
         /// </summary>
-        /// <param name="partSpecification"></param>
-        /// <returns></returns>
-        Task<PartComponent<TModel>> GetRequiredComponentAsync<TModel>(PartSpecification partSpecification);
+        Task<RenderFragment> GetPartTemplate(PartSpecification partSpecification);
     }
 }

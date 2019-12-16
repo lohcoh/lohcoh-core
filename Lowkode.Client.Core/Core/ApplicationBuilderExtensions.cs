@@ -1,5 +1,6 @@
 ﻿using Lowkode.Client.Core;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,10 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ApplicationBuilderExtensions
     {
-        public static void AddLowkodeClient(this IServiceCollection services)
+        public static void AddLowkodeClient<TProvider>(this IServiceCollection services, TProvider openApiProvider)
+            where TProvider : IOpenApiProvider
         {
+            services.AddSingleton<IOpenApiProvider>(openApiProvider);
             services.AddSingleton<IPartProvider, DefaultPartProvider>();
             services.AddSingleton<ILowkodeExplorer, LowkodeExplorer>();
         }

@@ -16,10 +16,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var partSpecification= new PartSpecification(this, typeof(TModel), null);
-        var part= await PartProvider.GetRequiredComponentAsync<TModel>(partSpecification);
+        var partSpecification= new PartSpecification(this, new DefaultModelBinding(typeof(TModel)));
+        var partTemplate= await PartProvider.GetPartTemplate(partSpecification);
 
-        DisplayTableTemplate = part.ToRenderFragment();
+        DisplayTableTemplate = partTemplate;
     }
 
 }

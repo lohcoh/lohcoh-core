@@ -1,7 +1,7 @@
 ﻿@using  Lowkode.Client.Core
 @using Microsoft.OpenApi.Models;
 @typeparam TModel
-@inherits PartComponent<TModel>
+@inherits PartComponent
 @inject ILowkodeExplorer lowkodeExplorer
 
 <table class="table">
@@ -9,7 +9,7 @@
         <tr>
             @foreach (var header in ColumnHeaders)
             {
-                <th>header</th>
+                <th>@header</th>
             }
         </tr>
     </thead>
@@ -48,6 +48,7 @@
     IDictionary<string, OpenApiSchema> _properties;
 
     PlaceholderComponent _placeholder;
+    [Parameter]
     override public PlaceholderComponent PlaceholderComponent
     {
         set
@@ -82,7 +83,8 @@
             // the query.
             // This gives the explorer the ability to filter the results based on any contributed filter and customizations.
             // return LowkodeExplorer.Query(doc => doc.Components.Schemas).First(s => s.Key == nameof(TModel)).Value
-            return openAPI.Components.Schemas.First(s => s.Key == nameof(TModel)).Value;
+            var schemaName= typeof(TModel).Name;
+            return openAPI.Components.Schemas.First(s => s.Key == schemaName).Value;
         });
 
         _properties = _schema.Properties;
@@ -98,10 +100,12 @@
             foreach (var property in _properties)
             {
                 string value = "";
-                var propertyInfo = forecast.GetType().GetProperties().First(p => p.Name == property.Key);
+                var itemType= forecast.GetType();
+                var itemTypeProperties= itemType.GetProperties();
+                var propertyInfo = itemTypeProperties.First(p => p.Name.ToLower() == property.Key.ToLower());
                 if (propertyInfo != null)
                 {
-                    value = (string)propertyInfo.GetMethod.Invoke(forecast, null);
+                    value = propertyInfo.GetMethod.Invoke(forecast, null).ToString();
                 }
                 rowValues.Add(value);
             }

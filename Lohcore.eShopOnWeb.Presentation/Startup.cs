@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Lohcode.eShopOnWeb.Presentation.Data;
+using Lowkode.Client.Core.Core.Repository;
 
 namespace Lohcode.eShopOnWeb.Presentation
 {
@@ -29,7 +30,9 @@ namespace Lohcode.eShopOnWeb.Presentation
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-            services.AddLowkodeClient();
+
+            var openApiPath= @"..\Lohcore.eShopOnWeb.Presentation\wwwroot\swagger\v1\swagger.json"; // TODO: create configuration
+            services.AddLowkodeClient(new OpenApiProviderFromFile(openApiPath) );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

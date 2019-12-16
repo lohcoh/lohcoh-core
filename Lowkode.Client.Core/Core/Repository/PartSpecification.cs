@@ -8,36 +8,19 @@ namespace Lowkode.Client.Core
     /// <summary>
     /// A part specification represents an instance of a placeholder element.
     /// A part specification is a collection of key:value pairs that are used to map a placeholder 
-    /// component to a component implementation.
+    /// component to a part component (A concrete implementation of a placeholder component).
     /// Consider this Razor template...
     /// 
-    ///     <EmailInput bindTo=@Binding<Customer>().Property(c=>c.Email) required/>
+    ///     <EmailInput bindTo=@Binding<Customer>(c=>c.Email) required/>
     ///     
-    /// ... where Binding is a method provided lowkode components for binding components to model parts.
+    /// ... where Binding is a method provided by the base placeholder component for binding components to model parts.
     /// 
-    /// A specification could be built to represent this component like so...
+    /// Here's a specification to represent this component...
     ///     var spec= new EmailInputPartSpecification() {
-    ///         BoundTo= component.boundTo,
-    ///         ComponentType= typeof(EmailInput),
-    ///         Required = true
+    ///         ModelBinding= component.bindTo,
+    ///         ComponentType= typeof(EmailInput)
     ///     }
     ///     
-    /// Every placeholder component knows how to create it's part specification.
-    /// On the client, lowkode provides a global ImplementationProvider service.
-    /// A placeholder component get's it's replacement by creating a new scope and then 
-    /// calling implProvider.GetImplementation(partSpecification);
-    /// Dispose of the scope when the placeholder is destroyed.
-    /// 
-    /// On the client, lowkode provides a global MetadataProvider service.
-    /// class ImplementationProvider  {
-    ///     public ComponentBase GetImplementation(partSpecification) {
-    ///         var implDescription= metaService.GetData<IImplementationDescription>(partSpecification);
-    ///         services.RegisterScoped(implDescription.BuildSpecification);
-    ///         return services.GetRequiredService(implDescription.ImplementationType)
-    ///     }
-    /// }
-    /// 
-    /// Now, the magical part is how the build specification got built.
     /// </summary>
     public class PartSpecification
     {
@@ -75,11 +58,10 @@ namespace Lowkode.Client.Core
         /// </summary>
         /// <param name="componentType"></param>
         /// <param name="modelType"></param>
-        public PartSpecification(PlaceholderComponent placeholderComponent, Type componentType, IModelBinding modelBinding)
+        public PartSpecification(PlaceholderComponent placeholderComponent, IModelBinding modelBinding)
         {
             this.PlaceholderComponent = placeholderComponent;
             this.ModelBinding = modelBinding;
-            this.ComponentType = componentType;
         }
 
         /// <summary>
@@ -88,18 +70,9 @@ namespace Lowkode.Client.Core
         public PlaceholderComponent PlaceholderComponent { get; set; }
 
         /// <summary>
-        /// The Type of the view model to be displayed by this element.
-        /// The UI element associated with these options will be configured to accomodate the view model.
-        /// For instance, if the associated UI element is a form then fields will be added to the form 
-        /// for each property on the view model.
+        /// The data item(s) to be displayed by the part.
         /// </summary>
         public IModelBinding ModelBinding { get; }
-
-        /// <summary>
-        /// The Type of the component to be displayed.
-        /// This is the Type of the associated lowcode component.
-        /// </summary>
-        public Type ComponentType { get; }
     }
 
 
