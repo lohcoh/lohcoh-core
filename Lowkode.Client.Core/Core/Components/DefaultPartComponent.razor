@@ -97,12 +97,15 @@
         foreach (var forecast in (Items as IReadOnlyList<TModel>))
         {
             var rowValues= new List<string>();
-            foreach (var property in _properties)
+            foreach (var propertyItem in _properties)
             {
                 string value = "";
                 var itemType= forecast.GetType();
                 var itemTypeProperties= itemType.GetProperties();
-                var propertyInfo = itemTypeProperties.First(p => p.Name.ToLower() == property.Key.ToLower());
+
+
+
+                var propertyInfo = itemTypeProperties.First(p => p.Name.ToLower() == propertyItem.Key.ToLower());
                 if (propertyInfo != null)
                 {
                     value = propertyInfo.GetMethod.Invoke(forecast, null).ToString();

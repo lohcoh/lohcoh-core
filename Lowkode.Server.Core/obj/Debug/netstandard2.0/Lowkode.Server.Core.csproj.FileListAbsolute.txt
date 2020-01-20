@@ -3,3 +3,6 @@ C:\Users\zen\source\repos\lohcoh-core\Lowkode.Server.Core\bin\Debug\netstandard2
 C:\Users\zen\source\repos\lohcoh-core\Lowkode.Server.Core\obj\Debug\netstandard2.0\Lowkode.Server.Core.csprojAssemblyReference.cache
 C:\Users\zen\source\repos\lohcoh-core\Lowkode.Server.Core\obj\Debug\netstandard2.0\Lowkode.Server.Core.AssemblyInfoInputs.cache
 C:\Users\zen\source\repos\lohcoh-core\Lowkode.Server.Core\obj\Debug\netstandard2.0\Lowkode.Server.Core.AssemblyInfo.cs
+C:\Users\zen\source\repos\lohcoh-core\Lowkode.Server.Core\bin\Debug\netstandard2.0\Lowkode.Server.Core.pdb
+C:\Users\zen\source\repos\lohcoh-core\Lowkode.Server.Core\obj\Debug\netstandard2.0\Lowkode.Server.Core.dll
+C:\Users\zen\source\repos\lohcoh-core\Lowkode.Server.Core\obj\Debug\netstandard2.0\Lowkode.Server.Core.pdb
