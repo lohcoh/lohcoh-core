@@ -28,7 +28,7 @@ namespace Lowkode.Client.Core.Core.Repository
         {
             OpenApiDiagnostic apiDiagnostic= null;
 
-            // Note: OpenApi.NET doesn't have an async reader or I would have used it.
+            // Note: OpenApi.NET doesn't appear to have an async reader or I would have used it.
             OpenApiDocument document= 
                 new OpenApiStreamReader().Read(new FileStream(Path, FileMode.Open), out apiDiagnostic);
 
