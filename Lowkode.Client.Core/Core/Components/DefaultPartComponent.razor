@@ -1,8 +1,9 @@
-﻿@using  Lowkode.Client.Core
+﻿@using Lowkode.Client.Core
 @using Microsoft.OpenApi.Models;
+@using System.ComponentModel.DataAnnotations;
 @typeparam TModel
 @inherits PartComponent
-@inject ILowkodeExplorer lowkodeExplorer
+@inject ILowkodeExplorer lkExplorer;
 
 <table class="table">
     <thead>
@@ -45,7 +46,6 @@
 
 
     OpenApiSchema _schema;
-    IDictionary<string, OpenApiSchema> _properties;
 
     PlaceholderComponent _placeholder;
     [Parameter]
@@ -76,34 +76,36 @@
     {
         base.OnInitialized();
 
-        _schema = lowkodeExplorer.Query((openAPI) =>
-        {
-            // this is a better way of doing queries.
-            // The query methods are given expressions and the lowkode explorer is responsible for executing 
-            // the query.
-            // This gives the explorer the ability to filter the results based on any contributed filter and customizations.
-            // return LowkodeExplorer.Query(doc => doc.Components.Schemas).First(s => s.Key == nameof(TModel)).Value
-            var schemaName= typeof(TModel).Name;
-            return openAPI.Components.Schemas.First(s => s.Key == schemaName).Value;
-        });
+        var TType = typeof(TModel);
 
-        _properties = _schema.Properties;
+        var attributes = _schema = lkExplorer.GetAnnotation<DisplayAttribute>();
+        IDictionary<string, OpenApiSchema> _properties;
+        Query((openAPI) =>
+                {
+        // this is a better way of doing queries.
+        // The query methods are given expressions and the lowkode explorer is responsible for executing
+        // the query.
+        // This gives the explorer the ability to filter the results based on any contributed filter and customizations.
+        // return LowkodeExplorer.Query(doc => doc.Components.Schemas).First(s => s.Key == nameof(TModel)).Value
+        var schemaName = typeof(TModel).Name;
+                    return openAPI.Components.Schemas.First(s => s.Key == schemaName).Value;
+                });
 
-        foreach (var property in _properties)
+        var properties = TType.GetProperties();
+
+        foreach (var property in properties)
         {
-            ColumnHeaders.Add(property.Key);
+            DisplayAttribute displayAttributes = lkExplorer.GetAnnotation<DisplayAttribute>(property);
+            ColumnHeaders.Add(displayAttributes.Name);
         }
 
+        var itemTypeProperties = typeof(TModel).GetProperties();
         foreach (var forecast in (Items as IReadOnlyList<TModel>))
         {
-            var rowValues= new List<string>();
+            var rowValues = new List<string>();
             foreach (var propertyItem in _properties)
             {
                 string value = "";
-                var itemType= forecast.GetType();
-                var itemTypeProperties= itemType.GetProperties();
-
-
 
                 var propertyInfo = itemTypeProperties.First(p => p.Name.ToLower() == propertyItem.Key.ToLower());
                 if (propertyInfo != null)
