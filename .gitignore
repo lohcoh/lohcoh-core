@@ -35,3 +35,5 @@
 /Lohcode.eShopOnWeb.Gateway/bin/Debug/netcoreapp3.1
 /Lowkode.Client.Core/bin/Debug/netstandard2.0
 /Lowkode.Client.Core/obj
+/Lowkode.Server.Core/obj
+/Lowkode.Server.Core/bin/Debug/netstandard2.0

@@ -89,20 +89,24 @@
         "properties": {
           "date": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "title": "Date"
           },
           "temperatureC": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "title":  "Temperature (C)"
           },
           "temperatureF": {
             "type": "integer",
             "format": "int32",
-            "readOnly": true
+            "readOnly": true,
+            "title": "Temperatre (F)"
           },
           "summary": {
             "type": "string",
-            "nullable": true
+            "nullable": true,
+            "title": "Summary"
           }
         },
         "additionalProperties": false

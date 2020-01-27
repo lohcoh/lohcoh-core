@@ -25,6 +25,10 @@ It's difficult to understand rule engines, especially forward-chaining engines.
 Right now I'm thinking that component implementations query the LowkodeRepository with LINQ.
 After an set of results is built the results can be customized with pipeline transformers, ala Apache Cocoon.
 
+### Metadata processing - take 2
+JSON Schema provides mechanisms for customizing schemas, perhaps lowkode should use these mechanisms to customize schema.
+The downside... binds lowkode to JSON Schema.
+
 ## Metadata Providers
 
 ### Metadata Initialization

@@ -39,6 +39,11 @@ namespace Lowkode.Server.Core.Swashbuckle
                         OpenApiSchema schemaProp;
                         if (schema.Properties.TryGetValue(property.Name, out schemaProp))
                         {
+                            if (string.IsNullOrWhiteSpace(schemaProp.Title))
+                            {
+                                schemaProp.Title = displayAttribute.Name;
+                            }
+
                             var displayExtension= new OpenApiObject();
 
                             if (!string.IsNullOrWhiteSpace(displayAttribute.Name))
