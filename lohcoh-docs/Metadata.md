@@ -1,5 +1,7 @@
 ﻿# Metadata
 
+Lowcode dynamically assembles user interfaces from 
+
 ## Properties
 
 ### Field/Property Titles

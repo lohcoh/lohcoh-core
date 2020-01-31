@@ -44,7 +44,7 @@ This made it possible for developers to think in term of components, thus makign
 to understand and maintain a large set of CSS rules.  
 BEM had shortcoming though, it wasn;t a true component-oriented system, you needed to explicitly 
 extend every ui component whenever you wanted to reuse in a different context.
-Again, if lowcode adopted a BEN-like approach to styling then we could expect to have the same problems.
+Again, if lowcode adopted a BEM-like approach to styling then we could expect to have the same problems.
 
 Styled-Components is a recent innovation 
 
