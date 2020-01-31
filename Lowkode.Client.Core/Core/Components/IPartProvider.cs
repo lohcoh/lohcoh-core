@@ -12,5 +12,6 @@ namespace Lowkode.Client.Core
         /// This method returns a RenderFragment that will render the content component denoted by the given content specification.
         /// </summary>
         Task<RenderFragment> GetPartTemplate(PartSpecification partSpecification);
+
     }
 }

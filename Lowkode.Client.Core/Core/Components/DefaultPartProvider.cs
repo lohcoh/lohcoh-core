@@ -8,6 +8,11 @@ namespace Lowkode.Client.Core
 {
     public class DefaultPartProvider : IPartProvider
     {
+        public RenderFragment GetNameTemplate()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<RenderFragment> GetPartTemplate(PartSpecification partSpecification)
         {
             RenderFragment renderFragment = (RenderTreeBuilder builder) =>

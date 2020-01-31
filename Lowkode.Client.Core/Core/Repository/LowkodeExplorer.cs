@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
 
@@ -6,25 +7,26 @@ using Microsoft.OpenApi.Models;
 
 namespace Lowkode.Client.Core
 {
-    /// <summary>
-    /// A container for an OpenAPI document that contains all lowkode metadata.
-    /// This class provides methods for querying the document for data.
-    /// Creator components query the Lowkode API repository for metadata.
-    /// 
-    /// The results returned for a query don't depend solely on the given query 
-    /// but also on the current scope.
-    /// </summary>
+
     public class LowkodeExplorer : ILowkodeExplorer
     {
-        Task<OpenApiDocument> openApiDocument;
-        public LowkodeExplorer(IOpenApiProvider openApiProvider)
+        private Dictionary<Type, IModelMetadata> typeMetadata = new Dictionary<Type, IModelMetadata>();
+
+        public LowkodeExplorer()
         {
-            this.openApiDocument = openApiProvider.GetDocument();
         }
 
-        TResult ILowkodeExplorer.Query<TResult>(Func<OpenApiDocument, TResult> query)
+        public IModelMetadata MetadataForType<TModel>()
         {
-            return query(openApiDocument.Result);
+            IModelMetadata metadata = null;
+            if (!typeMetadata.TryGetValue(typeof(TModel), out metadata))
+            {
+                var type = typeof(TModel);
+                metadata = new ModelMetadata(type);
+                typeMetadata.Add(type, metadata);
+            }
+            return metadata;
         }
+
     }
 }
