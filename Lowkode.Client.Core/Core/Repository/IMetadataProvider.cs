@@ -13,8 +13,12 @@ namespace Lowkode.Client.Core
     /// - adding metadata contributers
     /// - defining 'scope'
     /// </summary>
-    public interface ILowkodeExplorer 
+    public interface IMetadataProvider 
     {
-        IModelMetadata MetadataForType<TModel>();
+        /// <summary>
+        /// Returns metadata associated with the given object.
+        /// The For method is meant to be overloaded with many types of model objects.
+        /// </summary>
+        IModelMetadata For(Type modelType);
     }
 }

@@ -16,13 +16,6 @@ namespace Lowkode.Client.Core
     {
 
         /// <summary>
-        /// All model objects have associated UI elements.
-        /// The TemplateProvider provides access to Razor templates (RenderFragments) that can display the associated object.
-        /// </summary>
-        IModelTemplateProvider TemplateProvider { get; }
-
-
-        /// <summary>
         /// If the associated model part has properties then this method return the metadata for the properties
         /// </summary>
         /// <returns></returns>

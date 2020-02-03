@@ -3,8 +3,8 @@
 @using System.ComponentModel.DataAnnotations;
 @typeparam TModel;
 @inherits PartComponent;
-@inject ILowkodeExplorer lkExplorer;
-@inject IPartProvider lkTemplateProvider;
+@inject ILowkodeContext lkContext;
+
 
 <table class="table">
     <thead>
@@ -74,22 +74,21 @@
     {
         base.OnInitialized();
 
-        var typeMetadata = lkExplorer.MetadataForType<TModel>();
-        var properties = typeMetadata.Properties;        
+        var typeMetadata = lkContext.Metadata.For(typeof(TModel));
 
-        foreach (var propertyMetadata in properties)
+        foreach (var property in typeMetadata.Properties)
         {
-            var headerTemplate = propertyMetadata.TemplateProvider.GetNameTemplate();
+            var headerTemplate = lkContext.Templates.ForName(property);
             ColumnHeaders.Add(headerTemplate);
         }
 
         foreach (var forecast in (Items as IReadOnlyList<TModel>))
         {
             var rowValues = new List<RenderFragment>();
-            foreach (var propertyMetadata in properties)
+            foreach (var property in typeMetadata.Properties)
             {
-                object value = propertyMetadata.PropertyInfo.GetMethod.Invoke(forecast, null);
-                var valueTemplate = propertyMetadata.TemplateProvider.GetTemplateFor(value);
+                object value = property.PropertyInfo.GetMethod.Invoke(forecast, null);
+                var valueTemplate = lkContext.Templates.ForValue(property, value);
 
                 rowValues.Add(valueTemplate);
             }
