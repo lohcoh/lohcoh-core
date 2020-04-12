@@ -1,7 +1,5 @@
 ﻿# Customization
 
-lowkode 
-
 lowkode has support for two common requirements for customization...
 - The ability to customize the visual aspects of the UI via CSS.  For instance, set the application navbar background to black.
 	lowcode provides 

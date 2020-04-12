@@ -65,6 +65,29 @@ Developers can create thier own metadata-driven components by adding thier own m
 	- <Navigation forType=@typeof(NavigationMenuItem) value="@mainMenuItems"> 
 		Some components are populated by metadata contributions
 
+### client...
+template...
+	<lk TView=@DisplayTable<Customer> 
+		@init(v => {
+			v.Items= @customerList
+		}
+	/>
+
+can be shortened to...
+
+	<DisplayTable TModel=@Customer Items= @customerList/>
+
+
+- All content display is type driven.  examples...
+	- <EditForm forType=@typeof(Customer) value=@customer/>  
+		This displays an entire form for editing a Customer
+	- <Card forType=@typeof(Customer) value=@customer/>  
+		Displays a view-only, abbreviated view of a Customer
+	- <DisplayTable forType=@typeof(Customer) value="@customerList">
+		Displays a view-only table of customers
+	- <Navigation forType=@typeof(NavigationMenuItem) value="@mainMenuItems"> 
+		Some components are populated by metadata contributions
+
 These tags delegate to components that have been contributed to the system.
 The justification for this tag scheme is threefold....
 	- Avoids creating dependency on a particlar component library.
