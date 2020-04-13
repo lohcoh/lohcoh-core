@@ -37,7 +37,4 @@
 /Lowkode.Client.Core/obj
 /Lowkode.Server.Core/obj
 /Lowkode.Server.Core/bin/Debug/netstandard2.0
-/lohr/obj/Debug/netcoreapp3.1
-/lohr/wwwroot/lib
-/lohr-documentation/obj/Debug/netstandard2.0
-/lohr-documentation/obj
+/Lohcore.eShopOnWeb.Presentation/wwwroot/swagger/v1/ott_files

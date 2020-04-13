@@ -35,6 +35,11 @@ A library for managing feature flags:
 
 [Window Forms made extensive use of design-time attributes](https://flylib.com/books/en/1.41.1/)
 
+[Blazor UI grid that uses metadata](https://github.com/gustavnavar/Grid.Blazor)
+    [This sample app shows how Grid.Blazor configures components with a delegate that handles client side operations](https://github.com/gustavnavar/Grid.Blazor/blob/master/GridBlazorClientSide.Client/Pages/GridButtons.razor)
+    This would be a useful approach for providing lowkode components with thier delegates
+
+
 
 https://camel.apache.org/manual/latest/roundRobin-eip.html
 

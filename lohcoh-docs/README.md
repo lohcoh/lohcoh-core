@@ -1,32 +1,32 @@
 # lowkode
 
-
 ## lowkode : metadata driven, UI component library for ASP.NET.
 
-lowkode is a Blazor-based, metadata driven, UI component library for ASP.NET Core.
-lowkode is the easiest way to build, customize, and extend user interafces for business applications.
+lowkode is a metadata driven, UI component library for Blazor.
+lowkode is the easiest way to build, customize, and extend a web-based user interface for line of business applications.
 
 lowkode eliminates the need to manually create basic UI elements like forms, data tables, search panels, etc.
-Instead, lowkode can provide these UI elements using metadata from a variety of sources.
-lowkode also makes it easy to customize your UI without coding.  
+Instead, lowkode can dynamically build these UI elements using metadata from a variety of sources.
+lowkode uses metadata to map data and objects to UI components.
+lowkode contains an extensible backend metadata service that scans your application's 
+artifacts and assemblies at startup, collects metadata, and provides that metadata to lowkode clients.
 
-lowkode's metadata-driven components can be used in your existing Razor Pages and MVC apps.
-Conversely, lowkode can create a complete Blazor application UI and you can embed your existing Blazor components into lowkode's UI.
+The traditional downside of metadata-driven UIs is that they are generally not very flexible and difficult to customize.
+lowkode enables developers to change lowkode's appearance and behavior by adding 'mixins' to lowkode components that can 
+customize the componenents or even completely replace them.
+Mixins provide developers with complete control of the lowkode UI.
 
 lowkode can automatically provided many kinds of UI elements, including...
-- forms for editing, include validation
+- full-featured forms 
 - data tables 
 - search forms
 - navigation 
-- login form 
+- signin form 
 - permission based access to all UI elements, including navigation, forms, and search pages.
 - User administration UI
 
-lowkode contains an extensible backend configuration library that scans your application's 
-artifacts and assemblies at startup and adds metadata to an extended OpenApi/Swagger document.
-In the browser, lowkode uses this metadata to assemble a custom UI.
-Developers can create thier own metadata-driven components by adding thier own metadata provider 
-to the backend and creating UI components that leverage that metadata.
+Since lowkode is build with Blazor, lowkode's components can be used in your existing Razor Pages and MVC apps.
+
 
 ##  How does lowkode work?
 Here's a very quick overview of how lowcode works.  
@@ -113,7 +113,9 @@ I like that when you google lowkode it displays dome results for 'low-code'
 loecode
 lowkode
 lokoh
+lohkoh
 locoh
+lohkode
 
 ### Taken
 loco
