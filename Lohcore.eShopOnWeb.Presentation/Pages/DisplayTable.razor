@@ -1,0 +1,66 @@
+﻿@using Lohcode.eShopOnWeb.Presentation.Data
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+
+@typeparam TModel;
+
+@inject IModelMetadataProvider ModelMetadataProvider
+
+
+    <table class='table'>
+        <thead>
+            <tr>
+                @foreach (var header in ColumnHeaders)
+                {
+
+                    <th>@header</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in RowValues)
+            {
+                <tr>
+                    @foreach (var v in row)
+                    {
+                        <td>@v</td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+@code {
+    
+    [Parameter]
+    public virtual IReadOnlyList<TModel> Items { get; set; }
+
+    private List<string> ColumnHeaders = new List<string>();
+    private List<List<string>> RowValues = new List<List<string>>();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var typeMetadata = ModelMetadataProvider.GetMetadataForType(typeof(WeatherForecast));
+
+        foreach (var property in typeMetadata.Properties)
+        {
+            var displayName = property.DisplayName;
+            ColumnHeaders.Add(displayName);
+        }
+
+        foreach (var forecast in Items)
+        {
+            var rowValues = new List<string>();
+            foreach (var property in typeMetadata.Properties)
+            {
+                var value = property.PropertyGetter.Invoke(forecast);
+                var displayValue = value?.ToString();
+
+                rowValues.Add(displayValue);
+            }
+            RowValues.Add(rowValues);
+        }
+    }
+}

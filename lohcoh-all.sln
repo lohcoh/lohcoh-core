@@ -33,7 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lohcode.eShopOnWeb.Presenta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lowkode.Client.Core", "Lowkode.Client.Core\Lowkode.Client.Core.csproj", "{0E08DA76-63C7-4DDB-A616-4744FF19B02D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lowkode.Server.Core", "Lowkode.Server.Core\Lowkode.Server.Core.csproj", "{667F39A1-C664-4EFD-BA78-507E369FC71F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lowkode.Server.Core", "Lowkode.Server.Core\Lowkode.Server.Core.csproj", "{667F39A1-C664-4EFD-BA78-507E369FC71F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lohr-documentation", "lohr-documentation\lohr-documentation.csproj", "{9B10017D-830C-4C39-BE42-CAF05605E72A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{667F39A1-C664-4EFD-BA78-507E369FC71F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{667F39A1-C664-4EFD-BA78-507E369FC71F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{667F39A1-C664-4EFD-BA78-507E369FC71F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B10017D-830C-4C39-BE42-CAF05605E72A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B10017D-830C-4C39-BE42-CAF05605E72A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B10017D-830C-4C39-BE42-CAF05605E72A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B10017D-830C-4C39-BE42-CAF05605E72A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

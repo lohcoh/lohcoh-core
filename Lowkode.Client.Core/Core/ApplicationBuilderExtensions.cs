@@ -21,7 +21,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddSingleton<IOpenApiProvider>(openApiProvider);
             services.AddSingleton<IPartProvider, DefaultPartProvider>();
-            services.AddSingleton<ILowkodeContext, MetadataProvider>();
+            //services.AddSingleton<ILowkodeContext, MetadataProvider>();
         }
     }
 }

@@ -40,3 +40,19 @@ https://camel.apache.org/manual/latest/roundRobin-eip.html
 
 ### DDD Frameworks
 http://seedstack.org/docs/business/policies/
+
+### Articles on schema-driven UI development
+
+[Design system and API-Driven UI](https://getaround.tech/mobile-api-driven/)
+Conclusion: ```we definitely think that on a long terms basis, it’s a valuable and powerful tool for quickly building a new feature, in a scalable way.```
+
+[Using GraphQL & Backend-Driven UI, to build faster with less code](https://medium.com/novvum/using-graphql-backend-driven-ui-to-build-faster-with-less-code-5c13d7154d99)
+Conclusion: 
+```
+So, what benefits did we receive from this pattern?
+- More consistent and enjoyable developer experience across teams. Now, developers don’t have to re-implement the same code across every client. No more worrying about the design and copy requirements individually, the API handles it!
+- Reduced frontend code. The project had been worked on by numerous developers and had to handle all of the status logic prior to rendering! There was a ton of unnecessary logic transforming these statuses into the right wording and design patterns. Now, we have removed all of that code equating to hundreds of lines!
+- More consistent user experience! Most importantly, is the benefit this has had on user experience. Now, users and admins receive consistent communication across all frontend clients and transactional messaging
+```
+
+

@@ -11,6 +11,7 @@
         <tr>
             @foreach (var header in ColumnHeaders)
             {
+                
                 <th>@header</th>
             }
         </tr>
@@ -78,8 +79,8 @@
 
         foreach (var property in typeMetadata.Properties)
         {
-            var headerTemplate = lkContext.Templates.ForName(property);
-            ColumnHeaders.Add(headerTemplate);
+            //var headerTemplate = lkContext.Templates.ForName(property);
+            //ColumnHeaders.Add(headerTemplate);
         }
 
         foreach (var forecast in (Items as IReadOnlyList<TModel>))
@@ -88,9 +89,9 @@
             foreach (var property in typeMetadata.Properties)
             {
                 object value = property.PropertyInfo.GetMethod.Invoke(forecast, null);
-                var valueTemplate = lkContext.Templates.ForValue(property, value);
+                //var valueTemplate = lkContext.Templates.ForValue(property, value);
 
-                rowValues.Add(valueTemplate);
+                //rowValues.Add(valueTemplate);
             }
             RowValues.Add(rowValues);
         }
