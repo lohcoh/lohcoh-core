@@ -2,7 +2,7 @@
 
 ## lowkode : metadata driven, UI component library for ASP.NET.
 
-lowkode is a Blazor-based, metadata driven, UI component library for ASP.NET Core.
+lowkode is a metadata driven, UI component library for Blazor.
 lowkode is the easiest way to build, customize, and extend a web-based user interface for line of business applications.
 
 lowkode eliminates the need to manually create basic UI elements like forms, data tables, search panels, etc.
