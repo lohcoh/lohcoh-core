@@ -35,6 +35,12 @@ A library for managing feature flags:
 
 [Window Forms made extensive use of design-time attributes](https://flylib.com/books/en/1.41.1/)
 
+### Windows Template Studio
+https://github.com/Microsoft/WindowsTemplateStudio
+https://www.infoq.com/news/2018/08/UWP-LOB-Win10/
+https://www.youtube.com/watch?time_continue=7&v=4chzzzAZRNQ&feature=emb_logo
+
+
 [Blazor UI grid that uses metadata](https://github.com/gustavnavar/Grid.Blazor)
     [This sample app shows how Grid.Blazor configures components with a delegate that handles client side operations](https://github.com/gustavnavar/Grid.Blazor/blob/master/GridBlazorClientSide.Client/Pages/GridButtons.razor)
     This would be a useful approach for providing lowkode components with thier delegates
