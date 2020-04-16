@@ -1,6 +1,6 @@
 ﻿# Concepts
 
-## What is lowlode
+## What is lowkode
 
 lowkode is library for dynamically generating, transforming, and composing Blazor UI components into higher level UI elements 
 using metadata, business rules, and runtime data.
@@ -117,6 +117,9 @@ The content that will eventually be injected into the original slot will look li
       <button type="submit">Submit</button>
     </EditForm>
 
+
+
+## Using lowkode components in Razor templates
 
 
 
