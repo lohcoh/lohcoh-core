@@ -22,7 +22,7 @@ Lowkode also provides a set of components specifically designed to make form cre
 	- Add an additional Report to the your application's Report menu for a specific client/tenant
 		Uses: Uses: metadata(ui report contribution), context (client/tenant)
 
-	- Add an extra field to a form when the current user 
+	- Add an extra field to a form when the current user belongs to specific Department.
 
 	- Change the layout of your application's Employee form depending on the employee's Business Group, 
 		since different Business Groups prioritize different information.
