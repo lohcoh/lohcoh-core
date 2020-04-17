@@ -49,6 +49,10 @@ The exact details of how lowkode generates content are discussed later, but basi
 within <lk> slots with other, dynamically created, component instances, all based on rules and templates.
 One of lowkode's secret weapons is that it provides some crazy cool ways to generate and transform content using templates.
 
+## Observations
+In Blazor , form validation depends on the form prividing a validation service.
+lowkode should provide the ability to inject services into a component and descendants, scoped to the component.
+
 
 ### Another Example
 If for some reason we wanted to explicitly build the form but didn't want to deal with building the details of each field we could do this...

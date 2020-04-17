@@ -1,5 +1,54 @@
 ﻿# Concepts
 
+lowkode is a framework designed for constructing metadata-driven user interfaces with Blazor, and especially for dynamically constructing forms from metadata.
+low
+
+With lowkode, UI elements are constructed using code.
+
+So, instead of constructing of form like this...
+
+    <form>
+        <label>Name</label>
+        <input type="text" @bind="@Name" />
+        <button type="submit" onChange=()>Submit</button>
+    </form>
+
+    @if (0 < Display.Length) {
+        Hi @Display
+	}
+
+    @code {
+        string Name= "";
+        string Display= "";
+
+        public void ShowName() { 
+            Display= Name; 
+        }
+	}
+
+with lowkode you'd write this...
+    <LkForm ref="lkForm">
+        <LkGroup type=@string name="Name"/>
+        <LkSubmit onClick=@ShowName/>
+    <LkForm>
+
+    @if (0 < Display.Length) {
+        Hi @Display
+	}
+
+    @code {
+        LkForm lkForm;
+        string Display= "";
+
+        public void ShowName() { 
+            Display= lkForm.ValueFor<string>("Name"); 
+        }
+	}
+
+
+
+
+
 ## What is lowkode
 
 lowkode is a rapid form development library for Blazor.
