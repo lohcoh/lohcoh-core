@@ -27,19 +27,21 @@ So, instead of constructing of form like this...
 	}
 
 with lowkode you'd write this...
-    @NameForm
+    <LkForm ref="lkForm">
+        <LkGroup type=@string name="Name"/>
+        <LkSubmit onClick=@ShowName/>
+    <LkForm>
 
     @if (0 < Display.Length) {
         Hi @Display
 	}
 
     @code {
-        FormComponent NameForm= UIService.Form().WithTextInputGroup("Name").HasSubmit(ShowName);
-
+        LkForm lkForm;
         string Display= "";
 
         public void ShowName() { 
-            Display= NameForm.ValueFor("Name"); 
+            Display= lkForm.ValueFor<string>("Name"); 
         }
 	}
 
