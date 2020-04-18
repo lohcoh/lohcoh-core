@@ -7,9 +7,9 @@ using metadata, business rules, and runtime data.
 lowkode is the easiest way for developers to build, customize, extend, and maintain a user interface for line of business applications.
 
 lowkode does three things...
-	- it maps data and objects to UI components 		
-	- it dynamically generates many kinds of high level UI elements, like forms, data tables, search panels, navigation menus, etc.
-	- it give developers the ability to completely customize, transform, or replace any UI element contained within a lowkode 'slot'. 
+- Maps data and objects to UI components 		
+- Dynamically generates many kinds of high level UI elements, like forms, data tables, search panels, navigation menus, etc.
+- Gives developers the ability to completely customize, transform, or replace any UI element contained within a lowkode 'slot'. 
 
 ## Using lowkode components in Razor templates
 lowkode provides a special tag, <lk>, for identifying content that should be enhanced or replaced by lowkode.
@@ -48,10 +48,6 @@ lowkode will, among other things, use the .NET Reflection API and Attributes to 
 The exact details of how lowkode generates content are discussed later, but basically lowkode replaces the component instances defined 
 within <lk> slots with other, dynamically created, component instances, all based on rules and templates.
 One of lowkode's secret weapons is that it provides some crazy cool ways to generate and transform content using templates.
-
-## Observations
-In Blazor , form validation depends on the form prividing a validation service.
-lowkode should provide the ability to inject services into a component and descendants, scoped to the component.
 
 
 ### Another Example
