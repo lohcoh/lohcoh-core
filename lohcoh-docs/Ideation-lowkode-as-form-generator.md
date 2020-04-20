@@ -46,7 +46,9 @@ within <lk> slots with other, dynamically created, component instances, all base
 
 
 ### Another Example
-lowkode is not an all-or-nothing proposition, suppose for some reason you wanted to explicitly build the form but didn't want to deal with building the details of each field we could do this...
+A lowkode slot can contain as little as a single element or an entire page.
+Consider this partially completed form, the &lt;FormGroup&gt; elements lack details.
+
 
     <lk>
         <EditForm Model="@customer" OnValidSubmit="HandleValidSubmit">
@@ -58,51 +60,15 @@ lowkode is not an all-or-nothing proposition, suppose for some reason you wanted
         </EditForm>
     </lk>
 
-In this case we're just asking lowkode to generate the field elements of the form.
-
-### Example of Future Proofing
-One more example, let's suppose we just want to future proof our form.
-Let's suppose that we start with the form below, and wrap it in a lowkode slot just to future proof it...
-
-    <lk>
-        <EditForm Model="@customer" OnValidSubmit="HandleValidSubmit">
-          <FormGroup>
-            <Label for="customer.Name">Name</Label>
-            <InputText @bind-Value="customer.Name"/>
-          </FormGroup>
-          <FormGroup>
-            <Label for="customer.Email">Email address</Label>
-            <InputText @bind-Value="customer.Email"/>
-            <Help for="customer.Email">We'll never share your email with anyone else.</Help>
-          </FormGroup>
-          <button type="submit">Submit</button>
-        </EditForm>
-    </lk>
-
-Notice that the above form does not contain the <DataAnnotationsValidator/> and <ValidationSummary/> elements.
-
-Now, suppose that in the future we decide that we want to add attribute-driven validation to all our forms.
-We can create a lowkode 'processor' will add the  <DataAnnotationsValidator/> and <ValidationSummary/> elements to 
-any <EditForm> that doesn't have one.
-
-The content that will eventually be injected into the original slot will look like this...
-    <EditForm Model="@customer" OnValidSubmit="HandleValidSubmit">
-      <DataAnnotationsValidator />
-      <ValidationSummary />
-      <FormGroup>
-        <Label for="customer.Name">Name</Label>
-        <InputText @bind-Value="customer.Name"/>
-      </FormGroup>
-      <FormGroup>
-        <Label for="customer.Email">Email address</Label>
-        <InputText @bind-Value="customer.Email"/>
-        <Help for="customer.Email">We'll never share your email with anyone else.</Help>
-      </FormGroup>
-      <button type="submit">Submit</button>
-    </EditForm>
-
+lowkode will extend the &lt;FormGroup&gt; elements with labels, input elements, validation rules, etc.
+Out of the box, lowkode has model processors that can populate the &lt;FormGroup&gt; elements using information 
+from the .NET Reflection API, Annotations, an Open API schema, and the lowkode Fluent Modeling API.
 
 ## How lowkode works
+
+### Models, Processors, Renderers, and Components, oh my
+
+### Processor and Renderer Pipelines
 
 ## Creating Model Processors
 
