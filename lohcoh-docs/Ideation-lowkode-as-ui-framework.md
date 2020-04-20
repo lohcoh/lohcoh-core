@@ -27,6 +27,7 @@ So, instead of constructing of form like this...
 	}
 
 with lowkode you'd write this...
+
     <LkForm ref="lkForm">
         <LkGroup type=@string name="Name"/>
         <LkSubmit onClick=@ShowName/>

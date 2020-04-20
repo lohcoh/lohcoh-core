@@ -7467,23 +7467,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\zen\\.nuget\\packages\\": {},
+    "C:\\Users\\tedsto01\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\zen\\source\\repos\\lohcoh-core\\Lowkode.Server.Core\\Lowkode.Server.Core.csproj",
+      "projectUniqueName": "C:\\Users\\tedsto01\\source\\repos\\lohcoh-core\\Lowkode.Server.Core\\Lowkode.Server.Core.csproj",
       "projectName": "Lowkode.Server.Core",
-      "projectPath": "C:\\Users\\zen\\source\\repos\\lohcoh-core\\Lowkode.Server.Core\\Lowkode.Server.Core.csproj",
-      "packagesPath": "C:\\Users\\zen\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\zen\\source\\repos\\lohcoh-core\\Lowkode.Server.Core\\obj\\",
+      "projectPath": "C:\\Users\\tedsto01\\source\\repos\\lohcoh-core\\Lowkode.Server.Core\\Lowkode.Server.Core.csproj",
+      "packagesPath": "C:\\Users\\tedsto01\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\tedsto01\\source\\repos\\lohcoh-core\\Lowkode.Server.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\zen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\tedsto01\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
