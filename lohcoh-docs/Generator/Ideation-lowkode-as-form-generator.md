@@ -4,13 +4,12 @@
 ## What is lowkode
 
 lowkode is a rapid form development library for Blazor.  
-It fully automates form creation by dynamically generating forms from models.  
+It fully automates form UI creation by dynamically generating forms from models.  
 lowkode is not tied to any particular UI library, it provides its own Bootstrap-based components but provides 
 the ability to completely customize, transform, or replace any UI element. 
 
 ## Using lowkode in Razor templates
-lowkode uses templates to model forms.
-A form model tells lowkode *what* to display, lowkode creates a concrete UI that displays it. 
+lowkode uses templates to model UI elements.
 lowkode provides a special tag, &lt;lk&gt;, for creating models of UI elements.
 The &lt;lk&gt; element defines a kind of 'slot' where content should be injected and the slot contains a model of a UI.  
 The &lt;lk&gt; element will transform it's child content with customizations and extensions, possibly even completelty 
@@ -67,6 +66,8 @@ from the .NET Reflection API, Annotations, an Open API schema, and the lowkode F
 
 ## How lowkode works
 
+
+
 ### Models, Processors, Renderers, and Components, oh my
 
 ### Processor and Renderer Pipelines
@@ -75,13 +76,6 @@ from the .NET Reflection API, Annotations, an Open API schema, and the lowkode F
 
 ## Creating Model Renderer
 
-
-## Open Questions
-
-### Using Blazor compnents to specifiy a form model vs using a C# Fluent API for form modeling
-    #### Advantages
-        
-    #### Disadvantages
 
 
 
