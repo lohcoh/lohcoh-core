@@ -9,8 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\eShopOnWeb-master\src\ApplicationCore\ApplicationCore.csproj" />
-    <ProjectReference Include="..\eShopOnWeb-master\src\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Lowkode.Server.Core\Lowkode.Server.Core.csproj" />
   </ItemGroup>
 

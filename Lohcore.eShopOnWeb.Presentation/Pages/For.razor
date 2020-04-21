@@ -1,0 +1,54 @@
+﻿@page "/fetchdata"
+
+@using Lohcode.eShopOnWeb.Presentation.Data
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+
+@inject WeatherForecastService ForecastService
+@inject IModelMetadataProvider metaProvider
+
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <DisplayTable TModel=@WeatherForecast Items=@forecasts ></DisplayTable>
+}
+
+@code {
+
+    private WeatherForecast[] forecasts;
+    List<string> ColumnHeaders = new List<string>();
+    List<List<string>> RowValues = new List<List<string>>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+
+        var typeMetadata = metaProvider.GetMetadataForType(typeof(WeatherForecast));
+
+        foreach (var property in typeMetadata.Properties)
+        {
+            var displayName= property.DisplayName;
+            ColumnHeaders.Add(displayName);
+        }
+
+        foreach (var forecast in forecasts)
+        {
+            var rowValues = new List<string>();
+            foreach (var property in typeMetadata.Properties)
+            {
+                var value = property.PropertyGetter.Invoke(forecast);
+                var displayValue = value?.ToString();
+
+                rowValues.Add(displayValue);
+            }
+            RowValues.Add(rowValues);
+        }
+    }
+}

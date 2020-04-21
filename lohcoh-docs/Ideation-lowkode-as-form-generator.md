@@ -4,7 +4,7 @@
 ## What is lowkode
 
 lowkode is a rapid form development library for Blazor.  
-It fully automates form creation by dynamically generating forms from models.  
+It fully automates form creation by dynamically generating forms from templates and metadata models.  
 lowkode is not tied to any particular UI library, it provides its own Bootstrap-based components but provides 
 the ability to completely customize, transform, or replace any UI element. 
 

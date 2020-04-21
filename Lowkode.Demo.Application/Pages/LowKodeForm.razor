@@ -1,0 +1,21 @@
+﻿@page "/lowkode"
+@using Lowkode.Demo.Application.Data
+
+<LowK>
+
+    <h1>Starfleet Starship Database</h1>
+
+    <h2>New Ship Entry Form</h2>
+
+    <EditForm Model="@_starship" OnValidSubmit="HandleValidSubmit" />
+
+</LowK>
+
+@code {
+    private Starship _starship = new Starship();
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine("OnValidSubmit");
+    }
+}

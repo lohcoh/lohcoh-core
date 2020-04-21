@@ -42,3 +42,5 @@
 /lohr/wwwroot/lib
 /lohr-documentation/obj
 /RapidCMS/obj
+/Lowkode.Demo.Application/bin/Debug/netcoreapp3.1
+/Lowkode.Demo.Application/obj
