@@ -1,15 +1,34 @@
 ﻿@page "/lowkode"
 @using Lowkode.Demo.Application.Data
+@using LowKode.Core.Components.Forms
 
-<LowK>
+<h1>Starfleet Starship Database</h1>
 
-    <h1>Starfleet Starship Database</h1>
+<h2>New Ship Entry Form</h2>
 
-    <h2>New Ship Entry Form</h2>
+<EditForm Model="@_starship" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
-    <EditForm Model="@_starship" OnValidSubmit="HandleValidSubmit" />
+    <EditFields Context="field">
+        <FieldTemplate>
+            <p>
+                <label>
+                    @field.DisplayName+":"
+                    @field.InputComponent
+                </label>
+            </p>
+        </FieldTemplate>
+    </EditFields>
 
-</LowK>
+    <button type="submit">Submit</button>
+
+    <p>
+        <a href="http://www.startrek.com/">Star Trek</a>,
+        &copy;1966-2019 CBS Studios, Inc. and
+        <a href="https://www.paramount.com">Paramount Pictures</a>
+    </p>
+</EditForm>
 
 @code {
     private Starship _starship = new Starship();

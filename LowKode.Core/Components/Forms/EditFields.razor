@@ -1,0 +1,37 @@
+﻿@using LowKode.Core.Metadata
+@using Microsoft.AspNetCore.Components.Forms
+@using System.Reflection
+@inject ILowKodeMetaService lkMetaService
+
+@foreach (var property in properties)
+{
+    @FieldTemplate(property);
+}
+
+@code {
+
+    [Parameter]
+    public RenderFragment<PropertyMetadata> FieldTemplate { get; set; }
+
+    [CascadingParameter]
+    EditContext CurrentEditContext { get; set; }
+
+    IList<PropertyMetadata> properties { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        if (CurrentEditContext == null)
+        {
+            throw new InvalidOperationException($"{nameof(EditFields)} requires a cascading " +
+                $"parameter of type {nameof(EditContext)}. For example, you can use {nameof(EditFields)} " +
+                $"inside an EditForm.");
+        }
+
+        var modelType = CurrentEditContext.Model.GetType();
+        properties = lkMetaService.GetPropertyMetadataForType(modelType);
+
+    }
+
+}

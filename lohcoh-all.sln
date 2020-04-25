@@ -9,15 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lohcode.Documentation", "lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lowkode.Client.Core", "Lowkode.Client.Core\Lowkode.Client.Core.csproj", "{0E08DA76-63C7-4DDB-A616-4744FF19B02D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lowkode.Server.Core", "Lowkode.Server.Core\Lowkode.Server.Core.csproj", "{667F39A1-C664-4EFD-BA78-507E369FC71F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RapidCMS", "RapidCMS\RapidCMS.csproj", "{CB5CDC7E-DC17-42B6-9906-1E70A9B39C2D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.Components.Testing", "..\BlazorUnitTestingPrototype\Microsoft.AspNetCore.Components.Testing\Microsoft.AspNetCore.Components.Testing.csproj", "{2A9A21A7-2A10-466C-983C-782D79CB5B23}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Archive", "Archive", "{A3C09EFD-3CD7-4F07-ABCE-6AF953FEF6C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lowkode.Demo.Application", "Lowkode.Demo.Application\Lowkode.Demo.Application.csproj", "{BB535CB1-8038-43ED-A6A9-B00C0827785C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lowkode.Demo.Application", "Lowkode.Demo.Application\Lowkode.Demo.Application.csproj", "{BB535CB1-8038-43ED-A6A9-B00C0827785C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LowKode.Core", "LowKode.Core\LowKode.Core.csproj", "{B8CD2C98-3F42-4CC5-9AEE-33749D7FBFA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,6 @@ Global
 		{0E08DA76-63C7-4DDB-A616-4744FF19B02D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E08DA76-63C7-4DDB-A616-4744FF19B02D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E08DA76-63C7-4DDB-A616-4744FF19B02D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{667F39A1-C664-4EFD-BA78-507E369FC71F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{667F39A1-C664-4EFD-BA78-507E369FC71F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{667F39A1-C664-4EFD-BA78-507E369FC71F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{667F39A1-C664-4EFD-BA78-507E369FC71F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CB5CDC7E-DC17-42B6-9906-1E70A9B39C2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CB5CDC7E-DC17-42B6-9906-1E70A9B39C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB5CDC7E-DC17-42B6-9906-1E70A9B39C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,6 +45,10 @@ Global
 		{BB535CB1-8038-43ED-A6A9-B00C0827785C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB535CB1-8038-43ED-A6A9-B00C0827785C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB535CB1-8038-43ED-A6A9-B00C0827785C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8CD2C98-3F42-4CC5-9AEE-33749D7FBFA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8CD2C98-3F42-4CC5-9AEE-33749D7FBFA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8CD2C98-3F42-4CC5-9AEE-33749D7FBFA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8CD2C98-3F42-4CC5-9AEE-33749D7FBFA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

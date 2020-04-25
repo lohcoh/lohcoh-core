@@ -44,3 +44,5 @@
 /RapidCMS/obj
 /Lowkode.Demo.Application/bin/Debug/netcoreapp3.1
 /Lowkode.Demo.Application/obj
+/LowKode.Core/bin/Debug/netstandard2.0
+/LowKode.Core/obj

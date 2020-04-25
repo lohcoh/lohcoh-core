@@ -1,26 +1,22 @@
 ﻿
 # Concepts
 
-## What is lowkode
+## What is LowKode
 
-lowkode is a rapid form development library for Blazor, it fully automates form creation by dynamically generating forms from metadata.  
-More specifically, lowkode is a Blazor template processor that can use metadata to transform Razor templates.
+lowkode is a library designed to make it easy to use metadata to build a UI.
 
-lowkode can...
-- generate a complete form for a given .NET Type.
-- make cross-cutting changes to your UI.
-- keep business rules out of your UI code.
+lowkode can be used in many ways...
+- lowkode can fully automate form creation, or just make your current forms easier to maintain.  
+- lowkode can also automate the construction of grid and tables, menus, navigation, etc.
+- help keep business rules out of your UI code.
 
-lowkode is not tied to any particular UI library, it provides its own Bootstrap-based components but provides 
-the ability to completely customize, transform, or replace any UI element. 
+lowkode is not tied to any particular UI library, out-of-the-box lowkode uses Radzen Blazor components, but lowkode can use any UI library.
 
-## Using lowkode in Razor templates
-lowkode provides a special tag, &lt;lk&gt;, for applying lowkode to your Blazor templates.  
-The &lt;lk&gt; element defines a kind of 'slot' that will transform it's child content with customizations and extensions, possibly even completely 
-replacing the child content.  
 
-### Example
-A typical Blazor form for editing a Starship object looks something like this...
+## Example
+In this example we'll modify an example form from the Microsoft Blazor documentation.
+The example is a basic Blazor form, we'll eliminate a lot of code by rewriting it using lowKode.
+Here's the example form from the Microsoft site...
 
         @page "/FormsValidation"
 
@@ -28,7 +24,7 @@ A typical Blazor form for editing a Starship object looks something like this...
 
         <h2>New Ship Entry Form</h2>
 
-        <EditForm Model="@_starship" OnValidSubmit="HandleValidSubmit">
+        <EditForm EditContext="@_editContext" OnValidSubmit="HandleValidSubmit">
             <DataAnnotationsValidator />
             <ValidationSummary />
 
@@ -83,16 +79,38 @@ A typical Blazor form for editing a Starship object looks something like this...
             </p>
         </EditForm>
 
-        @code {
+       @code {
             private Starship _starship = new Starship();
+            private EditContext _editContext;
 
-            private void HandleValidSubmit()
+            protected override void OnInitialized()
             {
-                Console.WriteLine("OnValidSubmit");
+                _editContext = new EditContext(_starship);
             }
+
+            private async Task HandleSubmit()
+            {
+                var isValid = _editContext.Validate();
+
+                if (isValid)
+                {
+                   Console.WriteLine("OnValidSubmit");
+                }
+     
+            }          
         }
 
-Here's the same form using lowkode...
+The form above has some nice things going for it, it uses &lt;DataAnnotationsValidator /&gt; and &lt;ValidationSummary /&gt; 
+to automagically configure validations and display the results of validations.   
+That stuff would be better put into a base form class so that you don't have to do that everywhere.  
+So instead of using &lt;EditForm&gt; we would use something like &lt;MyBaseFrom&gt;, but this is just an example so it's no problem here.
+
+And the copyright notice at the bottom would be better if it were encapsulated in a component, again, no biggie since this is an example.
+
+But what about all the field definitions?  
+Blazor gave us convenient components for automagically handling validation, why isn't there a component that will automagically create all the fields?
+
+Well now there is, here's the same form using lowkode...
 
         @using Lowkode.Client.Core
         @page "/FormsValidation"
@@ -101,36 +119,73 @@ Here's the same form using lowkode...
 
         <h2>New Ship Entry Form</h2>
         
-        <lk><EditForm Model="@_starship" OnValidSubmit="HandleValidSubmit"/></lk>            
+        <EditForm EditContext="@_editContext" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <EditFields Context="field">
+                <FieldTemplate>
+                    <p>
+                        <label>
+                            @field.DisplayName+":"
+                            @field.InputComponent
+                        </label>
+                    </p>
+                </FieldTemplate>
+            <EditFields>
+
+            <button type="submit">Submit</button>
+
+            <p>
+                <a href="http://www.startrek.com/">Star Trek</a>, 
+                &copy;1966-2019 CBS Studios, Inc. and 
+                <a href="https://www.paramount.com">Paramount Pictures</a>
+            </p>
+        </EditForm>
 
         @code {
             private Starship _starship = new Starship();
+            private EditContext _editContext;
 
-            private void HandleValidSubmit()
+            protected override void OnInitialized()
             {
-                Console.WriteLine("OnValidSubmit");
+                _editContext = new EditContext(_starship);
             }
+
+            private async Task HandleSubmit()
+            {
+                var isValid = _editContext.Validate();
+
+                if (isValid)
+                {
+                   Console.WriteLine("OnValidSubmit");
+                }
+     
+            }          
         }
 
-    
-Notice that the EditForm element has been wrapped with &lt;lk&gt; tags.  
-The &lt;lk&gt; component transforms its child contents using the lowkode Transformation service to add and modify template contents.
-Out of the box, the lowkode &lt;lk&gt; component will extend the contained EditForm component with field elements for all the public properties defined by the Starship type.
-The exact details of how lowkode generates content are discussed later, but basically lowkode replaces the content  
-within <lk> slots with other, dynamically created component instances, all based on 'transformers' and components.
+Notice that we've replaced all the field declaration with the lowKode <EditFields> component.  
+The <EditFields> component can enumerate all the properties in a .Net type and automagically populate templates with appropriate input elements for each property.  
+In this case, the <EditFields> component will extend the EditForm component with field elements for all the public properties defined by the Starship type.  
 
-Also notice that the lowkode version of the Starship form doesn't contain the copyright notice at the bottom of the form, that's because the copyright's been moved elsewhere.  
-With lowkode, if you want to put a copyright notice at the bottom of all your forms you don't do it by putting a copyright notice at the bottom of all your forms, that's hard to maintain.  
-Instead, you create a Copyright component and a Transformer that adds the Copyright to the bottom of all your forms.
+The other thing that lowKode is doing in this example is automagically constructing the appropriate input component for each property, that's this line...  
+    @field.InputComponent  
+During Startup, lowKode is configured with data that maps data and object types to Blazor components used to display and edit those types.  
+When using lowKode to creating a form, you don't have to know the details of how to create an input element for each field, lowKode can do that for you.  
+In fact, if we registered the <FieldTemplate> element from the example with lowKode then we could reduce the EditFields element in the example to this...  
+    <EditFields/>  
+          
+### Extensible set of metadata providers
+lowkode comes with extensions that provide lowKode components with metadata from the .NET Reflection API, .NET Annotations, an Open API schema, and even third-party libraries like FluentValidation.
+Developers can use their own source of metadata by adding thier own extensions to lowkode.
 
-lowkode comes with transformers that can populate an &lt;EditForm&gt; element using information 
-from the .NET Reflection API, Annotations, an Open API schema, or the lowkode Fluent Modeling API.
-Developers can add thier own transformers to lowkode.
+
+### Create your own metadata-driven Blazor components
+Developers can also use lowKode's Metadata API to create thier own metadata-driven Blazor components.
 
 
 
 ## How lowkode works
-
 
 
 ### Models, Processors, Renderers, and Components, oh my

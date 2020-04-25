@@ -1,4 +1,13 @@
-﻿Is it possible to do this?...
+﻿
+Why a pipeline to compose UI instead of just plain components?
+LowKode (the pipeline generator) could achieve much the same thing with just components.
+
+
+
+
+-----------------
+
+Is it possible to do this?...
     <EditForm LkGenerate Model="@customer" OnValidSubmit="HandleValidSubmit"/></lk>
 instead of this...
     <lk><EditForm Model="@customer" OnValidSubmit="HandleValidSubmit"/></lk>

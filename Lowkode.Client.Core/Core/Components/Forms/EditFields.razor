@@ -1,0 +1,101 @@
+﻿@using Lowkode.Client.Core;
+@using Microsoft.OpenApi.Models;
+@using System.ComponentModel.DataAnnotations;
+@typeparam TModel;
+@inherits PartComponent;
+@inject ILowkodeContext lkContext;
+
+
+<table class="table">
+    <thead>
+        <tr>
+            @foreach (var header in ColumnHeaders)
+            {
+                
+                <th>@header</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in RowValues)
+        {
+            <tr>
+                @foreach (var value in row)
+                {
+                    <td>@value</td>
+                }
+            </tr>
+        }
+        @*
+            DateTime DateF = (DateTime)forecast.GetType().GetProperties().First(p => p.Name == "Date").GetMethod.Invoke(forecast, null);
+            int TemperatureC = (int)forecast.GetType().GetProperties().First(p => p.Name == "TemperatureC").GetMethod.Invoke(forecast, null);
+            int TemperatureF = (int)forecast.GetType().GetProperties().First(p => p.Name == "TemperatureF").GetMethod.Invoke(forecast, null);
+            string Summary = (string)forecast.GetType().GetProperties().First(p => p.Name == "Summary").GetMethod.Invoke(forecast, null);
+            <tr>
+                <td>@DateF.ToShortDateString()</td>
+                <td>@TemperatureC</td>
+                <td>@TemperatureF</td>
+                <td>@Summary</td>
+            </tr>
+        *@
+    </tbody>
+</table>
+
+@code {
+
+    List<RenderFragment> ColumnHeaders = new List<RenderFragment>();
+    List<List<RenderFragment>> RowValues = new List<List<RenderFragment>>();
+
+    PlaceholderComponent _placeholder;
+    [Parameter]
+    override public PlaceholderComponent PlaceholderComponent
+    {
+        set
+        {
+            _placeholder = value;
+            var items = ((DisplayTable<TModel>)_placeholder).Items;
+            Items = (IReadOnlyList<TModel>)items;
+        }
+    }
+
+    public IReadOnlyList<TModel> _items;
+    public IReadOnlyList<TModel> Items
+    {
+        get
+        {
+            return _items;
+        }
+        set
+        {
+            _items = value;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        var typeMetadata = lkContext.Metadata.For(typeof(TModel));
+
+        foreach (var property in typeMetadata.Properties)
+        {
+            //var headerTemplate = lkContext.Templates.ForName(property);
+            //ColumnHeaders.Add(headerTemplate);
+        }
+
+        foreach (var forecast in (Items as IReadOnlyList<TModel>))
+        {
+            var rowValues = new List<RenderFragment>();
+            foreach (var property in typeMetadata.Properties)
+            {
+                object value = property.PropertyInfo.GetMethod.Invoke(forecast, null);
+                //var valueTemplate = lkContext.Templates.ForValue(property, value);
+
+                //rowValues.Add(valueTemplate);
+            }
+            RowValues.Add(rowValues);
+        }
+
+    }
+
+}

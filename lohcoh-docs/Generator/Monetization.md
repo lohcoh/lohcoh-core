@@ -3,6 +3,7 @@
 ## library plugins
 
 LowKode will *NOT* provide support for commercial component libraies out of the box but will instead sell packages for them.
+
 	Free...
 		Blazorize
 		Razden
@@ -13,15 +14,23 @@ LowKode will *NOT* provide support for commercial component libraies out of the 
 
 
 ## extended components
-Data Tables
+Data Tables (should probably be in the free project)
 Search Filter
+Layouts (should probably be in the free project)
+Tailwind-like or PatternFly UI elements; 
 Cards
 Lists
 
 ## built with lowkode
-- admin panel
+- admin panel, generated from a variety of metadata sources.
 - User Admin extension for LowKode apps.
-- Workflow
+- End-User configuration extension
+	Let's developer's expose Configuration entities, lowKode generates the UI. 
+
+## for developers
+- Visual Studio extension that provides a generated UI for 
+	- project configuration artifacts.
+	- Entity relationships
 
 #### application blueprints
 - Order management. https://www.zoho.com/us/inventory/order-management-software/
