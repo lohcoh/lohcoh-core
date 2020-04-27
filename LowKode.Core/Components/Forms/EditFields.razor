@@ -16,7 +16,7 @@
     [CascadingParameter]
     EditContext CurrentEditContext { get; set; }
 
-    IList<PropertyMetadata> properties { get; set; }
+    IEnumerable<PropertyMetadata> properties { get; set; }
 
     protected override void OnInitialized()
     {
@@ -30,7 +30,7 @@
         }
 
         var modelType = CurrentEditContext.Model.GetType();
-        properties = lkMetaService.GetPropertyMetadataForType(modelType);
+        properties = lkMetaService.GetMetadataForType(modelType).Properties;
 
     }
 

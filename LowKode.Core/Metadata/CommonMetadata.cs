@@ -5,7 +5,10 @@ using System.Text;
 
 namespace LowKode.Core.Metadata
 {
-    public class PropertyMetadata : CommonMetadata
+    public class CommonMetadata
     {
+        public string DisplayName { get; set; }
+
+        public ComponentBase InputComponent { get; set; }
     }
 }

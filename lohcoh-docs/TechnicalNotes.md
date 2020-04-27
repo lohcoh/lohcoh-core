@@ -16,7 +16,7 @@ Basic Workflow...
 - Highlight a number in a table if it's above a certain number
 	- Rule-driven pipe (angular pipe)?
 - Change form layout based on customer
-- Call different endpoint based on tenant
+- Call different endpoint based on tenant (this is probably better handled by server)
 - Enable features if user paid for Enterprise Edition
 
 ## Metadata processing

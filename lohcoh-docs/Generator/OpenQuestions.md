@@ -1,17 +1,6 @@
 ﻿
-Why a pipeline to compose UI instead of just plain components?
-LowKode (the pipeline generator) could achieve much the same thing with just components.
+## How to manage Context?
 
+Well, one way to think about LowKode is that it does two things...
+- it increases the modularity of Blazor applications by separating implements inversion of control for Blazor templates.  That is, when using LowKode 
 
-
-
------------------
-
-Is it possible to do this?...
-    <EditForm LkGenerate Model="@customer" OnValidSubmit="HandleValidSubmit"/></lk>
-instead of this...
-    <lk><EditForm Model="@customer" OnValidSubmit="HandleValidSubmit"/></lk>
- 
- short answer: No.
-It might be possible to add lowkode to an application at startup.
-That is, lowkode would be added at startup and no &lt;lk&gt; elements would be needed in templates.

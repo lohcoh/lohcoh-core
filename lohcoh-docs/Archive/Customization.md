@@ -1,13 +1,5 @@
 ﻿# Customization
 
-lowkode has support for two common requirements for customization...
-- The ability to customize the visual aspects of the UI via CSS.  For instance, set the application navbar background to black.
-	lowcode provides 
-- The ability to customize UI components and model data.  For instance, add an extra link to the application navbar for a particular customer.
-lowkode doesn't concern itself with visual styling.  
-To support visual styling, a lowkode Component's associated DOM element can be decorated with custom classes.  
-Rules are used to add these custom classes to components.
-
 ## Overview of how lowkode works
 Lowkode generates a UI from Metadata, Components, Rules, and Context
 - Metadata: Data that describes the system that the UI fronts.  
