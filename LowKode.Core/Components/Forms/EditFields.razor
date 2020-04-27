@@ -5,18 +5,22 @@
 
 @foreach (var property in properties)
 {
-    @FieldTemplate(property);
+    var fieldInfo = new FieldInfo()
+    {
+        PropertyMetadata= property
+    };
+    @FieldTemplate(fieldInfo);
 }
 
 @code {
 
     [Parameter]
-    public RenderFragment<PropertyMetadata> FieldTemplate { get; set; }
+    public RenderFragment<FieldInfo> FieldTemplate { get; set; }
 
     [CascadingParameter]
     EditContext CurrentEditContext { get; set; }
 
-    IEnumerable<PropertyMetadata> properties { get; set; }
+    IEnumerable<IPropertyMetadata> properties { get; set; }
 
     protected override void OnInitialized()
     {
@@ -32,6 +36,12 @@
         var modelType = CurrentEditContext.Model.GetType();
         properties = lkMetaService.GetMetadataForType(modelType).Properties;
 
+    }
+
+    public class FieldInfo
+    {
+        public IPropertyMetadata PropertyMetadata;
+        public ComponentBase InputComponent { get; private set; }
     }
 
 }

@@ -4,9 +4,19 @@ using System.Text;
 
 namespace LowKode.Core.Metadata.Service
 {
-    public class LowKodeMetaService : ILowKodeMetaService
+    public class LowKodeMetaService : ILowKodeMetaRepository
     {
         public IEnumerable<Type> Roots => throw new NotImplementedException();
+
+        public void Add<T>(T value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add(Type modelType, object value)
+        {
+            throw new NotImplementedException();
+        }
 
         public bool ContainsRoot<T>() where T : Type
         {
@@ -24,6 +34,16 @@ namespace LowKode.Core.Metadata.Service
         }
 
         public IEnumerable<Type> Find(Type modelType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove<T>(T value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(Type modelType, object value)
         {
             throw new NotImplementedException();
         }

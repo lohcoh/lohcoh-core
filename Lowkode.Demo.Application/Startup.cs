@@ -29,8 +29,8 @@ namespace Lowkode.Demo.Application
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-            services.AddLowKode(metaService => {
-                metaService.Contribute(new TypeMetadata<Starship>());
+            services.AddLowKode(configuration => {
+                configuration.ContributeMetadataForType<Starship>();
             });
         }
 

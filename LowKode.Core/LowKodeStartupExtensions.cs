@@ -7,7 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class LowKodeStartupExtensions
     {
-        public static void AddLowKode(this IServiceCollection services, Action<ILowKodeMetaRepository> config)
+        public static void AddLowKode(this IServiceCollection services, Action<ILowKodeConfigurationService> config)
         {
 
         }

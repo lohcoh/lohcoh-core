@@ -4,6 +4,7 @@ using System.Text;
 
 namespace LowKode.Core.Metadata
 {
+    // Adds methods for mutating data to ILowKodeMetaService
     public interface ILowKodeMetaRepository : ILowKodeMetaService
     {
         void Add<T>(T value);
