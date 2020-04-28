@@ -12,7 +12,7 @@ namespace LowKode.Core.Metadata.Providers
         public void Invoke(ILowKodeConfigurationService lowkode, Type entityType)
         {
             var typeMetadata = new TypeMetadata(entityType);
-            lowkode.Repository.Add
+            typeMetadata.DisplayName= entityType.Name;
 
             foreach (var propertInfo in entityType.GetProperties())
             {
@@ -20,6 +20,7 @@ namespace LowKode.Core.Metadata.Providers
                 typeMetadata.Properties.Add(propertyMetadata);
             }
 
+            lowkode.Repository.Add(typeMetadata);
         }
     }
 }

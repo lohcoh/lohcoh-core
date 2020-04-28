@@ -10,7 +10,9 @@ namespace LowKode.Core.Metadata
     {
         public PropertyMetadata(PropertyInfo propertyInfo)
         {
-
+            this.PropertyInfo= propertyInfo;
         }
+
+        public PropertyInfo PropertyInfo { get; private set; }
     }
 }

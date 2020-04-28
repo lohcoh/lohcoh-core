@@ -7,7 +7,8 @@
 {
     var fieldInfo = new FieldInfo()
     {
-        PropertyMetadata= property
+        Metadata= property,
+        EditComponent= lkMetaService.
     };
     @FieldTemplate(fieldInfo);
 }
@@ -35,13 +36,6 @@
 
         var modelType = CurrentEditContext.Model.GetType();
         properties = lkMetaService.GetMetadataForType(modelType).Properties;
-
-    }
-
-    public class FieldInfo
-    {
-        public IPropertyMetadata PropertyMetadata;
-        public ComponentBase InputComponent { get; private set; }
     }
 
 }

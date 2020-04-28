@@ -8,6 +8,6 @@ namespace LowKode.Core.Metadata
 {
     public interface IPropertyMetadata : ICommonMetadata
     {
-        PropertyInfo PropertyInfo { get; set; }
+        PropertyInfo PropertyInfo { get; }
     }
 }
