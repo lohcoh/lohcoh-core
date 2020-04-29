@@ -3,19 +3,19 @@
 
 ## What is LowKode
 
-lowkode is a library designed to make it easy to use metadata to build a UI.
+LowKode is a library designed to make it easy to use metadata to build a UI.
 
-lowkode can be used in many ways...
-- lowkode can fully automate form creation, or just make your current forms easier to maintain.  
-- lowkode can also automate the construction of grid and tables, menus, navigation, etc.
+LowKode can be used in many ways...
+- LowKode can fully automate form creation, or just make your current forms easier to maintain.  
+- LowKode can also automate the construction of grid and tables, menus, navigation, etc.
 - help keep business rules out of your UI code.
 
-lowkode is not tied to any particular UI library, out-of-the-box lowkode uses Radzen Blazor components, but lowkode can use any UI library.
+LowKode is not tied to any particular UI library, out-of-the-box LowKode uses Radzen Blazor components, but LowKode can use any UI library.
 
 
 ## Example
 In this example we'll modify an example form from the Microsoft Blazor documentation.
-The example is a basic Blazor form, we'll eliminate a lot of code by rewriting it using lowKode.
+The example is a basic Blazor form, we'll eliminate a lot of code by rewriting it using LowKode.
 Here's the example form from the Microsoft site...
 
         @page "/FormsValidation"
@@ -110,9 +110,9 @@ And the copyright notice at the bottom would be better if it were encapsulated i
 But what about all the field definitions?  
 Blazor gave us convenient components for automagically handling validation, why isn't there a component that will automagically create all the fields?
 
-Well now there is, here's the same form using lowkode...
+Well now there is, here's the same form using LowKode...
 
-        @using Lowkode.Client.Core
+        @using LowKode.Client.Core
         @page "/FormsValidation"
 
         <h1>Starfleet Starship Database</h1>
@@ -127,8 +127,8 @@ Well now there is, here's the same form using lowkode...
                 <FieldTemplate>
                     <p>
                         <label>
-                            @field.DisplayName+":"
-                            @field.InputComponent
+                            @field.Metadata.DisplayName+":"
+                            @field.EditComponent
                         </label>
                     </p>
                 </FieldTemplate>
@@ -164,28 +164,28 @@ Well now there is, here's the same form using lowkode...
             }          
         }
 
-Notice that we've replaced all the field declaration with the lowKode <EditFields> component.  
+Notice that we've replaced all the field declaration with the LowKode <EditFields> component.  
 The <EditFields> component can enumerate all the properties in a .Net type and automagically populate templates with appropriate input elements for each property.  
 In this case, the <EditFields> component will extend the EditForm component with field elements for all the public properties defined by the Starship type.  
 
-The other thing that lowKode is doing in this example is automagically constructing the appropriate input component for each property, that's this line...  
+The other thing that LowKode is doing in this example is automagically constructing the appropriate input component for each property, that's this line...  
     @field.InputComponent  
-During Startup, lowKode is configured with data that maps data and object types to Blazor components used to display and edit those types.  
-When using lowKode to creating a form, you don't have to know the details of how to create an input element for each field, lowKode can do that for you.  
-In fact, if we registered the <FieldTemplate> element from the example with lowKode then we could reduce the EditFields element in the example to this...  
+During Startup, LowKode is configured with data that maps data and object types to Blazor components used to display and edit those types.  
+When using LowKode to creating a form, you don't have to know the details of how to create an input element for each field, LowKode can do that for you.  
+In fact, if we registered the <FieldTemplate> element from the example with LowKode then we could reduce the EditFields element in the example to this...  
     <EditFields/>  
           
 ### Extensible set of metadata providers
-lowkode comes with extensions that provide lowKode components with metadata from the .NET Reflection API, .NET Annotations, an Open API schema, and even third-party libraries like FluentValidation.
-Developers can use their own source of metadata by adding thier own extensions to lowkode.
+LowKode comes with extensions that provide LowKode components with metadata from the .NET Reflection API, .NET Annotations, an Open API schema, and even third-party libraries like FluentValidation.
+Developers can use their own source of metadata by adding thier own extensions to LowKode.
 
 
 ### Create your own metadata-driven Blazor components
-Developers can also use lowKode's Metadata API to create thier own metadata-driven Blazor components.
+Developers can also use LowKode's Metadata API to create thier own metadata-driven Blazor components.
 
 
 
-## How lowkode works
+## How LowKode works
 
 
 ### Models, Processors, Renderers, and Components, oh my

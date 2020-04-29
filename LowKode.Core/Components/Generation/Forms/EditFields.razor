@@ -1,14 +1,18 @@
 ﻿@using LowKode.Core.Metadata
+@using LowKode.Core.Components
 @using Microsoft.AspNetCore.Components.Forms
 @using System.Reflection
-@inject ILowKodeMetaService lkMetaService
+@using LowKode.Core.Components.Forms
+@inject ILowKodeMetaService lkMeta
+@inject ILowKodeComponentService lkComponents
+
 
 @foreach (var property in properties)
 {
-    var fieldInfo = new FieldInfo()
+    var fieldInfo = new EditFieldModel()
     {
-        Metadata= property,
-        EditComponent= lkMetaService.
+        Metadata = property,
+        EditComponent = lkComponents.Create<Input>(modelType, property.PropertyInfo)
     };
     @FieldTemplate(fieldInfo);
 }
@@ -16,12 +20,13 @@
 @code {
 
     [Parameter]
-    public RenderFragment<FieldInfo> FieldTemplate { get; set; }
+    public RenderFragment<EditFieldModel> FieldTemplate { get; set; }
 
     [CascadingParameter]
     EditContext CurrentEditContext { get; set; }
 
     IEnumerable<IPropertyMetadata> properties { get; set; }
+    Type modelType;
 
     protected override void OnInitialized()
     {
@@ -34,8 +39,8 @@
                 $"inside an EditForm.");
         }
 
-        var modelType = CurrentEditContext.Model.GetType();
-        properties = lkMetaService.GetMetadataForType(modelType).Properties;
+        modelType = CurrentEditContext.Model.GetType();
+        properties = lkMeta.GetMetadataForType(modelType).Properties;
     }
 
 }

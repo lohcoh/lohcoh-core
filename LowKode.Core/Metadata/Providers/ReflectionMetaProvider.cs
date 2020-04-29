@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using LowKode.Core.Configuration;
 
-namespace LowKode.Core.Metadata.Providers
+namespace LowKode.Core.Metadata
 {
     /// <summary>
     /// Gathers all the metadata for a type and it's properties available from the .Net Reflection API.

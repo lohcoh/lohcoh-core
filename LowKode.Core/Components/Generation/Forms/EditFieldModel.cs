@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LowKode.Core.Components.Forms
 {
-    public class FieldInfo
+    public class EditFieldModel
     {
         public IPropertyMetadata Metadata { get; internal set; }
         public ComponentBase EditComponent { get; internal set; }

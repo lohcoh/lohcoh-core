@@ -9,12 +9,13 @@ namespace LowKode.Core.Metadata
     /// The service is a collection of metadata objects, that is, objects that hold metadata.
     /// Metadata objects may be nested, an individual metadata object may represent an entire REST api and be composed of many other metadata objects.
     /// 
-    /// The only way to access the metadata objects in the service is via the Find method.
-    /// The Find method returns all the metadata objects available of the denoted Type.
+    /// ILowKodeMetaService stores 'root' metadata objects by type.
+    /// Use the Find method to retrieve all the metadata objects of a given type stored in the service.
     /// 
-    /// You can discover the types of all available metadata object via the GetRoots method.
+    /// You can discover the types of all available 'root' metadata objects via the Roots property.
     /// 
-    /// The only way to add metadata objects to the service is via the ILowKodeMetaProvider API.
+    /// This interface is meant to be used by components and only provides methods for fetching data.
+    /// The only way to add metadata objects to the service is via the ILowKodeMetaRepository API, during Startup configuration.
     /// 
     /// </summary>
     public interface ILowKodeMetaService 
@@ -24,13 +25,8 @@ namespace LowKode.Core.Metadata
         IEnumerable<T> Find<T>();
         IEnumerable<Type> Find(Type modelType);
 
-        //void Add<T>(T value);
-        //void Add(Type modelType, object value);
-
         bool ContainsRoot<T>() where T : Type;
         bool ContainsRoot(Type modeltype);
-
-        //bool Remove<T>(T key) where T : Type;
 
         bool TryGetValue<T, V>(T key, out V value) where T : Type where V : IEnumerable<T>;
     }

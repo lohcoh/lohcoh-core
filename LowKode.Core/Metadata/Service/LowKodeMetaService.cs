@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LowKode.Core.Metadata.Service
+namespace LowKode.Core.Metadata
 {
+    /// <summary>
+    /// TODO: Unimplemented
+    /// </summary>
+
     public class LowKodeMetaService : ILowKodeMetaRepository
     {
         public IEnumerable<Type> Roots => throw new NotImplementedException();
 
-        public void Add<T>(T value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Add(Type modelType, object value)
+        public void Add(object value)
         {
             throw new NotImplementedException();
         }
@@ -38,12 +37,7 @@ namespace LowKode.Core.Metadata.Service
             throw new NotImplementedException();
         }
 
-        public bool Remove<T>(T value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Remove(Type modelType, object value)
+        public bool Remove(object value)
         {
             throw new NotImplementedException();
         }

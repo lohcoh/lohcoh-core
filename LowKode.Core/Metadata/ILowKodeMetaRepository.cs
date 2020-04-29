@@ -4,12 +4,14 @@ using System.Text;
 
 namespace LowKode.Core.Metadata
 {
-    // Adds methods for mutating data to ILowKodeMetaService
+    // Adds methods to ILowKodeMetaService for mutating data 
     public interface ILowKodeMetaRepository : ILowKodeMetaService
     {
-        void Add<T>(T value);
-        void Add(Type modelType, object value);
-        bool Remove<T>(T value);
-        bool Remove(Type modelType, object value);
+
+        /// <summary>
+        /// Add a new 'root' object to the repository.
+        /// </summary>
+        void Add(object value);
+        bool Remove(object value);
     }
 }
