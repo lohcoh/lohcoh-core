@@ -2,11 +2,13 @@
 
 LowKode generates, assembles, and customizes UI elements from a set of base Components, Metadata, Rules, and runtime Context.
 LowKode's primary functions are to...
-- map objects and properties to UI components.  
-- generate new UI elements from metadata.
+- map types and thier properties to UI components.  
+- Use metadata to create new UI elements for displaying data.
 - customize UI elements based on business rules
 
-The LowKode system is comprised of...
+
+
+A LowKode application is comprised of...
 
 - One or more libraries of basic UI Components
 	LowKode is not a UI component library, it's a tool for composing UI elements, and generating new UI elements, from an existing set of components.  
@@ -34,16 +36,18 @@ The LowKode system is comprised of...
 
 - A Context object.
 	A Context is a collection of key/value pairs that describe any runtime aspects of the current application needed to create a customized component.
-	A reference to the currently authenticated User is a common value to include in a Context.
-	A LowKode application contains a single Context object that is shared among all components in an application.
-	Context values are most often used by Rules to customize a UI with business rules.
+	A value that identifies the current User is a common value to include in a Context.  
+	A LowKode application contains a single Context object that is shared among all components in an application.  
+	Context values are most often used by Rules to customize a UI with business rules.  
 
 - One or more libraries of LowKode templated Components
 	LowKode does include some components of it's own, these are the components that fulfill it's primary functions, to map objects and properties 
 	to components and to generate new UI elements.
 	For instance...  
-	- Using metadata, the <EditFields> component automagically generates field templates for every property in an object.
-	- The <Input> component maps a data element to a UI component that can edit the data.
+	- Using metadata, the <EditFields> component automagically generates editable field templates for every property in an object.
+	- Using metadata, the <DisplayFields> component automagically generates read-only field templates for every property in an object.
+	- The <Editor> component maps a data element to a UI component that can edit the data.
+	- The <Display> component maps a data element to a UI component that displays the data in a read-only mode.
 
 
 

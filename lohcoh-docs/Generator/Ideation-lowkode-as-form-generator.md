@@ -5,10 +5,10 @@
 
 LowKode is a library designed to make it easy to use metadata to build a UI.
 
-LowKode can be used in many ways...
-- LowKode can fully automate form creation, or just make your current forms easier to maintain.  
-- LowKode can also automate the construction of grid and tables, menus, navigation, etc.
-- help keep business rules out of your UI code.
+Among other things, LowKode can be used to...
+- fully automate form creation, or just make your current forms easier to maintain.  
+- automate the construction of grids and tables, menus, navigation, etc.
+- keep business rules out of your UI code.
 
 LowKode is not tied to any particular UI library, out-of-the-box LowKode uses Radzen Blazor components, but LowKode can use any UI library.
 
@@ -123,12 +123,12 @@ Well now there is, here's the same form using LowKode...
             <DataAnnotationsValidator />
             <ValidationSummary />
 
-            <EditFields Context="field">
+            <EditFields Context="editField">
                 <FieldTemplate>
                     <p>
                         <label>
-                            @field.Metadata.DisplayName+":"
-                            @field.EditComponent
+                            @editField.DisplayName+":"
+                            @editField.Editor
                         </label>
                     </p>
                 </FieldTemplate>
@@ -164,15 +164,17 @@ Well now there is, here's the same form using LowKode...
             }          
         }
 
+This, much shorter, template produces the exact same output as the original Microsoft example.
 Notice that we've replaced all the field declaration with the LowKode <EditFields> component.  
 The <EditFields> component can enumerate all the properties in a .Net type and automagically populate templates with appropriate input elements for each property.  
-In this case, the <EditFields> component will extend the EditForm component with field elements for all the public properties defined by the Starship type.  
+In this case, the <EditFields> component will extend the <EditForm> component with field elements for all the public properties defined by the Starship type.  
 
 The other thing that LowKode is doing in this example is automagically constructing the appropriate input component for each property, that's this line...  
-    @field.InputComponent  
+    @editField.Editor 
 During Startup, LowKode is configured with data that maps data and object types to Blazor components used to display and edit those types.  
-When using LowKode to creating a form, you don't have to know the details of how to create an input element for each field, LowKode can do that for you.  
-In fact, if we registered the <FieldTemplate> element from the example with LowKode then we could reduce the EditFields element in the example to this...  
+When using LowKode to create a form, you don't have to know the details of how to create an input element for each field, LowKode can do that for you.  
+In fact, if we registered the <FieldTemplate> element with LowKode, as the component to use to display the 'editField' type, then we could reduce the 
+EditFields element in the example to this...  
     <EditFields/>  
           
 ### Extensible set of metadata providers
