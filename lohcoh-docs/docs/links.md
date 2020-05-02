@@ -22,6 +22,10 @@ A library for managing feature flags:
   
 [More info on DDD design in eShopOnWeb](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-implemenation-entity-framework-core)
 
+[Business Rules in User Interfaces](http://www.brcommunity.com/articles.php?id=b378)
+
+https://openrules.wordpress.com/2018/10/17/openrules-customer-is-a-winner-of-the-2018-business-rules-excellence-awards/
+
 ## Related Products
 
 [React library that creates forms from JSON schemas](https://uniforms.tools/docs/uth-bridge-concept)
