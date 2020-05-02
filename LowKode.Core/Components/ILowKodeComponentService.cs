@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
-namespace LowKode.Core.Metadata
+namespace LowKode.Core.Components
 {
 
     /// <summary>
@@ -18,9 +16,17 @@ namespace LowKode.Core.Metadata
     public interface ILowKodeComponentService 
     {
         /// <summary>
-        /// Creates a component that is a subclass of the type denoted by TSlot, 
-        /// suitable for editing or displaying the denoted property of the denoted type.
+        /// Creates a component that is a subclass of componentType, 
+        /// suitable for editing or displaying the denoted property of the denoted model type.
         /// </summary>
-        ComponentBase Create<TSlot>(Type modelType, PropertyInfo property);
+        /// <param name="componentType">The type denoting the slot type, usually LowKode.Core.Components.Editor or usually LowKode.Core.Components.Display </param>
+        ComponentBase Create(Type componentType, Type modelType, PropertyInfo property);
+
+        /// <summary>
+        /// Creates a component that is a subclass of the type denoted by TSlot, 
+        /// suitable for editing or displaying a value of the given type.
+        /// </summary>
+        /// <typeparam name="TSlot">The type denoting the slot type, usually LowKode.Core.Components.Editor or usually LowKode.Core.Components.Display </typeparam>
+        ComponentBase Create<TSlot>();
     }
 }

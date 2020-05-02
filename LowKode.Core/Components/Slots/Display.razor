@@ -1,7 +1,14 @@
-﻿
-
+﻿@namespace LowKode.Core.Components
+@inject ILowKodeComponentService lkComponents
+@typeparam TItem
+@DisplayComponent
 @code {
 
-    
+    ComponentBase DisplayComponent;
+
+    protected override void OnInitialized()
+    {
+        DisplayComponent = lkComponents.Create<Display<TItem>>();
+    }
 
 }

@@ -3,9 +3,8 @@
 LowKode generates, assembles, and customizes UI elements from a set of base Components, Metadata, Rules, and runtime Context.
 LowKode's primary functions are to...
 - map types and thier properties to UI components.  
-- Use metadata to create new UI elements for displaying data.
+- Use metadata to generate new UI elements for displaying data.
 - customize UI elements based on business rules
-
 
 
 A LowKode application is comprised of...
@@ -19,7 +18,7 @@ A LowKode application is comprised of...
 	At Startup, LowKode is configured with metadata from a variety of sources and saves this data in a metadata repository.  
 	Metadata includes schemas for objects, component mappings, available web services, UI contributions, etc.  
 	LowKode can be extended with custom metadata providers.
-	Clients use Linq queries to 
+	Clients use Linq queries to select data from the repository.  
 	Examples of what can be done with Metadata...  
 	- globally replace the component used to display dates
 	- Generate a full featured form for displaying an Employee
@@ -27,10 +26,14 @@ A LowKode application is comprised of...
 	- Generate a menu for displaying all available reports.
 
 - A repository of Rules
-	Rules modify metadata, usually based on runtime Context values.
-	Rules are configured at Startup.
+	Rules modify metadata, usually based on runtime Context values.  
+	Rules are configured at Startup.  
 	Examples of what can be done with Rules...
-	- use a custom Card component when displaying an Album in a Card and the Album won a Grammy.
+	- Use a custom Card component when displaying an Album in a Card and the Album won a Grammy.
+		new Rule()
+			.For(ctx => ctx[UIModule].ComponentMapping.Where(m => m.TComponent == Card))
+			.When(ctx => ctx[CreateRequest].TComponent == Card  &&  ctx[CreateRequest].TModel == Album && 0 < ((Album)ctx[ComponentInstance].Value).Grammies.Count)
+			.Then(m => m.		
 	- Add an additional Report to the Report menu for a specific tenant.
 	- When displaying an Employee in a Form, make the SSN field optional when the Employee belongs to a business unit that's not located in the US.
 

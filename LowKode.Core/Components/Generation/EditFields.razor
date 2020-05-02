@@ -1,8 +1,6 @@
 ﻿@using LowKode.Core.Metadata
-@using LowKode.Core.Components
 @using Microsoft.AspNetCore.Components.Forms
-@using System.Reflection
-@using LowKode.Core.Components.Forms
+@namespace LowKode.Core.Components
 @inject ILowKodeMetaService lkMeta
 @inject ILowKodeComponentService lkComponents
 
@@ -12,7 +10,7 @@
     var fieldInfo = new EditFieldModel()
     {
         Metadata = property,
-        EditComponent = lkComponents.Create<Input>(modelType, property.PropertyInfo)
+        EditComponent = lkComponents.Create(typeof(Editor), modelType, property.PropertyInfo)
     };
     @FieldTemplate(fieldInfo);
 }

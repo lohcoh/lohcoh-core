@@ -1,10 +1,7 @@
 ﻿using LowKode.Core.Metadata;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace LowKode.Core.Components.Forms
+namespace LowKode.Core.Components
 {
     public class EditFieldModel
     {
