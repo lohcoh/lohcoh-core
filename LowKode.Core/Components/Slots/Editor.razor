@@ -1,16 +1,16 @@
 ﻿@namespace LowKode.Core.Components
 @inject ILowKodeComponentService lkComponents
-@typeparam TItem
 @EditorComponent
 @code {
 
-    [Parameter]
-    public Type TModel { get; set; }
+    [Parameter] public Type TModel { get; set; }
+    [Parameter] public IItem Value { get; set; }
+
     ComponentBase EditorComponent;
 
     protected override void OnInitialized()
     {
-        EditorComponent = lkComponents.Create(ComponentBase:<Editor<TItem>>();
+        EditorComponent = lkComponents.Create(Type componentType, Type modelType, PropertyInfo property);
     }
 
 }

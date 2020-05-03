@@ -30,10 +30,16 @@ A LowKode application is comprised of...
 	Rules are configured at Startup.  
 	Examples of what can be done with Rules...
 	- Use a custom Card component when displaying an Album in a Card and the Album won a Grammy.
-		new Rule()
-			.For(ctx => ctx[UIModule].ComponentMapping.Where(m => m.TComponent == Card))
-			.When(ctx => ctx[CreateRequest].TComponent == Card  &&  ctx[CreateRequest].TModel == Album && 0 < ((Album)ctx[ComponentInstance].Value).Grammies.Count)
-			.Then(m => m.		
+		Example of how to write such a rule...
+			new Rule()
+				.For(ctx => ctx[UIModule].ComponentMapping.Where(m => m.TComponent == Card))
+				.When(ctx => ctx[LkComponentRequest].TComponent == Card  &&  ctx[LkComponentRequest].TModel == Album && 0 < ((Album)ctx[ComponentInstance].Value).Grammies.Count)
+				.Then(m => m.TComponent= GrammyCard);  
+		The above is a barebones idea of how a Rule is coded.  
+		It can be simplified by creating a subclass of Rule that can provide better usability...  
+			new EntityMappingRule<Card,Album>()
+				.When(() => 0 < Model.Grammies.Count)
+				.Then(() => GrammyCard);
 	- Add an additional Report to the Report menu for a specific tenant.
 	- When displaying an Employee in a Form, make the SSN field optional when the Employee belongs to a business unit that's not located in the US.
 
