@@ -20,7 +20,7 @@ namespace LowKode.Core.Components
         /// suitable for editing or displaying the denoted property of the denoted model type.
         /// </summary>
         /// <param name="componentType">The type denoting the slot type, usually LowKode.Core.Components.Editor or usually LowKode.Core.Components.Display </param>
-        ComponentBase Create(Type componentType, Type modelType, PropertyInfo property);
+        ComponentBase Create(Type componentType, Type modelType, IMetaSelector property);
 
         /// <summary>
         /// Creates a component that is a subclass of the type denoted by TSlot, 

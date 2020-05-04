@@ -9,7 +9,8 @@ namespace LowKode.Core.Metadata
     {
 
         public string DisplayName { get; set;  }
-        public ComponentBase InputComponent { get; set; }
+        public Type EditorType { get; set; }
 
+        public Type DisplayType { get; set; }
     }
 }

@@ -1,16 +1,20 @@
 ﻿@namespace LowKode.Core.Components
+@using LowKode.Core.Metadata
 @inject ILowKodeComponentService lkComponents
 @EditorComponent
 @code {
 
-    [Parameter] public Type TModel { get; set; }
-    [Parameter] public IItem Value { get; set; }
+
+    // TODO: Unfinished
+    //[Parameter] public Type TModel { get; set; }
+    //[Parameter] public object Value { get; set; }
+    //[Parameter] public IMetaSelector< Value { get; set; }
 
     ComponentBase EditorComponent;
 
     protected override void OnInitialized()
     {
-        EditorComponent = lkComponents.Create(Type componentType, Type modelType, PropertyInfo property);
+        //EditorComponent = lkComponents.Create(componentType:typeof(Editor), modelType:TModel, PropertyInfo property);
     }
 
 }

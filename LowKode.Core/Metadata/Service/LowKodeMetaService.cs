@@ -17,6 +17,11 @@ namespace LowKode.Core.Metadata
             throw new NotImplementedException();
         }
 
+        public ILowKodeMetaRepository AddMetadataRoot(Type rootType, object metadataRoot)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool ContainsRoot<T>() where T : Type
         {
             throw new NotImplementedException();
@@ -37,6 +42,16 @@ namespace LowKode.Core.Metadata
             throw new NotImplementedException();
         }
 
+        public T First<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public object First(Type modelType)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Remove(object value)
         {
             throw new NotImplementedException();
@@ -45,6 +60,11 @@ namespace LowKode.Core.Metadata
         public bool TryGetValue<T, V>(T key, out V value)
             where T : Type
             where V : IEnumerable<T>
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<object> ILowKodeMetaService.Find(Type modelType)
         {
             throw new NotImplementedException();
         }

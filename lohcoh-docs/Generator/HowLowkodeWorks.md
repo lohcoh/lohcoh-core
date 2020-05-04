@@ -19,29 +19,55 @@ A LowKode application is comprised of...
 	Metadata includes schemas for objects, component mappings, available web services, UI contributions, etc.  
 	LowKode can be extended with custom metadata providers.
 	Clients use Linq queries to select data from the repository.  
-	Examples of what can be done with Metadata...  
+	Metadata is static information that, after initialization, is invariant for the life of the application.
+	However, metadata is *context-sensitive*, that is, metadata queries may return different results depending 
+	on the current context.
+
+	Examples of what can be done with pure Metadata, without using rules...  
 	- globally replace the component used to display dates
 	- Generate a full featured form for displaying an Employee
 	- Generate a full featured table for displaying search results
 	- Generate a menu for displaying all available reports.
 
 - A repository of Rules
-	Rules modify metadata, usually based on runtime Context values.  
+	Rules customize metadata, usually based on runtime Context values.  
 	Rules are configured at Startup.  
 	Examples of what can be done with Rules...
 	- Use a custom Card component when displaying an Album in a Card and the Album won a Grammy.
-		Example of how to write such a rule...
-			new Rule()
-				.For(ctx => ctx[UIModule].ComponentMapping.Where(m => m.TComponent == Card))
-				.When(ctx => ctx[LkComponentRequest].TComponent == Card  &&  ctx[LkComponentRequest].TModel == Album && 0 < ((Album)ctx[ComponentInstance].Value).Grammies.Count)
-				.Then(m => m.TComponent= GrammyCard);  
-		The above is a barebones idea of how a Rule is coded.  
-		It can be simplified by creating a subclass of Rule that can provide better usability...  
-			new EntityMappingRule<Card,Album>()
-				.When(() => 0 < Model.Grammies.Count)
-				.Then(() => GrammyCard);
 	- Add an additional Report to the Report menu for a specific tenant.
 	- When displaying an Employee in a Form, make the SSN field optional when the Employee belongs to a business unit that's not located in the US.
+	- Layout the Order form differently depending on which business group the User belongs to.  
+
+	Rules consist of three parts...
+	- A *selection query* that specifies *what* metadata the rule applies to. 
+	- A *when condition" that specifies *when* the rule should be applied.
+	- A function that transforms the results of the selection query.
+
+	Here's an example of how to code a rule.  
+	The rule implemented in this example is  
+			> Use a custom Card component when displaying an Album in a Card and the Album won a Grammy.  
+	Here's the barebone example of how to write such a rule, this examle is shown in order to promote an 
+	understanding of how rules work, this implementation will be rewritten in the next example in a more readable way...  
+	```cs
+		new Rule()
+			.For(ctx => ctx[UIModule].ComponentMapping.Where(m => m.TComponent == Card))
+			.When(ctx => ctx[LkComponentRequest].TComponent == Card  &&  ctx[LkComponentRequest].TModel == Album && 0 < ((Album)ctx[ComponentInstance].Value).Grammies.Count)
+			.Then(m => m.TComponent= GrammyCard);  
+	```
+	```cs
+		new Rule()
+			.For(ctx => ctx[UIModule].ComponentMapping.Where(m => m.TComponent == Card))
+			.When(ctx => ctx[LkComponentRequest].TComponent == Card  &&  ctx[LkComponentRequest].TModel == Album && 0 < ((Album)ctx[ComponentInstance].Value).Grammies.Count)
+			.Then(m => m.TComponent= GrammyCard);  
+	```
+	The base Rule class 
+	Don't write rules that way :-).  
+	Here's a more readable way, using a Rule subclass that provides better usability...  
+	```cs
+		new EntityMappingRule<Card,Album>()
+			.When(0 < Model.Grammies.Count)
+			.Use(GrammyAlbumCard);
+	```
 
 - A Context object.
 	A Context is a collection of key/value pairs that describe any runtime aspects of the current application needed to create a customized component.

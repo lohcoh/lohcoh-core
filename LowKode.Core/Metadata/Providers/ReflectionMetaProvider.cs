@@ -21,7 +21,7 @@ namespace LowKode.Core.Metadata
                 typeMetadata.Properties.Add(propertyMetadata);
             }
 
-            lowkode.Repository.Add(typeMetadata);
+            lowkode.Repository.AddMetadataRoot<ITypeMetadata>(typeMetadata);
         }
     }
 }
