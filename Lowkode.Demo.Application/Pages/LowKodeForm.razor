@@ -1,6 +1,9 @@
 ﻿@page "/lowkode"
 @using Lowkode.Demo.Application.Data
+@using LowKode.Core.Metadata
 @using LowKode.Core.Components
+@inject ILowKodeMetaService lkMetadata
+@inject ILowKodeComponentService lkComponents
 
 <h1>Starfleet Starship Database</h1>
 
@@ -10,16 +13,15 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <EditFields Context="field">
-        <FieldTemplate>
-            <p>
-                <label>
-                    @field.DisplayName+":"
-                    @field.Editor
-                </label>
-            </p>
-        </FieldTemplate>
-    </EditFields>
+    @foreach (var propertyMetadata in lkMetadata.ForType<Starship>().Properties)
+    {
+        <p>
+            <label>
+                @propertyMetadata.DisplayName+":"
+                @lkComponents.ForProperty<Editor>(property)
+            </label>
+        </p>
+    }
 
     <button type="submit">Submit</button>
 
@@ -37,4 +39,5 @@
     {
         Console.WriteLine("OnValidSubmit");
     }
+
 }

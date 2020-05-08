@@ -15,18 +15,13 @@ namespace LowKode.Core.Components
     /// </summary>
     public interface ILowKodeComponentService 
     {
-        /// <summary>
-        /// Creates a component that is a subclass of componentType, 
-        /// suitable for editing or displaying the denoted property of the denoted model type.
-        /// </summary>
-        /// <param name="componentType">The type denoting the slot type, usually LowKode.Core.Components.Editor or usually LowKode.Core.Components.Display </param>
-        ComponentBase Create(Type componentType, Type modelType, IMetaSelector property);
+        ComponentBase Create(IComponentSpecification specification);
 
         /// <summary>
         /// Creates a component that is a subclass of the type denoted by TSlot, 
         /// suitable for editing or displaying a value of the given type.
         /// </summary>
         /// <typeparam name="TSlot">The type denoting the slot type, usually LowKode.Core.Components.Editor or usually LowKode.Core.Components.Display </typeparam>
-        ComponentBase Create<TSlot>();
+        TSlot Create<TSlot>(IComponentSpecification<TSlot> specification);
     }
 }

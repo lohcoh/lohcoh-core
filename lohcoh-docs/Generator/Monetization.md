@@ -14,9 +14,13 @@ LowKode will *NOT* provide support for commercial component libraies out of the 
 
 
 ## extended components
-Data Tables (should probably be in the free project)
-Search Filter
-Layouts (should probably be in the free project)
+Data Tables (should be in the free project?)
+Layouts (should definitely be in the free project, is needed for forms)
+
+Search Filters UI + Query API 
+	The idea here is to provide a metadata-driven GraphQL-like query facility along with search filter UI that enables users to 
+	filter search results or even create ad-hoc reports.
+
 Tailwind-like or PatternFly UI elements; 
 Cards
 Lists

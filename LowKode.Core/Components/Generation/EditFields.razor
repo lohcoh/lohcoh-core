@@ -10,10 +10,17 @@
     var fieldInfo = new EditFieldModel()
     {
         Metadata = property,
-        EditComponent = lkComponents.Create(typeof(Editor), modelType, property.PropertyInfo)
-    };
+        EditComponent = lkComponents.Create(new PropertyComponentSpec()
+        {
+            ComponentType = Editor,
+            ModelType = modelType,
+            Property = property
+        })
+    }   
     @FieldTemplate(fieldInfo);
 }
+
+
 
 @code {
 
@@ -38,7 +45,7 @@
         }
 
         modelType = CurrentEditContext.Model.GetType();
-        properties = lkMeta.GetMetadataForType(modelType).Properties;
+        properties = lkMeta.ForType(modelType).Properties;
     }
 
 }
