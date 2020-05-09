@@ -4,24 +4,20 @@ using System.Text;
 
 namespace LowKode.Core.Metadata
 {
+
+
     /// <summary>
-    /// LowKode needs several of its interfaces to be extensible and discoverable.
+    /// LowKode needs several of its interfaces to be extensible and discoverable.  
     /// That is, these APIs need to support scenarios where third-parties add 
-    /// thier own data, and then later some other party discovers and uses that metadata (discoverable).  
+    /// thier own data (extensible), and then later some other party discovers and uses that metadata (discoverable).  
+    /// IDiscoverableResource and IExtensibleResource provides a common API for the parts of 
+    /// LowKode that need to be extensible, including but not limited to, most of the service interfaces and 
+    /// metadata interfaces defined by LowKode.
     /// 
-    /// Using labels to identify properties is not a good solution, it's susceptable to namespace collisions.
-    /// I have chosen to use Types to identify properties.
+    /// An extensible resource is a collection of 'extensions', indexed by the Type of the extension.
     /// 
-    /// 
-    /// I'm a fan of RDF, this interface is meant to define objects similar to RDF resources.
-    /// I understand an RDF resource to be a collection of values indexed by property identifiers, 
-    /// where the property identifiers are essentially the name of the associated property type (in RDF, 
-    /// properties are types).
-    /// 
-    /// This API is intended to be a C#, type safe, equivalent of something like an RDF resource.
-    /// IDiscoverableResource is a collection of values indexed by thier associated Types.
-    /// The types associated with the values contained in a resource are called 'roots'.
-    /// IDiscoverableResource provides methods for discovering roots and getting the values associated with roots.
+    /// This API is intended to be bare-boned, type safe, C# implementation of the Extension Point pattern 
+    /// found in may other extensible frameworks.
     /// 
     /// </summary>
     public interface IDiscoverableResource

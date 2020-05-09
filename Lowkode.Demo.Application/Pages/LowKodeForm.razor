@@ -2,8 +2,11 @@
 @using Lowkode.Demo.Application.Data
 @using LowKode.Core.Metadata
 @using LowKode.Core.Components
+@using LowKode.Core.Context
 @inject ILowKodeMetaService lkMetadata
 @inject ILowKodeComponentService lkComponents
+@inject ILowKodeContext lkContext
+
 
 <h1>Starfleet Starship Database</h1>
 
@@ -13,14 +16,19 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    @foreach (var propertyMetadata in lkMetadata.ForType<Starship>().Properties)
-    {
-        <p>
-            <label>
-                @propertyMetadata.DisplayName+":"
-                @lkComponents.ForProperty<Editor>(property)
-            </label>
-        </p>
+    @{
+        var modelMetadata = lkMetadata.ForType<Starship>();
+        <scope value=@lkContext.ForModelType(modelMetadata).ForModel(_starship)>
+            @foreach (var propertyMetadata in modelMetadata.Properties)
+            {
+                <scope value=@context.ForProperty(propertyMetadata)>
+                    <p>
+                        <Label/>
+                        <Editor/>
+                    </p>
+                </scope>
+            }
+        </scope>
     }
 
     <button type="submit">Submit</button>
