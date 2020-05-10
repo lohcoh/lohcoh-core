@@ -10,12 +10,17 @@ namespace LowKode.Core.Components
         {
             var scope= ctx.CreateScope();
 
-            var siteSpecification= scope.First<ComponentSiteSpecification>();
-            if (siteSpecification == null) { 
-                siteSpecification= new ComponentSiteSpecification();
-                scope.Add<IComponentSiteSpecification>(siteSpecification);
-            }
+            var siteSpecification= scope.First<ComponentSiteSpecification>(() => new ComponentSiteSpecification());
             siteSpecification.ModelType= modelType;
+
+            return scope;
+        }
+        public static ILowKodeContext WithModel(this ILowKodeContext ctx, object model)
+        {
+            var scope = ctx.CreateScope();
+
+            var siteSpecification = scope.First<ComponentSiteSpecification>(() => new ComponentSiteSpecification());
+            siteSpecification.Model = model;
 
             return scope;
         }

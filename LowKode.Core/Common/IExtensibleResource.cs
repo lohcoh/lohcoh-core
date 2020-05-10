@@ -12,6 +12,10 @@ namespace LowKode.Core.Metadata
     public interface IExtensibleResource : IDiscoverableResource
     {
 
+        /// <summary>
+        /// Same as parameterless First but calls the given function to get a new root if no root is found
+        /// </summary>
+        TRoot First<TRoot>(Func<TRoot> p);
 
         void Add(Type root, object value);
         void Add<TRoot>(TRoot value) => Add(typeof(TRoot), value);
