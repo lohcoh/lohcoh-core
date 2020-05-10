@@ -15,7 +15,7 @@ namespace LowKode.Core.Components
     /// </summary>
     public interface ILowKodeComponentService 
     {
-        ComponentBase Create(IComponentSpecification specification);
+        ComponentBase Create(IComponentSiteSpecification specification);
 
         /// <summary>
         /// Creates a component that is a subclass of the type denoted by TSlot, 

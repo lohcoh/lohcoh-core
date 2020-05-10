@@ -1,14 +1,22 @@
 ﻿using LowKode.Core.Context;
+using LowKode.Core.Metadata;
 using System;
+using System.Linq.Expressions;
 
 namespace LowKode.Core.Components
 {
+    public interface PropertyIdentifier
+    {
+        string Name { get; }
+        Type Type {  get; }
+    }
+
     /// <summary>
     /// Specifies all the information required to create a component.
     /// The IComponentSpecification interface only declares values that will be universally required to create a component.
     /// It's intended that there will be many implementations of this interface that require additional values.
     /// </summary>
-    public interface IComponentSpecification
+    public interface IComponentSiteSpecification
     {
 
         /// <summary>
@@ -22,7 +30,7 @@ namespace LowKode.Core.Components
         /// The actual value to be displayed by the component
         /// Can be null, because some components just display some essentially hard-coded content and they don't need a value.
         /// </summary>
-        Object Value { get; }
+        Object Model { get; }
 
         /// <summary>
         /// If ModelType is denotes a type that represents a primitive value (int, string, date, etc) 
@@ -34,18 +42,10 @@ namespace LowKode.Core.Components
         /// 
         /// Required, may not be null.
         /// </summary>
-        Type ModelType { get; }
+        ITypeMetadata ModelType { get; }
 
-        /// <summary>
-        /// The context in which the component will operate.
-        /// </summary>
-        ILowKodeContext Context { get; }
-
+        MemberExpression ModelMember {  get; }
     }
 
-    public interface IComponentSpecification<TComponent> : IComponentSpecification
-    {
-
-    }
 
 }

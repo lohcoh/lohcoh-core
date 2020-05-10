@@ -1,37 +1,36 @@
 ﻿@using LowKode.Core.Metadata
+@using LowKode.Core.Context
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
-@inject ILowKodeMetaService lkMeta
+@inject ILowKodeMetaService lkMetadata
 @inject ILowKodeComponentService lkComponents
+@inject ILowKodeContext lkContext
 
 
-@foreach (var property in properties)
-{
-    var fieldInfo = new EditFieldModel()
-    {
-        Metadata = property,
-        EditComponent = lkComponents.Create(new PropertyComponentSpec()
+@{
+    var modelMetadata = lkMetadata.ForType(TModel);
+    <scope value=@lkContext.WithModelType(modelMetadata).WithModel(CurrentEditContext.Model)>
+        @foreach (var propertyMetadata in modelMetadata.Properties)
         {
-            ComponentType = Editor,
-            ModelType = modelType,
-            Property = property
-        })
-    }   
-    @FieldTemplate(fieldInfo);
+            <scope value=@context.WithProperty(propertyMetadata)>
+                @ChildContent
+            </scope>
+        }
+    </scope>
 }
-
 
 
 @code {
 
+
     [Parameter]
-    public RenderFragment<EditFieldModel> FieldTemplate { get; set; }
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public Type TModel { get; set; }
 
     [CascadingParameter]
     EditContext CurrentEditContext { get; set; }
-
-    IEnumerable<IPropertyMetadata> properties { get; set; }
-    Type modelType;
 
     protected override void OnInitialized()
     {
@@ -39,13 +38,14 @@
 
         if (CurrentEditContext == null)
         {
-            throw new InvalidOperationException($"{nameof(EditFields)} requires a cascading " +
-                $"parameter of type {nameof(EditContext)}. For example, you can use {nameof(EditFields)} " +
-                $"inside an EditForm.");
+            throw new InvalidOperationException("No EditContext found");
         }
 
-        modelType = CurrentEditContext.Model.GetType();
-        properties = lkMeta.ForType(modelType).Properties;
+        if (TModel == null)
+        {
+            TModel= CurrentEditContext.Model.GetType();
+        }
+
     }
 
 }
