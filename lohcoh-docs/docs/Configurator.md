@@ -18,20 +18,37 @@ Lowkode also provides a set of components specifically designed to make form cre
 ## Things you can do with lowkode
 
 	- Create a complete form with a single tag, just specify the type of object that you want to display.
+		- Doesn't necessarily require metadata, could use reflection directly.
 
 	- Add an additional Report to the your application's Report menu for a specific client/tenant
-		Uses: Uses: metadata(ui report contribution), context (client/tenant)
+		- Uses: Uses: metadata(ui report contribution), context (client/tenant)
+		- Could be implemented simply by creating a component that accepts a list of reports, don't need lowkode
 
 	- Add an extra field to a form when the current user belongs to specific Department.
+		- Could be implemented with metadata, but that will cause mismatch with .NET reflection API.
+		- In a perfect world, the server would return a subclass of the model object that contains the additional field.
+			The UI would use the runtime type of the given model object and render the additional field.
+			I guess it would be necessary to annotate types to inform lowkode what subclasses should be used for rendering.
+
+	- Add two extra fields to a form, one field when the current user belongs to specific Department and another 
+		for a specific client/tenant.
 
 	- Change the layout of your application's Employee form depending on the employee's Business Group, 
 		since different Business Groups prioritize different information.
+		- could implement this with a rule-driven slot.
+			This idea requires context.
+		- could implement this by injecting layout into components, driven by configuration
+		- could pass layout as a paremeter.
+			How about rule-driven parameter injection??
+
 
 	- globally replace the component used to display dates
 		Uses: metadata(component mapping), specification (component value type), and lowcode Placeholder utility.
+		- could implement this with a rule-driven slot.
 
 	- use a custom Card component when displaying an Album in a Card and the Album won a Grammy.
 		Uses: Uses: metadata(component mapping), specification (component value type, component value)
+		- could implement this with a rule-driven slot.
 
 	- When displaying an Employee in a Form, make the SSN field optional when the client/tenant is not located in the US.
 		Uses: Uses: metadata(Employee schema), context (client/tenant)
