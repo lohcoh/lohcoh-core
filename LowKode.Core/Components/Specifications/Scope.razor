@@ -1,0 +1,23 @@
+﻿@namespace LowKode.Core.Components
+@using LowKode.Core.Metadata
+@using LowKode.Core.Context
+@inject ILowKodeComponentService lkComponents
+@EditorComponent
+@code {
+
+    [Parameter]
+    public RenderFragment<ILowKodeContext> ChildContent { get; set; }
+
+    // TODO: Unfinished
+    //[Parameter] public Type TModel { get; set; }
+    //[Parameter] public object Value { get; set; }
+    //[Parameter] public IMetaSelector< Value { get; set; }
+
+    ComponentBase EditorComponent;
+
+    protected override void OnInitialized()
+    {
+        //EditorComponent = lkComponents.Create(componentType:typeof(Editor), modelType:TModel, PropertyInfo property);
+    }
+
+}

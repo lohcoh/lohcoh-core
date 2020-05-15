@@ -1,25 +1,14 @@
 ﻿# ToDo
 
-## lowkode next steps
-
-- create Lowkode API repository and load swagger.json at startup.
-	- Lowkode API repository uses [OpenAPI.NET](https://github.com/microsoft/OpenAPI.NET)
-	- The repository provides an API for executing Linq queries aginst the OpenAPI.NET 
-	document.  In the future the repository will be extended to allow query transformations 
-	to be plugged into the query processing.
-
-- rewrite DisplayTable to use OpenAPI and eliminate all hard-coded text and data
-	- need to add 'title' annotations to property definitions in swagger.json so as to 
-	generate labels for the Weather forecast display.
-	- NOTE: Follow 
-
-- rewrite FetchData.razor to eliminate hard-coded data fetching
-
-	- lowkode will need a data source api that can hook up an OpenAPI endpoint to a 
-	component's input parameter.
-
-		- This API should be generic and reactive, so that the endpoint can be connected to 
-		a service that posts updates.
-
-
-## completed
+## Design of context and metadata API
+It's been difficult to design the context and metadata APIs.
+I don't have a good solution for APIs that need to be extensible by third-parties, and typesafe.
+Here's what I've decided so far...
+...Context will be defined by custom classes, like with React Context.
+...Context will be injected into components using a parameter with a [ContextParameter] attribute, like with Cascading parameters in Blazor.
+...Context containers will form a nested hierarchy, one container per component.
+	When a context container does not contain a vaue requested by a component then it will delegate to it's parent container, 
+	unless the specified item has been explicitly removed from the child container.
+...Metadata will be modeled after a database, using 'records' of a given type.
+	Query facilities will be limited.
+	This approach will make it easier to customize metadata will rules.

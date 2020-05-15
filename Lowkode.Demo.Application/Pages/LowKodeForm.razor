@@ -18,26 +18,26 @@
 
     @{
         var modelMetadata = lkMetadata.ForType<Starship>();
-        <scope value=@lkContext.WithModelType(modelMetadata).WithModel(_starship)>
+        <Scope value=@lkContext.WithModelType(typeof(Starship)).WithModel(_starship) Context="modelContext">
             @foreach (var propertyMetadata in modelMetadata.Properties)
             {
-                <scope value=@context.WithProperty(propertyMetadata)>
+                <Scope value=@modelContext.WithProperty(propertyMetadata) Context="propertyContext">
                     <p>
                         <label>
-                            <LkDisplayName/>:
-                            <LkInput />
+                            <DisplayName/>:
+                            <Input/>
                         </label>
                     </p>
-                </scope>
+                </Scope>
             }
-        </scope>
+        </Scope>
     }
 
-    <EditFields>
+    <EditFields>        
         <p>
             <label>
-                <LkDisplayName/>:
-                <LkInput/>
+                <DisplayName/>:
+                <Input/>
             </label>
         </p>
     </EditFields>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using LowKode.Core.Context;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Reflection;
 
@@ -15,13 +16,13 @@ namespace LowKode.Core.Components
     /// </summary>
     public interface ILowKodeComponentService 
     {
-        ComponentBase Create(IComponentSiteSpecification specification);
-
         /// <summary>
-        /// Creates a component that is a subclass of the type denoted by TSlot, 
-        /// suitable for editing or displaying a value of the given type.
+        /// Create a Component
         /// </summary>
-        /// <typeparam name="TSlot">The type denoting the slot type, usually LowKode.Core.Components.Editor or usually LowKode.Core.Components.Display </typeparam>
-        TSlot Create<TSlot>(IComponentSpecification<TSlot> specification);
+        /// <param name="context"></param>
+        /// <returns></returns>
+        ComponentBase Create(ILowKodeContext context);
+
+       
     }
 }

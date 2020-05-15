@@ -14,7 +14,7 @@ namespace LowKode.Core.Components
 
         public object Model { get; set; }
 
-        public ITypeMetadata ModelType { get; set; }
+        public Type ModelType { get; set; }
         public MemberExpression ModelMember {  get; set; }
 
     }

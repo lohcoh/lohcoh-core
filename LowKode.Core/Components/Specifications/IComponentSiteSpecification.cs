@@ -42,7 +42,7 @@ namespace LowKode.Core.Components
         /// 
         /// Required, may not be null.
         /// </summary>
-        ITypeMetadata ModelType { get; }
+        Type ModelType { get; }
 
         MemberExpression ModelMember {  get; }
     }
