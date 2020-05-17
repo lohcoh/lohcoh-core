@@ -1,11 +1,8 @@
-﻿using LowKode.Core.Metadata;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using LowKode.Core.Common;
 
 namespace LowKode.Core.Context
 {
-    public interface ILowKodeContext : IExtensibleResource
+    public interface ILowKodeContext : IDependencyObject
     {
         ILowKodeContext CreateScope();
     }

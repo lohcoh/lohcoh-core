@@ -4,25 +4,25 @@
 @using LowKode.Core.Context
 @using Microsoft.AspNetCore.Components.Rendering
 
-@inject ILowKodeContext lkContext
-@inject ILowKodeMetaService lkMeta
+@inherits LowKode.Core.Components.SiteComponentBase
 
 @componentFragment
 
 
 @code {
-        RenderFragment componentFragment;
+    RenderFragment componentFragment;
 
     protected override void OnInitialized()
     {
-        var componentSpecification = lkContext.First<IComponentSiteSpecification>();
-        var componentType = lkMeta.Select<IComponentSiteMapping>(lkContext)
-            .Where(m => m.ComponentType == componentSpecification.ComponentType
-                && m.ModelType == componentSpecification.ComponentType
-                && m.ModelMember == componentSpecification.ModelMember);
-
-        componentFragment= new ComponentSiteFragment(componentType, lkContext);
-
+        // this component's only job is to set the value of Context.ComponentSiteSpecification before passing the 
+        // context to ComponentSiteFragment to finish the real work of rendering the component.
+        //
+        // by the time this code is executed a new context has been created for this component.
+        // changing the componentSpecification.ComponentType property only alters the value of componentSpecification.ComponentType 
+        // in this component's context.
+        var componentSpecification = Context.ComponentSiteSpecification;
+        componentSpecification.ComponentType = Metadata.DependencyTypes.Where(o => o.System.Type == typeof(DisplayName));
+        componentFragment = new ComponentSiteFragment(Context);
     }
 }
 

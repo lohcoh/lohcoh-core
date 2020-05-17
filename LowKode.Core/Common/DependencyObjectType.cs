@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace LowKode.Core.Common
 {
-    public class DependencyObjectType
-    {
+	public class DependencyObjectType : IDependencyObjectType
+	{
 		private static Dictionary<Type, DependencyObjectType> typeMap = new Dictionary<Type, DependencyObjectType>();
 		private static int current_id;
 
