@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using LowKode.Core.Common;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace LowKode.Core.Metadata
 {
-    public class CommonMetadata : ICommonMetadata
+    public class CommonMetadata : DependencyObject, ICommonMetadata
     {
 
         public string DisplayName { get; set;  }

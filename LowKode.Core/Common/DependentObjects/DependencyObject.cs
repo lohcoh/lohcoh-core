@@ -8,8 +8,8 @@ namespace LowKode.Core.Common
 	
 		public class DependencyObject : IDependencyObject
 		{
-			private static Dictionary<Type, Dictionary<string, DependencyProperty>> propertyDeclarations = new Dictionary<Type, Dictionary<string, DependencyProperty>>();
-			private Dictionary<DependencyProperty, object> properties = new Dictionary<DependencyProperty, object>();
+			private static Dictionary<Type, Dictionary<string, IDependencyProperty>> propertyDeclarations = new Dictionary<Type, Dictionary<string, IDependencyProperty>>();
+			private Dictionary<IDependencyProperty, object> properties = new Dictionary<IDependencyProperty, object>();
 
 			public bool IsSealed
 			{
@@ -21,7 +21,7 @@ namespace LowKode.Core.Common
 				get { return DependencyObjectType.FromSystemType(GetType()); }
 			}
 
-			public void ClearValue(DependencyProperty dp)
+			public void ClearValue(IDependencyProperty dp)
 			{
 				if (IsSealed)
 					throw new InvalidOperationException("Cannot manipulate property values on a sealed DependencyObject");
@@ -34,7 +34,7 @@ namespace LowKode.Core.Common
 				ClearValue(key.DependencyProperty);
 			}
 
-			public void CoerceValue(DependencyProperty dp)
+			public void CoerceValue(IDependencyProperty dp)
 			{
 				PropertyMetadata pm = dp.GetMetadata(this);
 				if (pm.CoerceValueCallback != null)
@@ -57,13 +57,13 @@ namespace LowKode.Core.Common
 				return new LocalValueEnumerator(properties);
 			}
 
-			public object GetValue(DependencyProperty dp)
+			public object GetValue(IDependencyProperty dp)
 			{
 				object val = properties.ContainsKey(dp) ? properties[dp] : null;
 				return val == null ? dp.DefaultMetadata.DefaultValue : val;
 			}
 
-			public void InvalidateProperty(DependencyProperty dp)
+			public void InvalidateProperty(IDependencyProperty dp)
 			{
 				throw new NotImplementedException("InvalidateProperty(DependencyProperty dp)");
 			}
@@ -75,13 +75,13 @@ namespace LowKode.Core.Common
 					pm.PropertyChangedCallback(this, e);
 			}
 
-			public object ReadLocalValue(DependencyProperty dp)
+			public object ReadLocalValue(IDependencyProperty dp)
 			{
 				object val = properties.ContainsKey(dp) ? properties[dp] : null;
 				return val == null ? DependencyProperty.UnsetValue : val;
 			}
 
-			public void SetValue(DependencyProperty dp, object value)
+			public void SetValue(IDependencyProperty dp, object value)
 			{
 				if (IsSealed)
 					throw new InvalidOperationException("Cannot manipulate property values on a sealed DependencyObject");
@@ -101,21 +101,33 @@ namespace LowKode.Core.Common
 				SetValue(key.DependencyProperty, value);
 			}
 
-		public virtual bool ShouldSerializeProperty(DependencyProperty dp)
+		public virtual bool ShouldSerializeProperty(IDependencyProperty dp)
 			{
 				throw new NotImplementedException();
 			}
 
-		public static void register(Type t, DependencyProperty dp)
+		public static void register(Type t, IDependencyProperty dp)
 			{
 				if (!propertyDeclarations.ContainsKey(t))
-					propertyDeclarations[t] = new Dictionary<string, DependencyProperty>();
-				Dictionary<string, DependencyProperty> typeDeclarations = propertyDeclarations[t];
+					propertyDeclarations[t] = new Dictionary<string, IDependencyProperty>();
+				var typeDeclarations = propertyDeclarations[t];
 				if (!typeDeclarations.ContainsKey(dp.Name))
 					typeDeclarations[dp.Name] = dp;
 				else
 					throw new ArgumentException("A property named " + dp.Name + " already exists on " + t.Name);
 			}
+
+		public TProperty GetValue<TProperty>(IDependencyProperty<TProperty> dp)
+		{
+			// todo:
+			throw new NotImplementedException();
 		}
+
+		public void SetValue<TProperty>(IDependencyProperty<TProperty> dp, TProperty value)
+		{
+			// todo:
+			throw new NotImplementedException();
+		}
+	}
 	
 }

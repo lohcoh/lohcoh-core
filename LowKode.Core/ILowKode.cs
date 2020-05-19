@@ -13,7 +13,7 @@ namespace LowKode.Core
     public interface ILowKode
     {
         ILowKodeComponentService Components { get; }
-        ILowKodeMetaService Metadata { get; }
-        ILowKodeContext Context { get; }
+        ILowKodeMetadata Metadata { get; }
+        IContext Context { get; }
     }
 }

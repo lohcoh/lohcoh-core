@@ -4,16 +4,16 @@ namespace LowKode.Core.Common
 {
 	public struct LocalValueEntry
 	{
-		private DependencyProperty property;
+		private IDependencyProperty property;
 		private object value;
 
-		internal LocalValueEntry(DependencyProperty property, object value)
+		internal LocalValueEntry(IDependencyProperty property, object value)
 		{
 			this.property = property;
 			this.value = value;
 		}
 
-		public DependencyProperty Property
+		public IDependencyProperty Property
 		{
 			get { return property; }
 		}

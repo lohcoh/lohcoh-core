@@ -9,7 +9,7 @@ namespace LowKode.Core.Metadata
     /// TODO: Unimplemented
     /// </summary>
 
-    public class LowKodeMetaService : DependencyObject
+    public class LowKodeMetadata : DependencyObject
     {
     }
 }

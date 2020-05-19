@@ -6,7 +6,7 @@
 @code {
 
     [Parameter]
-    public RenderFragment<ILowKodeContext> ChildContent { get; set; }
+    public RenderFragment<IContext> ChildContent { get; set; }
 
     // TODO: Unfinished
     //[Parameter] public Type TModel { get; set; }
@@ -14,6 +14,9 @@
     //[Parameter] public IMetaSelector< Value { get; set; }
 
     ComponentBase EditorComponent;
+
+    [Parameter]
+    public Action<IContext> init { get;  set; }
 
     protected override void OnInitialized()
     {

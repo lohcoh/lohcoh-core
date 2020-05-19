@@ -21,13 +21,27 @@ namespace LowKode.Core.Common
 			ValidateValueCallback = validateValueCallback;
 		}
 
+
+		public DependencyProperty(Type propertyType)
+		{
+			IsAttached = true;
+			DefaultMetadata = new PropertyMetadata();
+			PropertyType = propertyType;
+
+			Name = PropertyType.Name;
+			if (Name.EndsWith("Property"))
+				Name = Name.Substring(0, Name.Length - "Property".Length);
+			if (Name.StartsWith("I") && 1 < Name.Length && Char.IsUpper(Name, 1))
+				Name = Name.Substring(1, Name.Length - 1);
+
+		}
 		internal bool IsAttached { get; set; }
-		public bool ReadOnly { get; private set; }
-		public PropertyMetadata DefaultMetadata { get; private set; }
-		public string Name { get; private set; }
-		public Type OwnerType { get; private set; }
-		public Type PropertyType { get; private set; }
-		public ValidateValueCallback ValidateValueCallback { get; private set; }
+		public bool ReadOnly { get; protected set; }
+		public PropertyMetadata DefaultMetadata { get; protected set; }
+		public string Name { get; protected set; }
+		public Type OwnerType { get; protected set; }
+		public Type PropertyType { get; protected set; }
+		public ValidateValueCallback ValidateValueCallback { get; protected set; }
 
 		public int GlobalIndex
 		{
@@ -35,12 +49,12 @@ namespace LowKode.Core.Common
 		}
 
 
-		public DependencyProperty AddOwner(Type ownerType)
+		public IDependencyProperty AddOwner(Type ownerType)
 		{
 			return AddOwner(ownerType, null);
 		}
 
-		public DependencyProperty AddOwner(Type ownerType, PropertyMetadata typeMetadata)
+		public IDependencyProperty AddOwner(Type ownerType, PropertyMetadata typeMetadata)
 		{
 			if (typeMetadata == null) typeMetadata = new PropertyMetadata();
 			OverrideMetadata(ownerType, typeMetadata);
@@ -56,7 +70,7 @@ namespace LowKode.Core.Common
 			return null;
 		}
 
-		public PropertyMetadata GetMetadata(DependencyObject dependencyObject)
+		public PropertyMetadata GetMetadata(IDependencyObject dependencyObject)
 		{
 			if (metadataByType.ContainsKey(dependencyObject.GetType()))
 				return metadataByType[dependencyObject.GetType()];
@@ -124,25 +138,25 @@ namespace LowKode.Core.Common
 			return Name.GetHashCode() ^ PropertyType.GetHashCode() ^ OwnerType.GetHashCode();
 		}
 
-		public static DependencyProperty Register(string name, Type propertyType, Type ownerType)
+		public static IDependencyProperty Register(string name, Type propertyType, Type ownerType)
 		{
 			return Register(name, propertyType, ownerType, null, null);
 		}
 
-		public static DependencyProperty Register(string name, Type propertyType, Type ownerType,
+		public static IDependencyProperty Register(string name, Type propertyType, Type ownerType,
 							  PropertyMetadata typeMetadata)
 		{
 			return Register(name, propertyType, ownerType, typeMetadata, null);
 		}
 
-		public static DependencyProperty Register(string name, Type propertyType, Type ownerType,
+		public static IDependencyProperty Register(string name, Type propertyType, Type ownerType,
 							  PropertyMetadata typeMetadata,
 							  ValidateValueCallback validateValueCallback)
 		{
 			if (typeMetadata == null)
 				typeMetadata = new PropertyMetadata();
 
-			DependencyProperty dp = new DependencyProperty(false, name, propertyType, ownerType,
+			IDependencyProperty dp = new DependencyProperty(false, name, propertyType, ownerType,
 									   typeMetadata, validateValueCallback);
 			DependencyObject.register(ownerType, dp);
 
@@ -151,22 +165,22 @@ namespace LowKode.Core.Common
 			return dp;
 		}
 
-		public static DependencyProperty RegisterAttached(string name, Type propertyType, Type ownerType)
+		public static IDependencyProperty RegisterAttached(string name, Type propertyType, Type ownerType)
 		{
 			return RegisterAttached(name, propertyType, ownerType, null, null);
 		}
 
-		public static DependencyProperty RegisterAttached(string name, Type propertyType, Type ownerType,
+		public static IDependencyProperty RegisterAttached(string name, Type propertyType, Type ownerType,
 								  PropertyMetadata defaultMetadata)
 		{
 			return RegisterAttached(name, propertyType, ownerType, defaultMetadata, null);
 		}
 
-		public static DependencyProperty RegisterAttached(string name, Type propertyType, Type ownerType,
+		public static IDependencyProperty RegisterAttached(string name, Type propertyType, Type ownerType,
 								  PropertyMetadata defaultMetadata,
 								  ValidateValueCallback validateValueCallback)
 		{
-			DependencyProperty dp = new DependencyProperty(true, name, propertyType, ownerType,
+			IDependencyProperty dp = new DependencyProperty(true, name, propertyType, ownerType,
 									   defaultMetadata, validateValueCallback);
 			DependencyObject.register(ownerType, dp);
 			return dp;
@@ -196,9 +210,16 @@ namespace LowKode.Core.Common
 									 PropertyMetadata typeMetadata,
 									 ValidateValueCallback validateValueCallback)
 		{
-			DependencyProperty prop = Register(name, propertyType, ownerType, typeMetadata, validateValueCallback);
+			DependencyProperty prop = (DependencyProperty)Register(name, propertyType, ownerType, typeMetadata, validateValueCallback);
 			prop.ReadOnly = true;
 			return new DependencyPropertyKey(prop);
+		}
+	}
+
+	public class DependencyProperty<TValue> : DependencyProperty, IDependencyProperty<TValue>
+	{
+		public DependencyProperty(): base(typeof(TValue))
+		{
 		}
 	}
 }

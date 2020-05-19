@@ -7,11 +7,11 @@ namespace LowKode.Core.Common
 	public struct LocalValueEnumerator : IEnumerator
 	{
 		private IDictionaryEnumerator propertyEnumerator;
-		private Dictionary<DependencyProperty, object> properties;
+		private Dictionary<IDependencyProperty, object> properties;
 
 		private int count;
 
-		internal LocalValueEnumerator(Dictionary<DependencyProperty, object> properties)
+		internal LocalValueEnumerator(Dictionary<IDependencyProperty, object> properties)
 		{
 			this.count = properties.Count;
 			this.properties = properties;
@@ -27,7 +27,7 @@ namespace LowKode.Core.Common
 		{
 			get
 			{
-				return new LocalValueEntry((DependencyProperty)propertyEnumerator.Key,
+				return new LocalValueEntry((IDependencyProperty)propertyEnumerator.Key,
 				  propertyEnumerator.Value);
 			}
 		}

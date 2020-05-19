@@ -1,4 +1,4 @@
-﻿@page "/lowkode"
+﻿@page "/lowkodebasic"
 @using Lowkode.Demo.Application.Data
 @using LowKode.Core.Metadata
 @using LowKode.Core.Components
@@ -14,14 +14,22 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <EditFields>
-        <p>
-            <label>
-                <DisplayName />:
-                <Input />
-            </label>
-        </p>
-    </EditFields>
+    @{
+        var modelMetadata = site.Metadata.ForSystemType<Starship>();
+        <Scope init="@(c=> c.WithModel<Starship>(_starship))" Context="modelContext">
+            @foreach (var property in modelMetadata.Properties)
+            {
+                <Scope value=@modelContext.WithProperty(property)>
+                    <p>
+                        <label>
+                            <DisplayName />:
+                            <Input />
+                        </label>
+                    </p>
+                </Scope>
+            }
+        </Scope>
+    }
 
 
     <button type="submit">Submit</button>

@@ -5,10 +5,10 @@ using System.Text;
 namespace LowKode.Core.Metadata
 {
     /// <summary>
-    /// Adds methods to ILowKodeMetaService for contributing metadata.
+    /// Adds methods to ILowKodeMetadata for contributing metadata.
     /// 'root types' are the Types that will be used to retrieve the contributed metadata.
     /// </summary>
-    public interface ILowKodeMetaRepository : ILowKodeMetaService
+    public interface ILowKodeMetaRepository : ILowKodeMetadata
     {
 
         /// <summary>

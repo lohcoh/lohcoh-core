@@ -2,26 +2,28 @@
 @using LowKode.Core.Context
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
-@inject ILowKodeMetaService lkMetadata
-@inject ILowKodeComponentService lkComponents
-@inject ILowKodeContext lkContext
+@inject IComponentSite site
 
 
 @{
-    var modelMetadata = lkMetadata.ForType(TModel);
-    <scope value=@lkContext.WithModelType(modelMetadata).WithModel(CurrentEditContext.Model)>
-        @foreach (var propertyMetadata in modelMetadata.Properties)
-        {
-            <scope value=@context.WithProperty(propertyMetadata)>
-                @ChildContent
-            </scope>
-        }
-    </scope>
+    var modelMetadata = site.Metadata.ForSystemType(TModel);
+
+    site.Context.ComponentSiteSpecification.Model = CurrentEditContext.Model;
+    site.Context.ComponentSiteSpecification.ModelType = modelMetadata;
+
+    foreach (var property in modelMetadata.Properties)
+    {
+        IContext fieldContext = site.CreateScope();
+        fieldContext.ComponentSiteSpecification.ModelMember = new DependencyPath(property);
+
+        @ChildContent
+        
+    }
+    
 }
 
 
 @code {
-
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
@@ -43,9 +45,8 @@
 
         if (TModel == null)
         {
-            TModel= CurrentEditContext.Model.GetType();
+            TModel = CurrentEditContext.Model.GetType();
         }
 
     }
-
 }

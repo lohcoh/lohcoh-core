@@ -12,10 +12,10 @@ namespace LowKode.Core.Common
         bool ReadOnly { get; }
         ValidateValueCallback ValidateValueCallback { get; }
 
-        DependencyProperty AddOwner(Type ownerType);
-        DependencyProperty AddOwner(Type ownerType, PropertyMetadata typeMetadata);
+        IDependencyProperty AddOwner(Type ownerType);
+        IDependencyProperty AddOwner(Type ownerType, PropertyMetadata typeMetadata);
         int GetHashCode();
-        PropertyMetadata GetMetadata(DependencyObject dependencyObject);
+        PropertyMetadata GetMetadata(IDependencyObject dependencyObject);
         PropertyMetadata GetMetadata(DependencyObjectType dependencyObjectType);
         PropertyMetadata GetMetadata(Type forType);
         bool IsValidType(object value);
@@ -23,5 +23,10 @@ namespace LowKode.Core.Common
         void OverrideMetadata(Type forType, PropertyMetadata typeMetadata);
         void OverrideMetadata(Type forType, PropertyMetadata typeMetadata, DependencyPropertyKey key);
         string ToString();
+    }
+
+    public interface IDependencyProperty<TProperty> : IDependencyProperty
+    {
+
     }
 }

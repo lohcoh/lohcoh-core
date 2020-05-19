@@ -5,10 +5,10 @@ using System.Text;
 
 namespace LowKode.Core.Metadata
 {
+    // todoL implement dependency properties
     public interface ITypeMetadata : ICommonMetadata
     {
-        
-        Type RuntimeType { get; }
+        Type SystemType { get; }
         ICollection<IPropertyMetadata> Properties { get; } 
     }
 

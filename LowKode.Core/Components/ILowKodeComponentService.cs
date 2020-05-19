@@ -7,7 +7,7 @@ namespace LowKode.Core.Components
 {
 
     /// <summary>
-    /// Creates component instances based on settings contained in the ILowKodeMetaService and context 
+    /// Creates component instances based on settings contained in the ILowKodeMetadata and context 
     /// values in the ILowKodeContextService.
     /// 
     /// The ILowKodeComponentService is only responsible for creating the component, the 
@@ -21,7 +21,7 @@ namespace LowKode.Core.Components
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        ComponentBase Create(ILowKodeContext context);
+        ComponentBase Create(IContext context);
 
        
     }

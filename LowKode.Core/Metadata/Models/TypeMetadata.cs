@@ -10,7 +10,7 @@ namespace LowKode.Core.Metadata
 
         public TypeMetadata(Type t)
         {
-            RuntimeType = t;
+            SystemType = t;
 
             foreach (var propertInfo in t.GetProperties())
             {
@@ -19,7 +19,7 @@ namespace LowKode.Core.Metadata
             }
 
         }
-        public Type RuntimeType { get; set; }
+        public Type SystemType { get; set; }
 
         public ICollection<IPropertyMetadata> Properties { get; } = new List<IPropertyMetadata>();
       
