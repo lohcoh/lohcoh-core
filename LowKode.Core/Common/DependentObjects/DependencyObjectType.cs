@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LowKode.Core.Common
 {
-	public class DependencyObjectType : IDependencyObjectType
+	public class DependencyObjectType : DependencyObject, IDependencyObjectType
 	{
 		private static Dictionary<Type, DependencyObjectType> typeMap = new Dictionary<Type, DependencyObjectType>();
 		private static int current_id;
@@ -37,6 +37,13 @@ namespace LowKode.Core.Common
 			get { return systemType; }
 		}
 
+		// todo: implement
+		public IReadOnlyCollection<IDependencyProperty> Properties 
+		{ 
+			get => throw new NotImplementedException(); 
+			set => throw new NotImplementedException(); 
+		}
+
 		public static DependencyObjectType FromSystemType(Type systemType)
 		{
 			if (typeMap.ContainsKey(systemType))
@@ -59,9 +66,5 @@ namespace LowKode.Core.Common
 			return systemType.IsSubclassOf(dependencyObjectType.SystemType);
 		}
 
-		public override int GetHashCode()
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

@@ -1,16 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace LowKode.Core.Common
 {
-    public interface IDependencyObjectType
+    //todo: implement dependency properties
+    public interface IDependencyObjectType : IDependencyObject
     {
         DependencyObjectType BaseType { get; }
         int Id { get; }
         string Name { get; }
         Type SystemType { get; }
 
-        int GetHashCode();
         bool IsInstanceOfType(DependencyObject dependencyObject);
         bool IsSubclassOf(DependencyObjectType dependencyObjectType);
+
+        IReadOnlyCollection<IDependencyProperty> Properties { get; set; }
     }
 }

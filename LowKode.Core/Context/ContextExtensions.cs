@@ -44,14 +44,14 @@ namespace LowKode.Core.Components
             return site;
         }
 
-        public static IComponentSite WithProperty(this IComponentSite site, IDependencyPath modelMember)
+        public static IComponentSite WithModelMember(this IComponentSite site, IDependencyPath modelMember)
         {
             var siteSpecification = site.Context.ComponentSiteSpecification;
             siteSpecification.ModelMember = modelMember;
-
             return site;
         }
-        
+        public static IComponentSite WithModelMember(this IComponentSite site, IDependencyProperty modelMember)
+            => WithModelMember(site, new DependencyPath(modelMember));
 
     }
 }

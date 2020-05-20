@@ -1,25 +1,17 @@
 ﻿@using LowKode.Core.Metadata
-@using LowKode.Core.Context
+@using LowKode.Core.Common
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
 @inject IComponentSite site
 
 
 @{
-    var modelMetadata = site.Metadata.ForSystemType(TModel);
-
-    site.Context.ComponentSiteSpecification.Model = CurrentEditContext.Model;
-    site.Context.ComponentSiteSpecification.ModelType = modelMetadata;
-
     foreach (var property in modelMetadata.Properties)
     {
-        IContext fieldContext = site.CreateScope();
-        fieldContext.ComponentSiteSpecification.ModelMember = new DependencyPath(property);
-
-        @ChildContent
-        
-    }
-    
+        @site.RenderWithSite(ChildContent, site => {
+            site.Context.ComponentSiteSpecification.ModelMember = new DependencyPath(property);            
+        })
+    }    
 }
 
 
@@ -32,21 +24,28 @@
     public Type TModel { get; set; }
 
     [CascadingParameter]
-    EditContext CurrentEditContext { get; set; }
+    EditContext EditContext { get; set; }
+
+    IDependencyObjectType modelMetadata;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        if (CurrentEditContext == null)
+        if (EditContext == null)
         {
             throw new InvalidOperationException("No EditContext found");
         }
 
         if (TModel == null)
         {
-            TModel = CurrentEditContext.Model.GetType();
+            TModel = EditContext.Model.GetType();
         }
+
+        modelMetadata = site.Metadata.ForSystemType(TModel);
+
+        site.Context.ComponentSiteSpecification.Model = EditContext.Model;
+        site.Context.ComponentSiteSpecification.ModelType = modelMetadata;
 
     }
 }

@@ -16,10 +16,10 @@
 
     @{
         var modelMetadata = site.Metadata.ForSystemType<Starship>();
-        <Scope init="@(c=> c.WithModel<Starship>(_starship))" Context="modelContext">
+        <Scope Init=@(site => site.WithModel<Starship>(_starship)) Context="modelSite">
             @foreach (var property in modelMetadata.Properties)
             {
-                <Scope value=@modelContext.WithProperty(property)>
+                <Scope Init=@(site => site.WithModelMember(property)) Context="propertySite">
                     <p>
                         <label>
                             <DisplayName />:

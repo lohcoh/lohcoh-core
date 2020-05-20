@@ -8,8 +8,8 @@ namespace LowKode.Core.Common
 	
 		public class DependencyObject : IDependencyObject
 		{
-			private static Dictionary<Type, Dictionary<string, IDependencyProperty>> propertyDeclarations = new Dictionary<Type, Dictionary<string, IDependencyProperty>>();
-			private Dictionary<IDependencyProperty, object> properties = new Dictionary<IDependencyProperty, object>();
+			internal static Dictionary<Type, Dictionary<string, IDependencyProperty>> propertyDeclarations = new Dictionary<Type, Dictionary<string, IDependencyProperty>>();
+			internal Dictionary<IDependencyProperty, object> properties = new Dictionary<IDependencyProperty, object>();
 
 			public bool IsSealed
 			{

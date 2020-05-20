@@ -7,5 +7,6 @@ namespace LowKode.Core.Common
     /// </summary>
     public interface IDependencyPath
     {
+        object Invoke(IDependencyObject dependencyObject);
     }
 }

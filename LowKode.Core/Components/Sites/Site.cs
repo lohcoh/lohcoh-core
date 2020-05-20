@@ -17,8 +17,8 @@ namespace LowKode.Core.Components
             this.site = site;
         }
 
-        public IContext Context { get => site.Context; }
-        public ILowKodeMetadata Metadata { get => site.Metadata; }
+        protected IContext Context { get => site.Context; }
+        protected ILowKodeMetadata Metadata { get => site.Metadata; }
 
         IComponentSiteSpecification componentSpecification;
         protected override void OnInitialized()

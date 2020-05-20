@@ -1,26 +1,19 @@
 ﻿@namespace LowKode.Core.Components
-@using LowKode.Core.Metadata
 @using LowKode.Core.Context
-@inject ILowKodeComponentService lkComponents
-@EditorComponent
+@inject IComponentSite site
+@site.RenderWithSite(ChildContent, Init);
+
 @code {
+    /// <summary>
+    /// The Scope component renders it's child content within a new context.
+    /// The Init parameter is required and takes a function that initializes the new context.
+    /// </summary>
+
 
     [Parameter]
-    public RenderFragment<IContext> ChildContent { get; set; }
-
-    // TODO: Unfinished
-    //[Parameter] public Type TModel { get; set; }
-    //[Parameter] public object Value { get; set; }
-    //[Parameter] public IMetaSelector< Value { get; set; }
-
-    ComponentBase EditorComponent;
+    public RenderFragment ChildContent { get; set; }
 
     [Parameter]
-    public Action<IContext> init { get;  set; }
-
-    protected override void OnInitialized()
-    {
-        //EditorComponent = lkComponents.Create(componentType:typeof(Editor), modelType:TModel, PropertyInfo property);
-    }
+    public Action<IComponentSite> Init { get;  set; }
 
 }

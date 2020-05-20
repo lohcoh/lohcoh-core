@@ -29,9 +29,6 @@ namespace Lowkode.Demo.Application
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-            services.AddLowKode(configuration => {
-                configuration.ContributeMetadataForType<Starship>();
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
