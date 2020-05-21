@@ -15,7 +15,7 @@ namespace LowKode.Core.Components
     /// 
     /// todo: implement dependency properties
     /// </summary>
-    public interface IComponentSiteSpecification : IDependencyObject
+    public interface ISiteSpecification : IDependencyObject
     {
 
         /// <summary>

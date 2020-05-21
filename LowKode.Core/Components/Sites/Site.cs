@@ -20,7 +20,7 @@ namespace LowKode.Core.Components
         protected IContext Context { get => site.Context; }
         protected ILowKodeMetadata Metadata { get => site.Metadata; }
 
-        IComponentSiteSpecification componentSpecification;
+        ISiteSpecification componentSpecification;
         protected override void OnInitialized()
         {
             // this component's only job is to set the value of the Context.ComponentSiteSpecification.ComponentType 

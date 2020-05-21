@@ -9,7 +9,7 @@ namespace LowKode.Core.Components
     /// <summary>
     /// Encapsulates information required to create a component for a specific site.
     /// </summary>
-    public class ComponentSiteSpecification : DependencyObject, IComponentSiteSpecification
+    public class SiteSpecification : DependencyObject, ISiteSpecification
     {
         public object Model { get; set; }
         public IDependencyObjectType ComponentType { get; set; }

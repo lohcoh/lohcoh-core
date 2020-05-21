@@ -11,11 +11,11 @@ namespace LowKode.Core.Context
     {
         public static class Properties 
         {
-            public static readonly IDependencyProperty<IComponentSiteSpecification> ComponentSiteSpecificationProperty = 
-                new DependencyProperty<IComponentSiteSpecification>();
+            public static readonly IDependencyProperty<ISiteSpecification> ComponentSiteSpecificationProperty = 
+                new DependencyProperty<ISiteSpecification>();
         }
 
-        IComponentSiteSpecification ComponentSiteSpecification
+        ISiteSpecification ComponentSiteSpecification
         {
             get { return this.GetValue(ComponentSiteSpecificationProperty); }
             set { this.SetValue(ComponentSiteSpecificationProperty, value); }

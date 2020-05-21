@@ -30,44 +30,35 @@ Specifications are used to find a backing component for a lowkode placeholder, a
 
 
 ## Idea for reactive rule engine
-rules are invoked when thier dependencies change.
-A rule is a triplet of functions; dependents, a and ...
 
-/**
- * For Initech users, set the application title
- */
-new Rule() {
-	Properties: _=> new { Title: meta.App.Title },
-	Context: new { CompanyId: ctx.CurrentUser.CompanyId },
-	When: vars => vars.CompanyId == "ibm_selectric_accounting",
-	Then: props => props.Title="TPS Reports"
-};
-
-// ding ding ding, I think this is doable and it's the simplest possible
-new Rule((ctx,meta) => { 
-	if (ctx.CurrentUser.CompanyId == "ibm_selectric_accounting")
-		meta.App.Title = "TPS Reports";
-}
-
-the above gets translated to this equivalent code...
-
-(ctx,meta) => {
-	ctx.CurrentUser.Events.Select(user => user.CompanyId == "ibm_selectric_accounting")
-		.Then(() => meta.App.Events.Post(app => app.Title = "TPS Reports"));
-}
+Rules subscribe to property events and are fired when conditions match.
+LowKode can make rules more efficient by inspecting the When expressions and 
+building it's own indexes to reduce the # of When expressions that need to be 
+executed on a property change
 
 
+// All Initech rules...
+.When(ctx => ctx.User.CompanyId == "initech")
+.Then(meta => {
+	meta.App.Title = "TPS Reports 5000";	
 
-/**
- * For IBM users, set the URL to products thumbnails
-new Rule()
-	.Metadata(meta => meta.App..Items)
-	.Context(ctx => new {
-		CompanyId: ctx.CurrentUser.CompanyId
-	})
-	.When(vars => vars.CompanyId == "ibm_selectric_accounting")
-	.Then(meta => meta.App.Navigation.Items.AddItem(new Item("TSR Reports")));
-	
+	// Add TPS widgets to the dashboard
+	meta.App.Dashboard.Widgets.Add<TpsReportsWithNoCoverSheetDashboardWidget>();
+	meta.App.Dashboard.Widgets.Add<LateTpsReportsDashboardWidget>();
+});
 
-whose parameters declares its dependent properties in the context tree 
-When a rule's antecendent evaluates to true then the rule changes the
+.When((ctx,meta) => ctx.Site.ModelType == meta.ForSystemType<TPSReport>())
+.Then(meta => {
+	// when displaying a TPSReport in a form then make the submit button extra large
+	meta.UI.Widgets.Buttons.Submit.DefaultSize = meta.UI.Widgets.Buttons.Sizes.ExtraLarge;
+		
+	// when the form is submitted, display a notice to remind the user to also create a cover sheet
+	// The code below is adding a handler to the Submit Button's global metadata.
+	// These handlers get added to every Submit button created, but only in the contexts to 
+	// which the Rule is applyed.  In this case, ModelType is only equal to TPSReport when 
+	// a site is displaying or editing a TPSReport.
+	meta.Widgets.Buttons.Submit.OnClick += () => {
+		meta.App.Services.Notifications.Post("Don't forget to add a cover sheet m'kay....")
+	};
+});
+
