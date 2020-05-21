@@ -47,18 +47,28 @@ executed on a property change
 	meta.App.Dashboard.Widgets.Add<LateTpsReportsDashboardWidget>();
 });
 
-.When((ctx,meta) => ctx.Site.ModelType == meta.ForSystemType<TPSReport>())
+.When(ctx => ctx.Site.ModelType == m.TPSReportType)
 .Then(meta => {
+	var App= meta.Get<App>();
+	var UI= meta.Get<UI>
+
 	// when displaying a TPSReport in a form then make the submit button extra large
-	meta.UI.Widgets.Buttons.Submit.DefaultSize = meta.UI.Widgets.Buttons.Sizes.ExtraLarge;
+	UI.Widgets.Buttons.Submit.DefaultSize = UI.Widgets.Buttons.Sizes.ExtraLarge;
 		
 	// when the form is submitted, display a notice to remind the user to also create a cover sheet
 	// The code below is adding a handler to the Submit Button's global metadata.
 	// These handlers get added to every Submit button created, but only in the contexts to 
 	// which the Rule is applyed.  In this case, ModelType is only equal to TPSReport when 
 	// a site is displaying or editing a TPSReport.
-	meta.Widgets.Buttons.Submit.OnClick += () => {
-		meta.App.Services.Notifications.Post("Don't forget to add a cover sheet m'kay....")
+	App.Widgets.Buttons.Submit.OnClick += () => {
+		App.Services.Notifications.Post("Don't forget to add a cover sheet m'kay....")
 	};
 });
+
+
+static class UIMetadata {
+	static xxx UI(this IMetadata meta) => meta.TokenFor(UIMetadata)
+}
+
+
 

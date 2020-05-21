@@ -1,5 +1,17 @@
 ﻿# Open
 
+## 
+
+Consider this expression...
+    meta.App.MainMenu.Items
+I'm looking for a way to make this expression work in a way that is efficient for the lowkode context system.
+Each context is a versin of a tree of objects.
+
+static public IObjectKey<Application> App(this IObjectKey<ILowKodeMetadata> key) => obj.GetObjectKey(MyApp.ApplicationProperty)
+
+
+## There should be a way for components to declate their context and metadata dependencies
+
 ## Is it possible to design a Blazor component where dependent and attached properties are set in a template?
 Answer: I think the answer to this is that, since a site is totallt driven by context and metadata, that a developer 
 should basically NEVER pass values to a component.

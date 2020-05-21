@@ -1,5 +1,6 @@
 ﻿using LowKode.Core.Common;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LowKode.Core.Metadata
@@ -8,8 +9,17 @@ namespace LowKode.Core.Metadata
     {
         public static IDependencyObjectType ForSystemType(this ILowKodeMetadata metadata, Type systemType)
             => metadata.DependencyObjectTypes.Where(o => o.SystemType == systemType).First();
-        
+
+
         public static IDependencyObjectType ForSystemType<TSystem>(this ILowKodeMetadata metadata)
             => ForSystemType(metadata, typeof(TSystem));
     }
+    interface IDependencyObjectTypes { }
+
+    public static class ILowKodeMetadataExtensions
+    {
+        public static IDependencyObjectTypes DependencyObjectTypes(this ILowKodeMetadata meta)
+            => meta.GetService<IDependencyObjectTypes>();
+    }
+
 }
