@@ -61,18 +61,7 @@ executed on a property change
 	// which the Rule is applyed.  In this case, ModelType is only equal to TPSReport when 
 	// a site is displaying or editing a TPSReport.
 	App.Widgets.Buttons.Submit.OnClick += () => {
-		var tpsReport = meta.Site.Model as TPSReport;
-		if (!tpsReport.HasCoverSheet()) {
-			// notifications is an application service that displays UI notifications to the user, it's 
-			// injected into the object that's creating this rule.
-			// This approach doesn;t work if the notification service is context-sensitive.
-			notifications.Alert("Don't forget to add a cover sheet m'kay....");
-
-			// if the notification service is not available when the rule is registered, you can 
-			// put the notification service in metadata, and fetch it in the event handler
-			// This allows the service to be configured with lowkoder.
-			App.Services.Notifications.Alert("Don't forget to add a cover sheet m'kay....")
-		}
+		App.Services.Notifications.Post("Don't forget to add a cover sheet m'kay....")
 	};
 });
 
@@ -80,6 +69,8 @@ executed on a property change
 static class UIMetadata {
 	static xxx UI(this IMetadata meta) => meta.TokenFor(UIMetadata)
 }
+
+var meta.
 
 
 
