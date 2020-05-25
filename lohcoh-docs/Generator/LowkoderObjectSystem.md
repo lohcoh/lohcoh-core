@@ -1,9 +1,23 @@
 ﻿# The Lowkoder Object System
 
-The Lowkoder Object System(LOS) is an embedded object system designed to serve as a lightweight, extensible, versioned metadata and context repository.
+The Lowkoder Object System(LOS) is an embedded object system designed to serve as a lightweight and extensible metadata repository.
 
-LOS provides space-efficient versioning, the ability to dynamically extend object types, react to changes, implement cross-cutting functionality, etc.
-A goal of LOS is to provide these advanced behaviors in a simple idomatic C# fashion.
+Background...
+In Lowkoder, *metadata* is a tree of data objects that is configured at startup and is thereafter immutable.
+Like metadata, a context tree is a tree of data objects.  
+A RuleSet is a collection of rules where the rules in the collection modify property values in a given 
+metadata tree based on the property values in a given context tree.
+
+In Lowkoder, every UI component Lowkoder has it's own context tree. 
+Every component's context tree is initialized with property values, the context tree also inherit property values 
+from the context associated with the component's parent.
+After a component's context tree is configured it is given to the application's RuleSet to create a new metadata tree, customized 
+for the given conext by the RuleSet.
+The associated component uses the custom metadata to generate content.
+
+LOS is intended to be a metadata engine that can support Lowkoder and implement the functionality required by 
+Lowkoder in an a space and time efficient manner, yet still provide a simple, idomatic C# API.
+
 
 ## LOS basics
 
@@ -22,7 +36,8 @@ Things to know...
 - Every LOS object has a dictionary of properties, indexed by the name of the property.
 - Every LOS object has an associated C# interface type that specifies properties.
 - A LOS object's type interface may only specify properties.
-- A LOS object's type interface properties may not be generic.
+- LOS properties may only return a LOS object, a value type, or an immutable object.
+	LOS does not attempt to track changes to non-LOS objects, and mutating non-LOS objects stored on LOS can have negative side-effects.
 - There is no way to create new LOS objects other than the ILosObject.New method.
 - This line...
 		root.New<Application>(); 
@@ -38,6 +53,30 @@ Things to know...
 	You can also do this... 
 		var app= root.Get("Foobar"); 
 
+#### sealing an object.
+A LOS object may be sealed to prevent further changes.
+Sealing an object has it's advantages because it's often the case that application architecture can be simplified 
+and optimized when you know that objects are immutable, so it would be nice if LOS objects were immutable.
+OTOH, there are many situations where immuatable objects are more tedious to work with than mutable objects.
+The ability to seal objects is a compromise.
+Example... 
+
+```
+    var LOS = new LOSObjectSystem();
+	var root= LOS.Root; // get the root object
+	var app= root.New<Application>(); 
+	var contect= root.New<Context>();
+
+	app.Title= "TPS Report Manager 3000"
+	root.Sealed= true;
+	app.Title= "Acme Report Manager"; // throws error: "object is sealed"
+	app.New<MyExtentionMetadata>(); // throws error: "object is sealed"
+```
+
+Things to know...
+- branches (discussed later) *do not* inherit locks.  Branches are open to changes when they are first created.
+- Unsealing an object is not supported 
+- Lowkode always seals an object after populating it with properties and events.
 
 ### Use Extension methods to simplify root access
 
@@ -58,44 +97,6 @@ Note: By convention, metadata root extensions are declared in the LowKode.Core.M
 and context root extensions are declared in the LowKode.Core.Context namespace, thus making it easier 
 to discover all root extensions contributed by assemblies.
 
-
-### LOS Versioning
-
-It's possible to create new versions of an existing object system, the newly created object system will inherit values 
-from it's parent, unless explicitly overwritten in the child...
-
-	    var LOS = new LOSObjectSystem();
-		var root= LOS.Root; // get the root object
-
-		root.Add<string>("Hello1", "Howdy"); 
-		root.Add<string>("Hello2", "Hi"); 
-		root.Add<string>("Hello3", "Hello"); 
-
-		// creates a branch of the root and change some properties
-		var branch= LOS.Branch(); 
-		branch.Set("Hello1", "Yo");
-		branch.Remove("Hello2");
-
-		// then make a change to the root 
-		root.Set("Hello3", "Greetings");
-		
-		// all these assertions are true
-		Assert.AreEqual("Yo", branch.Get("Hello1"))
-		Assert.IsNull(branch.Get("Hello2"))
-
-		// note that the Hello3 property was never set in the branch, therefore 
-		// the current value in the root cascades to the child
-		Assert.AreEqual("Greetings", branch.Get("Hello3"))
-
-		Assert.AreEqual("Howdy", root.Get("Hello1"))
-
-		// Note that removing a property from the child did not remove it from the root.
-		Assert.AreEqual("Hi", root.Get("Hello2"))
-
-		Assert.AreEqual("Greetings", root.Get("Hello3"))
-
-
-LOS supports large numbers of versions of large object systems in a space-efficient way.
 
 
 ### LOS Events
@@ -118,12 +119,11 @@ root.Application.User.Subscribe(u => u.CompanyId).Then(e => "do something here")
 root.Application.User.Subscribe().Then(e => "do something here");
 	
 Things to know...
-- Event handlers are not registered on properties, they are registered on objects.
-- When a listener is attached to an object, that listener is inherited by all branches of 
-	that object, unless the listener is explicitly removed from the branch.	
+- Listeners may only be registers on root objects. There is no support for removing listeners.
+- Event handlers may only be registed on LOS objects and properties of LOS objects.
+- Listener are inherited by branches unless the listener is explicitly removed from the branch.	
 - Subscriptions always deliver events *after* the change has occurred.
 - Subscriptions deliver an event object to listeners that contains important info, like old values and such.
-
 
 ### Constructing Hierarchies 
 
@@ -142,4 +142,48 @@ Given the above interface definitons, here's how you might use them to discover 
 
 	var installedExtensions= root.App.Extensions.Installed
 
+### Extensions
+
+
+
+
+
+
+### LOS Versioning
+
+It's possible to create new versions of an existing object system, the newly created object system will inherit values 
+from it's parent, unless explicitly overwritten in the child...
+
+	    var LOS = new LOSObjectSystem();
+		var root= LOS.Root; // get the root object
+
+		root.Add<string>("Hello1", "Howdy"); 
+		root.Add<string>("Hello2", "Hi"); 
+		root.Add<string>("Hello3", "Hello"); 
+
+		// creates a branch of the root and change some properties
+		var branch= LOS.Branch(); 
+		branch.Set("Hello1", "Yo");
+		branch.Remove("Hello2");
+
+		// all these assertions are true
+		Assert.AreEqual("Yo", branch.Get("Hello1"))
+		Assert.IsNull(branch.Get("Hello2"))
+
+		// note that the Hello3 property was never set in the branch, therefore 
+		// the current value in the root cascades to the child
+		Assert.AreEqual("Hellow", branch.Get("Hello3"))
+
+		Assert.AreEqual("Howdy", root.Get("Hello1"))
+
+		// Note that removing a property from the child did not remove it from the root.
+		Assert.AreEqual("Hi", root.Get("Hello2"))
+
+		Assert.AreEqual("Hello", root.Get("Hello3"))
+
+Things to know...
+- LOS can support large numbers of branches because branches don't copy data from thier ancestor, requests for properties 
+that have not been explicitly set in a banch are delegated to an ancestor.
+- LOS efficiently supports deep hierarchies of branches.  Requests for property values are not passed up the tree of 
+branches to the branch that holds the value.  
 
