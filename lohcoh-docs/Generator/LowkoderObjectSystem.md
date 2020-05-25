@@ -24,34 +24,30 @@ Lowkoder in an a space and time efficient manner, yet still provide a simple, id
 A LOS object system is a tree of LOS objects.
 To create an instance of a LOS object system you first create a system object and then add more objects to the system's root object...
 
+	interface Application {
+		string Title { get; set; }
+	}
+
     var LOS = new LOSObjectSystem();
 	var root= LOS.Root; // get the root object
 	// Create a new object with the <Application> interface type, assign it to the "Application" property, and the return it
-	var app= root.Add<Application>(); 
-	app.Title= "TPS Report Manager 3000"
+	var app= root.Add<Application>(app => { 
+		app.Title= "TPS Report Manager 3000"; 
+	})
 	var title= root.Get<Application>().Title;  // get the application title
 
 Things to know...
-- Every LOS object has a dictionary of properties, indexed by the name of the property.
-- Every LOS object has an associated C# interface type that specifies properties.
-- A LOS object's type interface may only specify properties.
-- LOS properties may only return a LOS object, a value type, or an immutable object.
+- Every LOS object is a dictionary of other LOS objects, indexed by the type of the property.
+- Every LOS object has an associated C# interface type that subclasses ILosObject and that specifies properties.
+- A LOS object's type interface may only specify properties.  No methods allowed, but properties may return function references.
+- LOS properties may only return a LOS object type, a value type, or an immutable object.
 	LOS does not attempt to track changes to non-LOS objects, and mutating non-LOS objects stored on LOS can have negative side-effects.
-- LOS properties may not be overloaded.
+- LOS properties may not be generic.
 - There is no way to create new LOS objects other than the ILosObject.Add method.
-- This line...
+- The following line adds a property to the root object, the property type is Application, and, by convention, the property name is "Application"...
 		root.Add<Application>(); 
-	...Adds a property to the root object, the property type is Application, and, by convention, the property name is "Application".
-- This line...
+- The following line gets the "Application" property from the root object....
 		var app= root.Get<Application>(); 
-	...gets the property named "Application" from the root object.  
-	If the property value is not null and not an instance of Application then null will be returned.
-- This line...
-		var app= root.Get<Application>("Foobar"); 
-	...gets the property named "Foobar" from the root object.  
-	If the property value is not null and not an instance of Application then null will be returned.
-	You can also do this... 
-		var app= root.Get("Foobar"); 
 
 
 ### Use Extension methods to simplify root access
@@ -91,8 +87,6 @@ from it's parent, unless explicitly overwritten in the child...
 			string Two {get; set; }
 			string Three {get; set; }
 		}
-
-
 
 	    var LOS = new LOSObjectSystem();
 		var root= LOS.Root; // get the root object
@@ -183,7 +177,7 @@ Things to know...
 - Listeners may only be added to the root branch of an object system. 
 	Put another way, you can't subscribe to LOS objects in branches.
 - There is no support for removing listeners.
-- Event handlers may only subscribe to properties of type ILOSObject.
+- Event handlers may only subscribe ILOSObjects.
 - Subscriptions always deliver events *after* the change has occurred.
 - Subscriptions deliver an event object to listeners that contains important info, like old values and such.
 

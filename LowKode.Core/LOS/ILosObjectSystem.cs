@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LowKode.Core.LOS
 {
-    public interface ILosSystem
+    public interface ILosObjectSystem
     {
         ILosObject Root { get; }
     }
