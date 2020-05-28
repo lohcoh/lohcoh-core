@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LowKode.Core.LOS
 {
-    public class LosObject : ILosObject<TProperty>
+    public class LosObject : ILosObject
     {
         LosObject prototype;
         int revision;
@@ -15,7 +15,7 @@ namespace LowKode.Core.LOS
         /// <param name="revision">0 for the root branch, > 0 otherwise</param>
         LosObject(int revision)
         {
-            this.root= root;
+
         }
         /// <summary>
         /// Create a braan object when adding a new child to another LosObject
@@ -23,22 +23,22 @@ namespace LowKode.Core.LOS
         /// <param name="revision">0 for the root branch, > 0 otherwise</param>
         LosObject(LosObject prototype, int revision)
         {
-            this.root = root;
+
         }
 
         public int ObjectId { get => this.GetHashCode(); }
 
-        public ILosObject Add<TProperty>() where TProperty : ILosObject
-        {
-            objectSystem.Add<TProperty>
-        }
-
-        public ILosObject Get<TProperty>() where TProperty : ILosObject
+        public TProperty Add<TProperty>(string propertyName)
         {
             throw new NotImplementedException();
         }
 
-        public ILosObject Remove<TProperty>() where TProperty : ILosObject
+        public object Get(string propertyName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object Remove(string propertyName)
         {
             throw new NotImplementedException();
         }

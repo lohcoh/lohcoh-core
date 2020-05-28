@@ -4,13 +4,12 @@ The Lowkoder Object System(LOS) is an embedded object system designed to serve a
 
 Background...
 
-In Lowkoder, *metadata* is a tree of data objects that is configured at startup and is thereafter immutable.
+In Lowkoder, *metadata* is a tree of data objects that is configured at startup and is thereafter immutable, except by rules.
 Like metadata, a context tree is also a tree of data objects.  
-A RuleSet is a collection of rules where the rules in the collection modify property values in a given 
-metadata tree based on the property values in a given context tree.
+A RuleSet is a collection of rules that modify metadata based on the values in a given context tree.
 
-In Lowkoder, every UI component has it's own context tree. 
-Every component's context tree inherits property values from the context tree associated with the component's parent.
+In Lowkoder, every UI component has it's own context and metadata trees. 
+Every component's context tree inherits property values from the component's parent's context tree.
 Every component's context tree is initialized with property values and then given to the application's RuleSet to create a new metadata tree, customized 
 for the associated component by the RuleSet.
 The associated component uses the custom metadata to generate content.
@@ -24,25 +23,26 @@ Lowkoder in an a space and time efficient manner, yet still provide a simple, id
 A LOS object system is a tree of LOS objects.
 To create an instance of a LOS object system you first create a system object and then add more objects to the system's root object...
 
-	interface Application {
+	interface Application : LosObject {
 		string Title { get; set; }
 	}
 
     var LOS = new LOSObjectSystem();
 	var root= LOS.Root; // get the root object
-	// Create a new object with the <Application> interface type, assign it to the "Application" property, and the return it
-	var app= root.Add<Application>(app => { 
+	// Create a new object with the <Application> interface type, assign it to the "Application" property, and then return it
+	root.Add<Application>(app => { 
 		app.Title= "TPS Report Manager 3000"; 
 	})
 	var title= root.Get<Application>().Title;  // get the application title
 
 Things to know...
-- Every LOS object is a dictionary of other LOS objects, indexed by the type of the property.
-- Every LOS object has an associated C# interface type that subclasses ILosObject and that specifies properties.
-- A LOS object's type interface may only specify properties.  No methods allowed, but properties may return function references.
+- Every LOS object is a dictionary of values indexed by the name of the property.
+- Every LOS object has an associated C# interface type that subclasses LosObject and that specifies properties.
+- A LOS object's type interface may only specify properties.  
+	No methods allowed, but properties may return function references.
 - LOS properties may only return a LOS object type, a value type, or an immutable object.
-	LOS does not attempt to track changes to non-LOS objects, and mutating non-LOS objects stored on LOS can have negative side-effects.
-- LOS properties may not be generic.
+	LOS assumes that all the data stored in a LOS object system is only mutable by LOS.	
+	Also, LOS properties may not be generic.
 - There is no way to create new LOS objects other than the ILosObject.Add method.
 - The following line adds a property to the root object, the property type is Application, and, by convention, the property name is "Application"...
 		root.Add<Application>(); 
@@ -76,7 +76,7 @@ This documentation often assumes that this convention is being employed.
 It's possible to create new versions of an existing object tree, the newly created object tree will inherit values 
 from it's parent, unless explicitly overwritten in the child...
 	
-		interface Hello {
+		interface Hello : LosObject {
 			string One {get; set; }
 			string Two {get; set; }
 			string Three {get; set; }
@@ -159,27 +159,35 @@ Things to know...
 It's easy to listen to changes to an object system...
 
 // Event fired whenever the CompanyId property is changed...
-root.Application.User.Subscribe(u => u.CompanyId).Then(e => DisplayCompanyDashboard(e.User.CompanyId););
+root.Subscribe<Application>(app => app.Application.User.Property(u => u.CompanyId))
+	.Then(app => DisplayCompanyDashboard(app.User.CompanyId););
 
-// Event is fired only when CompanyId is set to "Initech"
-root.Application.User.Subscribe(u => u.CompanyId == "Initech").Then(e => AddTPSReports());
+Above is same as this...
+root.Subscribe(root => root.Application.User.Property(u => CompanyId))
+	.Then(root => DisplayCompanyDashboard(root.Application.User.CompanyId););
+
+Which is same as this...
+root.Subscribe(root => root.Get<Application>.User.Property(u => CompanyId))
+	.Then(root => DisplayCompanyDashboard(root.Get<Application>.User.CompanyId););
+
+// Every time the User object is changed an event is fired if CompanyId is set to "Initech"
+root.Subscribe<Application>(app => app.User.Where(u => u.CompanyId == "Initech")
+	.Then(e => AddTPSReports());
+
+// Every time the CompanyId is changed an event is fired when the is == "Initech"
+root.Subscribe(root => root.Get<Application>.User.Property(u => CompanyId).Where(id => id == "Initech")
+	.Then(root => DisplayCompanyDashboard(root.Get<Application>.User.CompanyId););
 
 // Fire event when Company is Initech and the TPS Reports extension is installed.
-(		root.Application.User.Subscribe(u => u.CompanyId == "Initech")
-	&&	root.Application.Extensions.Installed.Subscribe(x => x.Contains("TPS Reports"))
-)
+root.Subscribe(r => r.Application.User.Property(u => CompanyId).Where(id => id == "Initech"))
+	&& root.Subscribe(r => r.Application.Extensions.Installed.Where(i => i.Contains("TPS Reports"))))
 .Then(e => AddTPSReports());
 
-// Event fired whenever the User object is changed...
-root.Application.User.Subscribe().Then(e => "do something here");
 	
 Things to know...
-- Listeners may only be added to the root branch of an object system. 
-	Put another way, you can't subscribe to LOS objects in branches.
+- Listeners may only be added to the root branch of an object system, you can't subscribe to branches.
 - There is no support for removing listeners.
-- Event handlers may only subscribe ILOSObjects.
 - Subscriptions always deliver events *after* the change has occurred.
-- Subscriptions deliver an event object to listeners that contains important info, like old values and such.
 
 ### Constructing Hierarchies 
 

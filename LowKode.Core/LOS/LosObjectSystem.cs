@@ -6,6 +6,12 @@ namespace LowKode.Core.LOS
 {
     public class LosObjectSystem : ILosObjectSystem
     {
-        public ILosObject Root => throw new NotImplementedException();
+        public ILosRoot Master { get; private set; }
+
+        public LosObjectSystem()
+        {
+            Master = new LosRoot();
+        }
+
     }
 }
