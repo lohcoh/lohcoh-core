@@ -3,18 +3,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LowKode.Tests
 {
-    interface Application
+    interface Application : ILosObject
     {
         string Title { get; set; }
     }
-    interface Hello
+    interface Hello : ILosObject
     {
         string One { get; set; }
         string Two { get; set; }
         string Three { get; set; }
     }
 
-    interface GoodBye
+    interface GoodBye : ILosObject
     {
         string One { get; set; }
         string Two { get; set; }
@@ -34,7 +34,8 @@ namespace LowKode.Tests
             var LOS = new LosObjectSystem();
             var root = LOS.Master; // get the root object
             // Create a new object with the <Application> interface type, assign it to the "Application" property, and the return it
-            var app = root.Add<Application>(app => app.Title = "TPS Report Manager 3000");
+            var app = root.Add<Application>();
+            app.Title = "TPS Report Manager 3000");
 
             var title = root.Get<Application>().Title;  // get the application title
             Assert.AreEqual("TPS Report Manager 3000", title);
@@ -46,25 +47,20 @@ namespace LowKode.Tests
             var LOS = new LosObjectSystem();
             var root = LOS.Master; // get the root object
 
-            root.Add<Hello>(hello => 
-            {
-                hello.One = "Howdy";
-                hello.Two = "Hi";
-                hello.Three = "Hello";
-            });
-            root.Add<GoodBye>(bye => 
-            {
-                bye.One = "Bye";
-                bye.Two = "Goodby";
-                bye.Three = "Later";
-            });
+            var hello= root.Add<Hello>();
+            hello.One = "Howdy";
+            hello.Two = "Hi";
+            hello.Three = "Hello";
+
+            var bye= root.Add<GoodBye>();
+            bye.One = "Bye";
+            bye.Two = "Goodby";
+            bye.Three = "Later";
 
             // creates a branch of the root and changes some properties
-            var branch = root.Branch(branch => 
-            {
-                branch.One = "Yo";
-                branch.Two = null;
-            });
+            var branch = root.Branch();
+            branch.One = "Yo";
+            branch.Two = null;
 
             // all these assertions are true
             Assert.AreEqual("Yo", branch.One);

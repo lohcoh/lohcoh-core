@@ -4,43 +4,36 @@ using System.Text;
 
 namespace LowKode.Core.LOS
 {
+    /// <summary>
+    /// A LOS object is a proxy that translates calls to the ILosObject interface to 
+    /// commands passed to the underlying object system.
+    /// </summary>
     public class LosObject : ILosObject
     {
-        LosObject prototype;
         int revision;
+        int objectId;
+        ILosObjectSystem los;
 
-        /// <summary>
-        /// Create an object when adding a new child to another LosObject
-        /// </summary>
-        /// <param name="revision">0 for the root branch, > 0 otherwise</param>
-        LosObject(int revision)
+        LosObject(ILosObjectSystem los, int revision, int objectId)
         {
-
-        }
-        /// <summary>
-        /// Create a braan object when adding a new child to another LosObject
-        /// </summary>
-        /// <param name="revision">0 for the root branch, > 0 otherwise</param>
-        LosObject(LosObject prototype, int revision)
-        {
-
+            this.los= los;
+            this.revision= revision;
+            this.objectId= objectId;
         }
 
-        public int ObjectId { get => this.GetHashCode(); }
-
-        public TProperty Add<TProperty>(string propertyName)
+        public object Add(string propertyName, Type tProperty)
         {
-            throw new NotImplementedException();
+            return los.Add(this, propertyName, tProperty);
         }
 
         public object Get(string propertyName)
         {
-            throw new NotImplementedException();
+            return los.Get(this, propertyName);
         }
 
         public object Remove(string propertyName)
         {
-            throw new NotImplementedException();
+            return los.Remove(this, propertyName);
         }
     }
 }

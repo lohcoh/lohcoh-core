@@ -122,9 +122,8 @@ from it's parent, unless explicitly overwritten in the child...
 		Assert.AreEqual("Hello", root.Three)
 
 Things to know...
-- LOS can support large numbers of branches in a space efficient because branches don't copy data from thier ancestor.
-- LOS efficiently supports deep hierarchies of branches by not passing requests for property values up the tree of 
-branches to the branch that holds the value.  Instead, values are looked up, using an index that includes branch, object, and property Ids.
+- LOS can support large numbers of branches in a space efficient way because branches don't copy data from thier ancestor.
+- LOS efficiently supports deep hierarchies of branches, values are looked up, using an index that includes branch, object, and property Ids.
 
 
 
