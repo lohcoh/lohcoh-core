@@ -2,5 +2,6 @@
 {
     public interface ILosRoot : ILosObject
     {
+        ILosRoot Branch();
     }
 }

@@ -16,10 +16,6 @@ namespace LowKode.Core.Metadata
     }
     interface IDependencyObjectTypes { }
 
-    public static class ILowKodeMetadataExtensions
-    {
-        public static IDependencyObjectTypes DependencyObjectTypes(this ILowKodeMetadata meta)
-            => meta.GetService<IDependencyObjectTypes>();
-    }
+  
 
 }

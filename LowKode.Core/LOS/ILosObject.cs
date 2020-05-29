@@ -16,9 +16,7 @@ namespace LowKode.Core.LOS
         TProperty Get<TProperty>(string propertyName) where TProperty : ILosObject => (TProperty)Get(propertyName);
         TProperty Get<TProperty>() where TProperty : ILosObject => Get<TProperty>(typeof(TProperty).FullName);
 
-        object Remove(string propertyName);
-        TProperty Remove<TProperty>(string propertyName) where TProperty : ILosObject => (TProperty)Remove(propertyName);
-        TProperty Remove<TProperty>() where TProperty : ILosObject => Remove<TProperty>(typeof(TProperty).FullName);
+        void Remove(string propertyName);
     }
 
 }
