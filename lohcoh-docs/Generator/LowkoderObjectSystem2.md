@@ -22,18 +22,17 @@ Lowkoder in an a space and time efficient manner, yet still provide a simple, id
 ### LOS objects
 A LOS object system is a tree of LOS objects.
 To create an instance of a LOS object system you first create a system object and then add more objects to the system's root object...
-
-	interface Application : LosObject {
+	
+	public class Application : LosObject {
 		string Title { get; set; }
 	}
 
     var LOS = new LOSObjectSystem();
-	var root= LOS.Root; // get the root object
+	var root= LOS.Select(0); // get the root object
 	// Create a new object with the <Application> interface type, assign it to the "Application" property, and then return it
-	root.Add<Application>(app => { 
-		app.Title= "TPS Report Manager 3000"; 
-	})
-	var title= root.Get<Application>().Title;  // get the application title
+	var app= root.Add<Application>();
+	app.Title= "TPS Report Manager 3000";
+	var title= root.Get<Application>().Title;  
 
 Things to know...
 - Every LOS object is a dictionary of values indexed by the name of the property.
@@ -53,10 +52,10 @@ Things to know...
 ### Use Extension methods to simplify root access
 
 Instead of this...
-	var installedExtensions= root.Get<App>().Extensions.Installed
+	var installedExtensions= root.Get<App>().Extensions.Installed;
 
 You can do this...
-	var installedExtensions= root.App.Extensions.Installed
+	var installedExtensions= root.App.Extensions.Installed;
 
 If you create an extension method...
 	namespace LowKode.Core.Metadata {
@@ -76,50 +75,53 @@ This documentation often assumes that this convention is being employed.
 It's possible to create new versions of an existing object tree, the newly created object tree will inherit values 
 from it's parent, unless explicitly overwritten in the child...
 	
-		interface Hello : LosObject {
+		class Hello : LosObject {
 			string One {get; set; }
 			string Two {get; set; }
 			string Three {get; set; }
 		}
 
-		interface GoodBye {
+		class GoodBye : LosObject {
 			string One {get; set; }
 			string Two {get; set; }
 			string Three {get; set; }
 		}
 
 	    var LOS = new LOSObjectSystem();
-		var root= LOS.Root; // get the root object
+		var root= LOS.Select(0); // get the root object of th master branch
 
-		root.Add<Hello>(hello => {
-			hello.One= "Howdy",
-			hello.Two = "Hi",
-			hello.Three = "Hello"
-		}); 
-		root.Add<GoodBye>(bye => {
-			bye.One= "Bye",
-			bye.Two = "Goodby",
-			bye.Three = "Later"
-		}); 
+		var hello= new Hello() {
+			One= "Howdy",
+			Two = "Hi",
+			Three = "Hello"
+		}; 
+		root.Insert(hello); 
+
+		var goodBye= new GoodBye() {
+			One= "Bye",
+			Two = "Goodby",
+			Three = "Later"
+		}; 
+		root.Insert(goodBye); 
 
 		// creates a branch of the root and changes some properties
-		var branch= root.Branch(branch => {
-			branch.One= "Yo",
-			branch.Two = null
-		}); 
+		var branch= LOS.Branch(root);
+		var hello2= branch.Get<Hello>();
+		hello2.One= "Yo";
+		hello2.Two = null;
 
 		// all these assertions are true
-		Assert.AreEqual("Yo", branch.One)
-		Assert.IsNull(branch.Two)
+		Assert.AreEqual("Yo", hello2.One)
+		Assert.IsNull(hello2.Two)
 
 		// note that the Hello3 property was never set in the branch, therefore 
 		// the current value in the root cascades to the child
-		Assert.AreEqual("Hello", branch.Three)
+		Assert.AreEqual("Hello", hello2.Three)
 
 		// Note that changing properties in the branch did not change the root.
-		Assert.AreEqual("Howdy", root.One)
-		Assert.AreEqual("Hi", root.Two)
-		Assert.AreEqual("Hello", root.Three)
+		Assert.AreEqual("Howdy", hello.One)
+		Assert.AreEqual("Hi", hello.Two)
+		Assert.AreEqual("Hello", hello.Three)
 
 Things to know...
 - LOS can support large numbers of branches in a space efficient way because branches don't copy data from thier ancestor.
@@ -137,12 +139,12 @@ Example...
 
 ```
     var LOS = new LOSObjectSystem();
-	var root= LOS.Root; // get the root object
+	var root= LOS.Select(0); // get the root object
 	var app= root.Add<Application>(); 
 	var contect= root.Add<Context>();
 
 	app.Title= "TPS Report Manager 3000"
-	root.Sealed= true;
+	var branch= root.Save();
 	app.Title= "Acme Report Manager"; // throws error: "object is sealed"
 	app.Add<MyExtentionMetadata>(); // throws error: "object is sealed"
 ```
