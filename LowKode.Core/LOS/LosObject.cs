@@ -11,33 +11,34 @@ namespace LowKode.Core.LOS
     /// </summary>
     class LosObject : ILosObject
     {
-        protected int revision;
         protected int objectId;
-        protected ILosObjectSystem los;
+
+        public int Revision { get; private set; }
+        public ILosObjectSystem LOS { get; private set; }
 
         /// <summary>
         /// Create a proxy to object with id == objectId in the given revision of the given object system.
         /// </summary>
         public LosObject(ILosObjectSystem los, int revision, int objectId)
         {
-            this.los= los;
-            this.revision= revision;
+            this.LOS= los;
+            this.Revision= revision;
             this.objectId= objectId;
         }
 
         virtual public void Add(string propertyName, Type valueType, object value)
         {
-            los.Insert(objectId, revision, propertyName, valueType, value);
+            LOS.Insert(objectId, Revision, propertyName, valueType, value);
         }
 
         virtual public object Get(string propertyName)
         {
-            return los.Get(objectId, revision, propertyName);
+            return LOS.Get(objectId, Revision, propertyName);
         }
 
         virtual public void Remove(string propertyName)
         {
-            los.Remove(objectId, revision, propertyName);
+            LOS.Remove(objectId, Revision, propertyName);
         }
     }
 }

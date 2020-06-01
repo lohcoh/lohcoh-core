@@ -19,6 +19,7 @@ namespace LowKode.Core.LOS
 
         override public void Add(string propertyName, Type valueType, object value)
         {
+            // record the addition, when the Save method is called these additions will be inserted into object system.
             Additions.Add(propertyName, new DocumentInfo() {  DocumentType= valueType, Document= value });
         }
 
@@ -26,11 +27,11 @@ namespace LowKode.Core.LOS
         public ILosRoot Save()
         {
             // todo: need a proper generator of branch ids
-            var branch= new LosRoot(los, revision+1, objectId);
+            var branch= new LosRoot(LOS, Revision+1, objectId);
             foreach (var propertyName in Additions.Keys)
             {
                 var documentInfo= Additions[propertyName];
-                los.Insert(objectId, branch.revision, propertyName, documentInfo.DocumentType, documentInfo.Document);
+                LOS.Insert(objectId, branch.Revision, propertyName, documentInfo.DocumentType, documentInfo.Document);
             }
             return branch;
         }

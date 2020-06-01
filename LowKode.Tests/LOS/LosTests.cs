@@ -30,18 +30,31 @@ namespace LowKode.Tests
         [TestMethod]
         public void TestPriming()
         {
-
             var LOS = new LosObjectSystem();
-            var prime = LOS.Prime; // get the prime branch
+            
+            // The prime branch should always have revision == -1
+            Assert.AreEqual(-1, LOS.Prime.Revision);
 
-            var app = new Application() {
-                Title= "TPS Report Manager 3000"
-            };
-            prime.Add(app);
-            var master= prime.Save();
+            // populate the object system with some data
+            LOS.Prime.Add(new Application()
+            {
+                Title = "TPS Report Manager 3000"
+            });
 
-            var title = master.Get<Application>().Title;  // get the application title
-            Assert.AreEqual("TPS Report Manager 3000", title);
+            var master= LOS.Prime.Save(); // save the data to create the master branch
+            Assert.AreEqual(0, master.Revision); /// the master branch always has revision 0
+
+            // we should get the title that we created
+            Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
+
+            // now change the title
+            master.Get<Application>().Title = "TPS Report Manager 3000 + 1";
+            var branch= master.Save();
+            Assert.AreEqual(1, branch.Revision); 
+
+            // the branch title should be updated and the master title should not have changed
+            Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
+            Assert.AreEqual("TPS Report Manager 3000 + 1", branch.Get<Application>().Title);
         }
 
         [TestMethod]

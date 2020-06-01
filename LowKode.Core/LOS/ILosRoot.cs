@@ -5,6 +5,8 @@
     /// </summary>
     public interface ILosRoot : ILosObject
     {
+        public int Revision { get; }
+
         /// <summary>
         /// Saves the
         /// </summary>

@@ -4,64 +4,89 @@ The Lowkoder Object System(LOS) is an embedded object system designed to serve a
 
 Background...
 
-In Lowkoder, *metadata* is a tree of data objects that is configured at startup and is thereafter immutable, except by rules.
-Like metadata, a context tree is also a tree of data objects.  
-A RuleSet is a collection of rules that modify metadata based on the values in a given context tree.
+In Lowkoder, *metadata* is a tree of data objects that contain, among other things, schema and how to display them.
+Metadata is configured at startup and is thereafter immutable.
+Like metadata, a context tree is also a tree of data objects, populated at runtime, and contains state information about the current application.
+A RuleSet is a collection of rules that modify a given metadata tree based on the values in a given context tree.
 
 In Lowkoder, every UI component has it's own context and metadata trees. 
 Every component's context tree inherits property values from the component's parent's context tree.
 Every component's context tree is initialized with property values and then given to the application's RuleSet to create a new metadata tree, customized 
 for the associated component by the RuleSet.
-The associated component uses the custom metadata to generate content.
+The UI component uses the custom metadata to generate content.
 
-LOS is intended to be a metadata repository that can support Lowkoder and implement the functionality required by 
-Lowkoder in an a space and time efficient manner, yet still provide a simple, idomatic C# API.
+LOS is intended to be a metadata and context repository that can support the Lowkoder framework in a space and time efficient manner, 
+yet still provide a simple idomatic C# API.
 
-## LOS basics
+## Object System
+A LOS object system is a tree of data objects.
+Think of a LOS object system as a kind of micro database that stores many versions of a single object tree.
+Each version of the object tree is called a branch.
+Operations are performed on the root of a branch.
+A specific branch of the tree root may be selected from the object system, then mutated, then saved to the object system 
+to create a new branch of the tree.
 
-### LOS objects
-A LOS object system is a tree of LOS objects.
-To create an instance of a LOS object system you first create a system object and then add more objects to the system's root object...
+Immediately after an object system is created it has a single branch, called the prime branch.
+The prime branch has an index of -1;
+Immediately after an object system is created the prime branch should be populate and saved to create the *master* branch.
+The master branch has an index of 0.
 
-	interface Application : LosObject {
+## Creating and initializing an object system
+
+To create an instance of a LOS object system you first create a system object, then 'prime' the system by creating the master branch...
+	
+	public class Application {
 		string Title { get; set; }
 	}
 
     var LOS = new LOSObjectSystem();
-	var root= LOS.Root; // get the root object
-	// Create a new object with the <Application> interface type, assign it to the "Application" property, and then return it
-	root.Add<Application>(app => { 
-		app.Title= "TPS Report Manager 3000"; 
-	})
-	var title= root.Get<Application>().Title;  // get the application title
+
+	// Insert a new object
+	var application = new Application() {
+		Title= "TPS Report Manager 3000"
+	};
+	LOS.Prime.Insert(application);
+
+	// Objects are indexed by name, the above line is the same as this...
+	//LOS.Prime.Insert(typeof(Application).FullName, application);
+
+	var master= LOS.Prime.Save(); // Create master branch
+
+	// evaluates to true
+	Assert.AreEqual(application.Title, master.Get<Application>().Title);
+
+	// Note that inserting data into a LOS object system is like inserting data into a database
+	// So, you cannot do this...
+	application.Title= "ACME";
+	// throws an error...
+	Assert.AreEqual(application.Title, master.Get<Application>().Title);
+
 
 Things to know...
 - Every LOS object is a dictionary of values indexed by the name of the property.
-- Every LOS object has an associated C# interface type that subclasses LosObject and that specifies properties.
-- A LOS object's type interface may only specify properties.  
-	No methods allowed, but properties may return function references.
-- LOS properties may only return a LOS object type, a value type, or an immutable object.
-	LOS assumes that all the data stored in a LOS object system is only mutable by LOS.	
-	Also, LOS properties may not be generic.
-- There is no way to create new LOS objects other than the ILosObject.Add method.
-- The following line adds a property to the root object, the property type is Application, and, by convention, the property name is "Application"...
-		root.Add<Application>(); 
-- The following line gets the "Application" property from the root object....
-		var app= root.Get<Application>(); 
+- Every LOS object has an associated C# type that specifies properties.
+- There are a lot of restrictions on the definition of LOS object types.
+	A LOS object type may only specify properties, no methods allowed, but properties may return function references.
+	Properties may only return a LOS object type, a value type, or an immutable object.
+	Also, properties may not be generic.
+- All data stored in a LOS object system is immutable.  
+	The only way to add data is to Select a root, mutate the object tree, and save the tree to a new branch.
+- By convention, the 0th branch of a LOS object system is called the *prime* version.
+	The prime version is initially empty an immutable, it's only purpose is to initialize the object system 
+	with an object tree.
 
-
-### Use Extension methods to simplify root access
+## Use Extension methods to simplify root access
 
 Instead of this...
-	var installedExtensions= root.Get<App>().Extensions.Installed
+	var installedExtensions= root.Get<Application>().Extensions.Installed;
 
 You can do this...
-	var installedExtensions= root.App.Extensions.Installed
+	var installedExtensions= root.Application.Extensions.Installed;
 
 If you create an extension method...
 	namespace LowKode.Core.Metadata {
 		public static class MyMetadataRoots {
-			public static Application App(this IMetadataRoot meta) => meta.Get<App>();
+			public static Application Application(this ILosRoot root) => root.Get<App>();
 		}
 	}
 
@@ -71,123 +96,122 @@ to discover all root extensions contributed by assemblies.
 
 This documentation often assumes that this convention is being employed.
 
-### LOS Branching
+## LOS objects and LOS roots
 
-It's possible to create new versions of an existing object tree, the newly created object tree will inherit values 
-from it's parent, unless explicitly overwritten in the child...
+## LOS Branching
+
+This example illustrates how branches inherits data from it's parent, unless explicitly overwritten in the child...
 	
-		interface Hello : LosObject {
+		class Hello {
 			string One {get; set; }
 			string Two {get; set; }
 			string Three {get; set; }
 		}
 
-		interface GoodBye {
+		class GoodBye {
 			string One {get; set; }
 			string Two {get; set; }
 			string Three {get; set; }
 		}
 
 	    var LOS = new LOSObjectSystem();
-		var root= LOS.Root; // get the root object
+		var master= LOS.Select(0); 
 
-		root.Add<Hello>(hello => {
-			hello.One= "Howdy",
-			hello.Two = "Hi",
-			hello.Three = "Hello"
-		}); 
-		root.Add<GoodBye>(bye => {
-			bye.One= "Bye",
-			bye.Two = "Goodby",
-			bye.Three = "Later"
-		}); 
+		var hello= new Hello() {
+			One= "Howdy",
+			Two = "Hi",
+			Three = "Hello"
+		}; 
+		master.Insert(hello); 
+
+		var goodBye= new GoodBye() {
+			One= "Bye",
+			Two = "Goodby",
+			Three = "Later"
+		}; 
+		master.Insert(goodBye); 
+		var root= master.Save();
 
 		// creates a branch of the root and changes some properties
-		var branch= root.Branch(branch => {
-			branch.One= "Yo",
-			branch.Two = null
-		}); 
+		var hello2= root.Get<Hello>();
+		hello2.One= "Yo";
+		hello2.Two = null;
+
+		// Note that at this point the following line evaluates to true.
+		// This is because the ILosRoot.Select method returns a copy of the denoted tree
+		Assert.AreEqual("Howdy", LOS.Select(root.Revision).Get<Hello>().One);
+
+		var branch= root.Save();
 
 		// all these assertions are true
-		Assert.AreEqual("Yo", branch.One)
-		Assert.IsNull(branch.Two)
+		Assert.AreEqual("Yo", branch.Get<Hello>.One)
+		Assert.IsNull(branch.Get<Hello>.Two)
 
 		// note that the Hello3 property was never set in the branch, therefore 
 		// the current value in the root cascades to the child
-		Assert.AreEqual("Hello", branch.Three)
+		Assert.AreEqual("Hello", branch.Get<Hello>.Three)
 
 		// Note that changing properties in the branch did not change the root.
-		Assert.AreEqual("Howdy", root.One)
-		Assert.AreEqual("Hi", root.Two)
-		Assert.AreEqual("Hello", root.Three)
+		Assert.AreEqual("Howdy", root.Get<Hello>.One)
+		Assert.AreEqual("Hi", root.Get<Hello>.Two)
+		Assert.AreEqual("Hello", root.Get<Hello>.Three)
 
 Things to know...
 - LOS can support large numbers of branches in a space efficient way because branches don't copy data from thier ancestor.
-- LOS efficiently supports deep hierarchies of branches, values are looked up, using an index that includes branch, object, and property Ids.
+- LOS efficiently supports deep hierarchies of branches.
+
+
+### LOS Rules
+	
+Rules are used by a LOS object system to configure branches.
+Rules may be added to the prime branch, and only the prime branch.
+When an object tree is saved the rules are applied to the new branch produced by the saved object tree.
+
+Example...
+
+Suppose an object system is primed with this data, that defines menu items displayed by the application.
+prime.Insert(new Application() {
+	Navigation= new Navigation() {
+		Items= new Items() {
+			new Item() {
+				Label= "Orders"
+			},
+			new Item() {
+				Label= "Customers"
+			}
+		}
+	}
+});
+
+Now suppose that we want to display an additional menu item labeled "TPS Reports" when the user works for Initech....
+prime.When<Application>(app => app.User.CompanyId == "Initech")
+	.Then(e => app.Navigation.Items += new Item() { Label = "TPS Reports" });
+
+This rule adds a new item to list of menu items to be displayed by the application.
+You might be wondering what happens if the above rule is executed and then the User changes, to someone that doesn't work for Initech.
+Blazor doesn't work by changing things, Blazor rerenders things.
+So, it's expected when a scope changes that all components rendered within that scope will be rerendered, which also causes all new child 
+scopes to be created.
+So, the short answer to the question about what happens when context changes is that scopes are rerendered.
 
 
 
-#### sealing an object.
-A LOS object may be sealed to prevent further changes.
-Sealing an object has it's advantages because it's often the case that application architecture can be simplified 
-and optimized when you know that objects are immutable, so it would be nice if LOS objects were immutable.
-OTOH, there are many situations where immuatable objects are more tedious to work with than mutable objects.
-The ability to seal objects is a compromise.
-Example... 
+// Whenever the CompanyId is changed then add company specific items to the main navigation menu...
+prime.When<Application>(app => app.User.CompanyId)
+	.Then(app => app.Navigation.ConfigureCompanyItems(app.User.CompanyId));
 
-```
-    var LOS = new LOSObjectSystem();
-	var root= LOS.Root; // get the root object
-	var app= root.Add<Application>(); 
-	var contect= root.Add<Context>();
+prime.Rule<Application>(app => )
 
-	app.Title= "TPS Report Manager 3000"
-	root.Sealed= true;
-	app.Title= "Acme Report Manager"; // throws error: "object is sealed"
-	app.Add<MyExtentionMetadata>(); // throws error: "object is sealed"
-```
+// When CompanyId is "Initech" then add the TPS reports extension
+prime.When<Application>(app => app.User.CompanyId == "Initech")
+	.Then(e => app.Extensions.AddTPSReports());
+
+// When Company is Initech and the TPS Reports extension is installed then add navigation items
+prime.When<Application>(app => app.User.CompanyId == "Initech" && app.Extensions.Installed.Contains("TPS Reports"))
+.Then(e => app.Navigation.AddTPSReports());
 
 Things to know...
-- branches (discussed later) *do not* inherit locks.  Branches are open to changes when they are first created.
-- Unsealing an object is not supported 
-- Lowkode always seals an object after populating it with properties and events.
-
-
-### LOS Event Subscriptions
-	
-It's easy to listen to changes to an object system...
-
-// Event fired whenever the CompanyId property is changed...
-root.Subscribe<Application>(app => app.Application.User.Property(u => u.CompanyId))
-	.Then(app => DisplayCompanyDashboard(app.User.CompanyId););
-
-Above is same as this...
-root.Subscribe(root => root.Application.User.Property(u => CompanyId))
-	.Then(root => DisplayCompanyDashboard(root.Application.User.CompanyId););
-
-Which is same as this...
-root.Subscribe(root => root.Get<Application>.User.Property(u => CompanyId))
-	.Then(root => DisplayCompanyDashboard(root.Get<Application>.User.CompanyId););
-
-// Every time the User object is changed an event is fired if CompanyId is set to "Initech"
-root.Subscribe<Application>(app => app.User.Where(u => u.CompanyId == "Initech")
-	.Then(e => AddTPSReports());
-
-// Every time the CompanyId is changed an event is fired when the is == "Initech"
-root.Subscribe(root => root.Get<Application>.User.Property(u => CompanyId).Where(id => id == "Initech")
-	.Then(root => DisplayCompanyDashboard(root.Get<Application>.User.CompanyId););
-
-// Fire event when Company is Initech and the TPS Reports extension is installed.
-root.Subscribe(r => r.Application.User.Property(u => CompanyId).Where(id => id == "Initech"))
-	&& root.Subscribe(r => r.Application.Extensions.Installed.Where(i => i.Contains("TPS Reports"))))
-.Then(e => AddTPSReports());
-
-root.Subscribe(r => r.Application.User.CompanyId == "Initech" && r.Application.Extensions.Installed.Contains("TPS Reports"))
-.Then(e => AddTPSReports());
-	
-Things to know...
-- Listeners may only be added to the root branch of an object system, you can't subscribe to branches.
-- There is no support for removing listeners.
+- Listeners may only be added to the initialization branch of an object system, you can't subscribe to branches.
 - Subscriptions always deliver events *after* the change has occurred.
 
 ### Constructing Hierarchies 

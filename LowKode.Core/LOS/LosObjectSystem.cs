@@ -15,7 +15,7 @@ namespace LowKode.Core.LOS
             var documentObject = new ObjectInfo();
             objectLookup.Add(documentObject.Id, documentObject);
 
-            Prime = new LosRoot(this, revision:0, objectId: documentObject.Id);
+            Prime = new LosRoot(this, revision:-1, objectId: documentObject.Id);
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace LowKode.Core.LOS
                 throw new Exception("Object["+objectId+"] already contains property '"+propertyName+"'");
 
             // create new document object and add property to target object
-            var documentObject= new ObjectInfo();
+            var documentObject= new ObjectInfo(documentType);
             objectLookup.Add(documentObject.Id, documentObject);
             var propertyStore= new PropertyStore();
             propertyStore.AddValue(revision, documentObject);
@@ -81,13 +81,26 @@ namespace LowKode.Core.LOS
             if (!objectInfo.PropertyLookup.TryGetValue(propertyName, out propertyStore))
                 throw new Exception("Object[" + objectId + "] does not have a proiperty named '" + propertyName + "'");
 
-            return propertyStore.GetValue(revision);
+            object value= propertyStore.GetValue(revision);
+            if (!(value is ObjectInfo))
+                return value;
+
+            // The value being retrieved is a nested object, return a proxy.
+
+
         }
 
     }
 
     class ObjectInfo
     {
+        public Type DocumentType { get; private set; }
+
+        public ObjectInfo(Type documentType)
+        {
+            DocumentType = documentType;
+        }
+
         public Dictionary<string, PropertyStore> PropertyLookup { get; } = new Dictionary<string, PropertyStore>();
         public int Id { get=>GetHashCode(); }
     }
