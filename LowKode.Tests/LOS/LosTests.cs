@@ -3,22 +3,22 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LowKode.Tests
 {
-    interface Application : ILosObject
+    class Application 
     {
-        string Title { get; set; }
+        public string Title { get; set; }
     }
-    interface Hello : ILosObject
+    class Hello 
     {
-        string One { get; set; }
-        string Two { get; set; }
-        string Three { get; set; }
+        public string One { get; set; }
+        public string Two { get; set; }
+        public string Three { get; set; }
     }
 
-    interface GoodBye : ILosObject
+    class GoodBye 
     {
-        string One { get; set; }
-        string Two { get; set; }
-        string Three { get; set; }
+        public string One { get; set; }
+        public string Two { get; set; }
+        public string Three { get; set; }
     }
 
     /// <summary>
@@ -28,16 +28,19 @@ namespace LowKode.Tests
     public class LosTests
     {
         [TestMethod]
-        public void TestAddMethod()
+        public void TestPriming()
         {
 
             var LOS = new LosObjectSystem();
-            var root = LOS.Master; // get the root object
-            // Create a new object with the <Application> interface type, assign it to the "Application" property, and the return it
-            var app = root.Add<Application>();
-            app.Title = "TPS Report Manager 3000";
+            var prime = LOS.Prime; // get the prime branch
 
-            var title = root.Get<Application>().Title;  // get the application title
+            var app = new Application() {
+                Title= "TPS Report Manager 3000"
+            };
+            prime.Add(app);
+            var master= prime.Save();
+
+            var title = master.Get<Application>().Title;  // get the application title
             Assert.AreEqual("TPS Report Manager 3000", title);
         }
 
@@ -45,39 +48,45 @@ namespace LowKode.Tests
         public void TestBranching()
         {
             var LOS = new LosObjectSystem();
-            var root = LOS.Master; // get the root object
+            var prime = LOS.Prime; 
 
-            var hello= root.Add<Hello>();
-            hello.One = "Howdy";
-            hello.Two = "Hi";
-            hello.Three = "Hello";
+            prime.Add(new Hello()
+            {
+                One = "Howdy",
+                Two = "Hi",
+                Three = "Hello",
+            });
 
-            var bye= root.Add<GoodBye>();
-            bye.One = "Bye";
-            bye.Two = "Goodby";
-            bye.Three = "Later";
+            prime.Add(new GoodBye()
+            {
+                One = "Bye",
+                Two = "Goodby",
+                Three = "Later"
+            });
+
+            var master= prime.Save();
 
             // creates a branch of the root and changes some properties
-            var branch = root.Branch();
-            var bHello = branch.Get<Hello>();
-            bHello.One = "Yo";
-            bHello.Two = null;
+            var hello = master.Get<Hello>();
+            hello.One = "Yo";
+            hello.Two = null;
+
+            var branch= master.Save();
+
+            var bHello= branch.Get<Hello>();
 
             // all these assertions are true
             Assert.AreEqual("Yo", bHello.One);
-
             Assert.IsNull(bHello.Two);
-
-            // note that the Hello3 property was never set in the branch, therefore 
-            // the current value in the root cascades to the child
+            // note that Three was never set in the branch, therefore 
+            // the current value in the master cascades to the branch
             Assert.AreEqual("Hello", bHello.Three);
 
-            // Note that changing properties in the branch did not change the root.
-            Assert.AreEqual("Howdy", hello.One);
-
-            Assert.AreEqual("Hi", hello.Two);
-
-            Assert.AreEqual("Hello", hello.Three);
+            // Note that changing properties in the branch did not change the master
+            var mHello = master.Get<Hello>();
+            Assert.AreEqual("Howdy", mHello.One);
+            Assert.AreEqual("Hi", mHello.Two);
+            Assert.AreEqual("Hello", mHello.Three);
         }
     }
 }

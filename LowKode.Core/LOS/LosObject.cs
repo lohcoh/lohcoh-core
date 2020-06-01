@@ -11,9 +11,9 @@ namespace LowKode.Core.LOS
     /// </summary>
     class LosObject : ILosObject
     {
-        int revision;
-        int objectId;
-        ILosObjectSystem los;
+        protected int revision;
+        protected int objectId;
+        protected ILosObjectSystem los;
 
         /// <summary>
         /// Create a proxy to object with id == objectId in the given revision of the given object system.
@@ -25,26 +25,19 @@ namespace LowKode.Core.LOS
             this.objectId= objectId;
         }
 
-        public object Add(string propertyName, Type tProperty)
+        virtual public void Add(string propertyName, Type valueType, object value)
         {
-            return los.Add(objectId, revision, propertyName, tProperty);
+            los.Insert(objectId, revision, propertyName, valueType, value);
         }
 
-        public object Get(string propertyName)
+        virtual public object Get(string propertyName)
         {
             return los.Get(objectId, revision, propertyName);
         }
 
-        public void Remove(string propertyName)
+        virtual public void Remove(string propertyName)
         {
             los.Remove(objectId, revision, propertyName);
-        }
-        /// <summary>
-        /// Generates an object that implments ILosObject as well as objectInterface
-        /// </summary>
-        internal static object GetObjectProxy(Type objectInterface, LosObjectSystem losObjectSystem, int revision, int newObjectId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -8,15 +8,19 @@ namespace LowKode.Core.LOS
     public interface ILosObject 
     {
 
-        object Add(string propertyName, Type tProperty);
-        TProperty Add<TProperty>(string propertyName) where TProperty : ILosObject => (TProperty)Add(propertyName, typeof(TProperty));
-        TProperty Add<TProperty>() where TProperty : ILosObject => Add<TProperty>(typeof(TProperty).FullName);
-        
-        object Get(string propertyName);
-        TProperty Get<TProperty>(string propertyName) where TProperty : ILosObject => (TProperty)Get(propertyName);
-        TProperty Get<TProperty>() where TProperty : ILosObject => Get<TProperty>(typeof(TProperty).FullName);
+        public void Add(string propertyName, Type typeOfValue, object value);
+        public void Add<TProperty>(string propertyName, TProperty value) where TProperty : class, new() 
+            => Add(propertyName, typeof(TProperty), value);
+        public void Add<TProperty>(TProperty value) where TProperty : class, new() 
+            => Add<TProperty>(typeof(TProperty).FullName, value);
 
-        void Remove(string propertyName);
+        public object Get(string propertyName);
+        public TProperty Get<TProperty>(string propertyName) where TProperty : class, new()
+            => (TProperty)Get(propertyName);
+        public TProperty Get<TProperty>() where TProperty : class, new()
+            => Get<TProperty>(typeof(TProperty).FullName);
+
+        public void Remove(string propertyName);
     }
 
 }

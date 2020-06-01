@@ -18,10 +18,10 @@ namespace LowKode.Core.LOS
         /// <summary>
         /// A reference to the root object of the master branch of the system.
         /// </summary>
-        ILosRoot Master { get; }
+        ILosRoot Prime { get; }
 
         
-        object Add(int objectId, int revision, string propertyName, Type tProperty);
+        void Insert(int objectId, int revision, string propertyName, Type valueType, object value);
         object Get(int objectId, int revision, string propertyName);
         
         void Remove(int objectId, int revision, string propertyName);
