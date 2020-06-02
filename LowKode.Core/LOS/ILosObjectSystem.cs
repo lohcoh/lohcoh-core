@@ -21,7 +21,7 @@ namespace LowKode.Core.LOS
         ILosRoot Prime { get; }
 
         
-        void Insert(int objectId, int revision, string propertyName, Type valueType, object value);
+        object Insert(int objectId, int revision, string propertyName, Type valueType);
         object Get(int objectId, int revision, string propertyName);
         
         void Remove(int objectId, int revision, string propertyName);

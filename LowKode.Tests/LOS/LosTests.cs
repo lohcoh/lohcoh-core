@@ -3,18 +3,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LowKode.Tests
 {
-    class Application 
+    interface Application 
     {
         public string Title { get; set; }
     }
-    class Hello 
+    interface Hello 
     {
         public string One { get; set; }
         public string Two { get; set; }
         public string Three { get; set; }
     }
 
-    class GoodBye 
+    interface GoodBye 
     {
         public string One { get; set; }
         public string Two { get; set; }
@@ -36,10 +36,7 @@ namespace LowKode.Tests
             Assert.AreEqual(-1, LOS.Prime.Revision);
 
             // populate the object system with some data
-            LOS.Prime.Add(new Application()
-            {
-                Title = "TPS Report Manager 3000"
-            });
+            LOS.Prime.Put<Application>(a => a.Title = "TPS Report Manager 3000");
 
             var master= LOS.Prime.Save(); // save the data to create the master branch
             Assert.AreEqual(0, master.Revision); /// the master branch always has revision 0
@@ -48,7 +45,7 @@ namespace LowKode.Tests
             Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
 
             // now change the title
-            master.Get<Application>().Title = "TPS Report Manager 3000 + 1";
+            master.Get<Application>(a => a.Title = "TPS Report Manager 3000 + 1");
             var branch= master.Save();
             Assert.AreEqual(1, branch.Revision); 
 
@@ -63,18 +60,18 @@ namespace LowKode.Tests
             var LOS = new LosObjectSystem();
             var prime = LOS.Prime; 
 
-            prime.Add(new Hello()
+            prime.Put<Hello>(h => 
             {
-                One = "Howdy",
-                Two = "Hi",
-                Three = "Hello",
+                h.One = "Howdy";
+                h.Two = "Hi";
+                h.Three = "Hello";
             });
 
-            prime.Add(new GoodBye()
+            prime.Put<GoodBye>(g =>
             {
-                One = "Bye",
-                Two = "Goodby",
-                Three = "Later"
+                g.One = "Bye";
+                g.Two = "Goodby";
+                g.Three = "Later";
             });
 
             var master= prime.Save();

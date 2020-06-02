@@ -35,30 +35,27 @@ The master branch has an index of 0.
 
 To create an instance of a LOS object system you first create a system object, then 'prime' the system by creating the master branch...
 	
-	public class Application {
+	public interface Application {
 		string Title { get; set; }
 	}
 
-    var LOS = new LOSObjectSystem();
+    var los = new LOSObjectSystem();
 
 	// Insert a new object
-	var application = new Application() {
-		Title= "TPS Report Manager 3000"
-	};
-	LOS.Prime.Insert(application);
+	los.Prime.Put<Application>(a => Title = "TPS Report Manager 3000");
 
 	// Objects are indexed by name, the above line is the same as this...
-	//LOS.Prime.Insert(typeof(Application).FullName, application);
+	//los.Prime.Put(typeof(Application).FullName, application);
 
-	var master= LOS.Prime.Save(); // Create master branch
+	var master= los.Prime.Save(); // Create master branch
 
 	// evaluates to true
 	Assert.AreEqual(application.Title, master.Get<Application>().Title);
 
 	// Note that inserting data into a LOS object system is like inserting data into a database
-	// So, you cannot do this...
+	// So, you cannot now do this...
 	application.Title= "ACME";
-	// throws an error...
+	// and then expect this to work, it throws an error...
 	Assert.AreEqual(application.Title, master.Get<Application>().Title);
 
 
@@ -70,10 +67,11 @@ Things to know...
 	Properties may only return a LOS object type, a value type, or an immutable object.
 	Also, properties may not be generic.
 - All data stored in a LOS object system is immutable.  
-	The only way to add data is to Select a root, mutate the object tree, and save the tree to a new branch.
+	The only way to add/change data is to Select a root, mutate the object tree, and save the tree to a new branch.
 - By convention, the 0th branch of a LOS object system is called the *prime* version.
-	The prime version is initially empty an immutable, it's only purpose is to initialize the object system 
-	with an object tree.
+	The prime version is initially empty and immutable, it's only purpose is to initialize the object system 
+	with an object tree.  
+- By convention, a branch created from the prime branch is called a *master* branch.
 
 ## Use Extension methods to simplify root access
 
@@ -102,44 +100,42 @@ This documentation often assumes that this convention is being employed.
 
 This example illustrates how branches inherits data from it's parent, unless explicitly overwritten in the child...
 	
-		class Hello {
+		interface Hello {
 			string One {get; set; }
 			string Two {get; set; }
 			string Three {get; set; }
 		}
 
-		class GoodBye {
+		interface GoodBye {
 			string One {get; set; }
 			string Two {get; set; }
 			string Three {get; set; }
 		}
 
 	    var LOS = new LOSObjectSystem();
-		var master= LOS.Select(0); 
 
-		var hello= new Hello() {
-			One= "Howdy",
-			Two = "Hi",
-			Three = "Hello"
-		}; 
-		master.Insert(hello); 
-
-		var goodBye= new GoodBye() {
-			One= "Bye",
-			Two = "Goodby",
-			Three = "Later"
-		}; 
-		master.Insert(goodBye); 
-		var root= master.Save();
+		var master= LOS.Prime
+			.Put<Hello>(h => {
+				h.One= "Howdy";
+				h.Two = "Hi";
+				h.Three = "Hello";
+			})
+			.Put<GoodBye>(g => {
+				g.One= "Bye";
+				g.Two = "Goodby";
+				g.Three = "Later";
+			})
+			.Save();
 
 		// creates a branch of the root and changes some properties
-		var hello2= root.Get<Hello>();
-		hello2.One= "Yo";
-		hello2.Two = null;
+		master.Get<Hello>(h => {
+			h.One= "Yo";
+			h.Two = null;
+		});
 
 		// Note that at this point the following line evaluates to true.
-		// This is because the ILosRoot.Select method returns a copy of the denoted tree
-		Assert.AreEqual("Howdy", LOS.Select(root.Revision).Get<Hello>().One);
+		// This is because the ILosRoot.Get method returns a copy of the denoted tree.
+		Assert.AreEqual("Howdy", LOS.Select(master.Revision).Get<Hello>().One);
 
 		var branch= root.Save();
 
@@ -170,22 +166,16 @@ When an object tree is saved the rules are applied to the new branch produced by
 Example...
 
 Suppose an object system is primed with this data, that defines menu items displayed by the application.
-prime.Insert(new Application() {
-	Navigation= new Navigation() {
-		Items= new Items() {
-			new Item() {
-				Label= "Orders"
-			},
-			new Item() {
-				Label= "Customers"
-			}
-		}
-	}
+prime.Put<Application>(a => {
+	a.Navigation.Items.Add(new Item() { Label= "Orders"});
+		.Put(i => i.Label= "Orders")
+		.Put(i => i.Label= "Customers");
 });
 
+
 Now suppose that we want to display an additional menu item labeled "TPS Reports" when the user works for Initech....
-prime.When<Application>(app => app.User.CompanyId == "Initech")
-	.Then(e => app.Navigation.Items += new Item() { Label = "TPS Reports" });
+prime.When<Application>(a => a.User.CompanyId == "Initech")
+	.Then(e => a.Navigation.Items.Put(i => i.Label = "TPS Reports"));
 
 This rule adds a new item to list of menu items to be displayed by the application.
 You might be wondering what happens if the above rule is executed and then the User changes, to someone that doesn't work for Initech.

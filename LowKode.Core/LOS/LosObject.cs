@@ -24,12 +24,7 @@ namespace LowKode.Core.LOS
             this.LOS= los;
             this.Revision= revision;
             this.objectId= objectId;
-        }
-
-        virtual public void Add(string propertyName, Type valueType, object value)
-        {
-            LOS.Insert(objectId, Revision, propertyName, valueType, value);
-        }
+        }       
 
         virtual public object Get(string propertyName)
         {
@@ -40,5 +35,11 @@ namespace LowKode.Core.LOS
         {
             LOS.Remove(objectId, Revision, propertyName);
         }
+
+        virtual public object Put(string propertyName, Type interfaceType)
+        {
+            return LOS.Insert(objectId, Revision, propertyName, interfaceType);
+        }
+
     }
 }

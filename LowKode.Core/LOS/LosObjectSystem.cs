@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Castle.Components;
+using Castle.Components.DictionaryAdapter;
 
 namespace LowKode.Core.LOS
 {
@@ -26,7 +29,7 @@ namespace LowKode.Core.LOS
         /// <param name="propertyName"></param>
         /// <param name="documentType"></param>
         /// <param name="document"></param>
-        public void Insert(int objectId, int revision, string propertyName, Type documentType, object document)
+        public object Insert(int objectId, int revision, string propertyName, Type documentType)
         {
             ObjectInfo targetObject;
             if (!objectLookup.TryGetValue(objectId, out targetObject))
@@ -42,8 +45,7 @@ namespace LowKode.Core.LOS
             propertyStore.AddValue(revision, documentObject);
             targetObject.PropertyLookup.Add(propertyName, propertyStore);
 
-            // Construct the document tree
-            RenderDocumentTree(revision, documentType, documentObject, document);
+            return documentObject.GetProxy(revision);
         }
 
         void RenderDocumentTree(int revision, Type documentType, ObjectInfo documentObject, object document)
@@ -106,7 +108,82 @@ namespace LowKode.Core.LOS
 
         public object GetProxy(int revision)
         {
+            return new DictionaryAdapterFactory().GetAdapter(DocumentType, new LosObjectAdapter(revision));
+        }
+    }
 
+    class LosObjectAdapter : IDictionary<string, object>
+    {
+        public object this[string key] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public ICollection<string> Keys => throw new NotImplementedException();
+
+        public ICollection<object> Values => throw new NotImplementedException();
+
+        public int Count => throw new NotImplementedException();
+
+        public bool IsReadOnly => throw new NotImplementedException();
+
+        int Revision { get; set; }
+
+        public LosObjectAdapter(int revision)
+        {
+            this.Revision = revision;
+        }
+
+        public void Add(string key, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add(KeyValuePair<string, object> item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(KeyValuePair<string, object> item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ContainsKey(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(string key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(KeyValuePair<string, object> item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TryGetValue(string key, out object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
     }
 }

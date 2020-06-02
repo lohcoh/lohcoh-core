@@ -17,7 +17,7 @@ namespace LowKode.Core.LOS
         {
         }
 
-        override public void Add(string propertyName, Type valueType, object value)
+        override public void Put(string propertyName, Type valueType, object value)
         {
             // record the addition, when the Save method is called these additions will be inserted into object system.
             Additions.Add(propertyName, new DocumentInfo() {  DocumentType= valueType, Document= value });
