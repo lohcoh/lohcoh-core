@@ -12,7 +12,7 @@ namespace LowKode.Core.LOS
 
         public LosObjectSystem()
         {
-            var documentObject = new ObjectInfo();
+            var documentObject = new ObjectInfo(typeof(LosRoot));
             objectLookup.Add(documentObject.Id, documentObject);
 
             Prime = new LosRoot(this, revision:-1, objectId: documentObject.Id);
@@ -86,7 +86,7 @@ namespace LowKode.Core.LOS
                 return value;
 
             // The value being retrieved is a nested object, return a proxy.
-
+            return (value as ObjectInfo).GetProxy(revision);
 
         }
 
@@ -103,5 +103,10 @@ namespace LowKode.Core.LOS
 
         public Dictionary<string, PropertyStore> PropertyLookup { get; } = new Dictionary<string, PropertyStore>();
         public int Id { get=>GetHashCode(); }
+
+        public object GetProxy(int revision)
+        {
+
+        }
     }
 }
