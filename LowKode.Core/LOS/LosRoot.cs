@@ -27,11 +27,11 @@ namespace LowKode.Core.LOS
         public ILosRoot Save()
         {
             // todo: need a proper generator of branch ids
-            var branch= new LosRoot(LOS, Revision+1, objectId);
+            var branch= new LosRoot(LOS, Revision+1, ObjectId);
             foreach (var propertyName in Additions.Keys)
             {
                 var documentInfo= Additions[propertyName];
-                LOS.Insert(objectId, branch.Revision, propertyName, documentInfo.DocumentType, documentInfo.Document);
+                LOS.Insert(ObjectId, branch.Revision, propertyName, documentInfo.DocumentType, documentInfo.Document);
             }
             return branch;
         }

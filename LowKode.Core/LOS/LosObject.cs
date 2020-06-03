@@ -11,7 +11,7 @@ namespace LowKode.Core.LOS
     /// </summary>
     class LosObject : ILosObject
     {
-        protected int objectId;
+        protected int ObjectId;
 
         public int Revision { get; private set; }
         public ILosObjectSystem LOS { get; private set; }
@@ -23,22 +23,22 @@ namespace LowKode.Core.LOS
         {
             this.LOS= los;
             this.Revision= revision;
-            this.objectId= objectId;
+            this.ObjectId= objectId;
         }       
 
         virtual public object Get(string propertyName)
         {
-            return LOS.Get(objectId, Revision, propertyName);
+            return LOS.Get(ObjectId, Revision, propertyName);
         }
 
         virtual public void Remove(string propertyName)
         {
-            LOS.Remove(objectId, Revision, propertyName);
+            LOS.Remove(ObjectId, Revision, propertyName);
         }
 
         virtual public object Put(string propertyName, Type interfaceType)
         {
-            return LOS.Insert(objectId, Revision, propertyName, interfaceType);
+            return LOS.Insert(ObjectId, Revision, propertyName, interfaceType);
         }
 
     }
