@@ -44,19 +44,15 @@ To create an instance of a LOS object system you first create a system object, t
 	public class Application {
 		string Title { get; set; }
 	}
-
-    var LOS = new LOSObjectSystem();
-
-	// Insert a new object
 	var application = new Application() {
 		Title= "TPS Report Manager 3000"
 	};
-	LOS.Prime.Insert(application);
 
-	// Objects are indexed by name, the above line is the same as this...
-	//LOS.Prime.Insert(typeof(Application).FullName, application);
+    var LOS = new LOSObjectSystem();
+	LOS.AddRoot(application);
+	LOS.AddRoot(new LowkoderRoot());
 
-	var master= LOS.Prime.Save(); // Create master branch
+	var master= Los.Open();
 
 	// evaluates to true
 	Assert.AreEqual(application.Title, master.Get<Application>().Title);
