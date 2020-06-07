@@ -34,26 +34,64 @@ The master branch has an index of 0.
 ## Creating and initializing an object system
 
 To create an instance of a LOS object system you first create a system object, then 'prime' the system by creating the master branch...
-	
-	public class Application {
-		string Title { get; set; }
+
+		
+    public class Application 
+    {
+        public string Title { get; set; }
+        public Navigation Navigation { get; set; }
+    }
+
+    public class Navigation
+    {
+        public string HomeUrl { get; set; }
+        public IList<NavigationItem> Items { get; }
+    }
+    
+    public class NavigationItem
+    {
+        public string Label { get; set; }
+        public string Uri { get; set; }
+    }
+
+	public class MyContext : LosContext
+	{
+		public LosSet<Application> Application { get; set; }
 	}
+
+
 
     var LOS = new LOSObjectSystem();
 
 	// Insert a new object
 	var application = new Application() {
 		Title= "TPS Report Manager 3000"
+		Navigation= new Navigation() {
+			HomeUrl= "http://google.com",
+			Items= new List<NavigationItem>() {
+				new NavigationItem() {
+					Label= "Customers"
+					Uri = "customers"
+				},
+				new NavigationItem() {
+					Label= "Reports"
+					Uri = "reports"
+				}
+			}
+		}
 	};
-	LOS.Prime.Insert(application);
+	ctx.Application.Add(application);
 
 	// Objects are indexed by name, the above line is the same as this...
 	//LOS.Prime.Insert(typeof(Application).FullName, application);
 
-	var master= LOS.Prime.Save(); // Create master branch
+	ctx.SaveChanges(); // Create master branch
 
 	// evaluates to true
-	Assert.AreEqual(application.Title, master.Get<Application>().Title);
+	Assert.AreEqual(application.Title, ctx.Application.Get(a => a.Title));
+	Assert.AreEqual("customers", ctx.Application.Get(a => a.Navigation.Items.Where(i => i.Label="Customers").Uri));
+
+
 
 	// Note that inserting data into a LOS object system is like inserting data into a database
 	// So, you cannot do this...
@@ -169,16 +207,16 @@ When an object tree is saved the rules are executed against the tree being saved
 are applied to the newly created branch.
 
 // When the CompanyId changes then add company specific items to the main navigation menu...
-prime.When<Application>(app => app.User.CompanyId)
+prime.Application.When(a => a.User.CompanyId)
 	.Then(app => app.Navigation.AddCompanyItems(app.User.CompanyId));
 
 // When CompanyId is "Initech" then add the TPS reports extension
-prime.When<Application>(app => app.User.CompanyId == "Initech")
-	.Then(e => app.Extensions.AddTPSReports());
+prime.Application.When(a => a.User.CompanyId == "Initech")
+	.Then(ctx => ctx.Application.Extensions.AddTPSReports());
 
 // When Company is Initech and the TPS Reports extension is installed then add navigation items
-prime.When<Application>(app => app.User.CompanyId == "Initech" && app.Extensions.Installed.Contains("TPS Reports"))
-.Then(e => app.Navigation.AddTPSReports());
+(prime.Application.When(app => app.User.CompanyId == "Initech") && prime.Extensions.When(x => x.Installed.Contains("TPS Reports")))
+.Then(ctx => ctx.Application.Navigation.Add(new NavigationItem() { Label = "TPSReports" }));
 
 Things to know...
 - Listeners may only be added to the initialization branch of an object system, you can't subscribe to branches.

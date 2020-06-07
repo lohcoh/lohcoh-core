@@ -1,20 +1,34 @@
 using LowKode.Core.LOS;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace LowKode.Tests
 {
-    interface Application 
+    public interface Application 
     {
         public string Title { get; set; }
+        public Navigation Navigation { get; set; }
     }
-    interface Hello 
+
+    public interface Navigation
+    {
+        public string HomeUrl { get; set; }
+        public IList<NavigationItem> Items { get; }
+    }
+    
+    public interface NavigationItem
+    {
+        public string Label { get; set; }
+        public string Uri { get; set; }
+    }
+    public interface Hello 
     {
         public string One { get; set; }
         public string Two { get; set; }
         public string Three { get; set; }
     }
 
-    interface GoodBye 
+    public interface GoodBye 
     {
         public string One { get; set; }
         public string Two { get; set; }
@@ -53,6 +67,34 @@ namespace LowKode.Tests
             Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
             Assert.AreEqual("TPS Report Manager 3000 + 1", branch.Get<Application>().Title);
         }
+
+        [TestMethod]
+        public void TestNesting()
+        {         
+            var LOS = new LosObjectSystem();
+
+            // populate the object system with some data
+            LOS.Prime.Create<Application>(a => {
+                a.Title = "TPS Report Manager 3000";
+                a.Navigation= 
+            });
+
+            var master = LOS.Prime.Save(); // save the data to create the master branch
+            Assert.AreEqual(0, master.Revision); /// the master branch always has revision 0
+
+            // we should get the title that we created
+            Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
+
+            // now change the title
+            master.Get<Application>(a => a.Title = "TPS Report Manager 3000 + 1");
+            var branch = master.Save();
+            Assert.AreEqual(1, branch.Revision);
+
+            // the branch title should be updated and the master title should not have changed
+            Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
+            Assert.AreEqual("TPS Report Manager 3000 + 1", branch.Get<Application>().Title);
+        }
+
 
         [TestMethod]
         public void TestBranching()

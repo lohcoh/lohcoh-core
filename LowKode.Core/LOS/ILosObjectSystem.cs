@@ -20,8 +20,12 @@ namespace LowKode.Core.LOS
         /// </summary>
         ILosRoot Prime { get; }
 
-        
-        object Insert(int objectId, int revision, string propertyName, Type valueType);
+        /// <summary>
+        /// Creates a new 'object', with Type valueType.
+        /// Inserts the new object into the object with id == objectId as property propertyName.
+        /// Returns the id of the new object
+        /// </summary>
+        int Insert(int objectId, int revision, string propertyName, Type valueType);
         object Get(int objectId, int revision, string propertyName);
         
         void Remove(int objectId, int revision, string propertyName);

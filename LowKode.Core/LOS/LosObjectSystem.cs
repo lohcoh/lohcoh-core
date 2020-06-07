@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Castle.Components;
@@ -29,7 +28,7 @@ namespace LowKode.Core.LOS
         /// <param name="propertyName"></param>
         /// <param name="documentType"></param>
         /// <param name="document"></param>
-        public object Insert(int objectId, int revision, string propertyName, Type documentType)
+        public int Insert(int objectId, int revision, string propertyName, Type documentType)
         {
             ObjectInfo targetObject;
             if (!objectLookup.TryGetValue(objectId, out targetObject))
@@ -38,14 +37,16 @@ namespace LowKode.Core.LOS
             if (targetObject.PropertyLookup.ContainsKey(propertyName))
                 throw new Exception("Object["+objectId+"] already contains property '"+propertyName+"'");
 
-            // create new document object and add property to target object
+            // create new document object and add to system 
             var documentObject= new ObjectInfo(documentType);
             objectLookup.Add(documentObject.Id, documentObject);
-            var propertyStore= new PropertyStore();
+
+            // add object as property to target object
+            var propertyStore = new PropertyStore();
             propertyStore.AddValue(revision, documentObject);
             targetObject.PropertyLookup.Add(propertyName, propertyStore);
 
-            return documentObject.GetProxy(revision);
+            return documentObject.Id;
         }
 
         void RenderDocumentTree(int revision, Type documentType, ObjectInfo documentObject, object document)
@@ -88,8 +89,15 @@ namespace LowKode.Core.LOS
                 return value;
 
             // The value being retrieved is a nested object, return a proxy.
-            return (value as ObjectInfo).GetProxy(revision);
+            return GetObjectAdapter((value as ObjectInfo).DocumentType, new LosObjectAdapter());
 
+        }
+
+
+        public object GetObjectAdapter(Type DocumentType, IDictionary<string, object> valueHolder)
+        {
+            var losObjectAdapter = new LosObjectAdapter();
+            return new DictionaryAdapterFactory().GetAdapter<object>(DocumentType, valueHolder);
         }
 
     }
@@ -106,84 +114,5 @@ namespace LowKode.Core.LOS
         public Dictionary<string, PropertyStore> PropertyLookup { get; } = new Dictionary<string, PropertyStore>();
         public int Id { get=>GetHashCode(); }
 
-        public object GetProxy(int revision)
-        {
-            return new DictionaryAdapterFactory().GetAdapter(DocumentType, new LosObjectAdapter(revision));
-        }
-    }
-
-    class LosObjectAdapter : IDictionary<string, object>
-    {
-        public object this[string key] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public ICollection<string> Keys => throw new NotImplementedException();
-
-        public ICollection<object> Values => throw new NotImplementedException();
-
-        public int Count => throw new NotImplementedException();
-
-        public bool IsReadOnly => throw new NotImplementedException();
-
-        int Revision { get; set; }
-
-        public LosObjectAdapter(int revision)
-        {
-            this.Revision = revision;
-        }
-
-        public void Add(string key, object value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Add(KeyValuePair<string, object> item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Clear()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Contains(KeyValuePair<string, object> item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool ContainsKey(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Remove(string key)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Remove(KeyValuePair<string, object> item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool TryGetValue(string key, out object value)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

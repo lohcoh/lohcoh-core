@@ -15,6 +15,7 @@ Every component's context tree is initialized with property values and then give
 for the associated component by the RuleSet.
 The UI component uses the custom metadata to generate content.
 
+A naive implementation of such a content repository would create a custom copy of the entire object tree for each Lowkoder component.
 LOS is intended to be a metadata and context repository that can support the Lowkoder framework in a space and time efficient manner, 
 yet still provide a simple idomatic C# API.
 
@@ -26,20 +27,38 @@ Operations are performed on the root of a branch.
 A specific branch of the tree root may be selected from the object system, then mutated, then saved to the object system 
 to create a new branch of the tree.
 
-Immediately after an object system is created it has a single branch, called the prime branch.
-The prime branch has an index of -1;
-Immediately after an object system is created the prime branch should be populate and saved to create the *master* branch.
-The master branch has an index of 0.
+	using (var root = los.Open(revision)
+	{
+		// get columns for edit table for a given model type
+		var columns = root.ColumnsSets.Where(columns => set.SystemType == modelType).Items;
+	}
+
+Immediately after an object system is created it has a single branch, called the prime branch, which is initially empty.
+Immediately after an object system is created the prime branch should be populated and saved to create a *master* branch.
+Any branch created from the prime brnach is referred to as a master branch.
 
 ## Creating and initializing an object system
 
+A tree 'root' is the LOS equivalent of an Entity Framework context, it represents a session and it defines the data contained 
+in a LOS object tree.
 To create an instance of a LOS object system you first create a system object, then 'prime' the system by creating the master branch...
-	
+
 	public interface Application {
 		string Title { get; set; }
 	}
 
+	public abstract class BloggingApplicationRoot : LosRoot
+    {
+		Application Application { get; set; }
+        public List<BlogSubscription> Blogs { get; set; }
+        public PostsDashboard Posts { get; set; }        
+        public List<Reports> Reports { get; set; }        
+    }
+	
     var los = new LOSObjectSystem();
+	los.AddRoot<LowkoderRoot>();
+	los.AddRoot<BloggingApplicationRoot>();
+
 
 	// Insert a new object
 	los.Prime.Put<Application>(a => Title = "TPS Report Manager 3000");
