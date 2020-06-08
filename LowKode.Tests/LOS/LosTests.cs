@@ -4,31 +4,31 @@ using System.Collections.Generic;
 
 namespace LowKode.Tests
 {
-    public interface Application 
+    public class Application 
     {
-        public string Title { get; set; }
-        public Navigation Navigation { get; set; }
+        public virtual string Title { get; set; }
+        public virtual Navigation Navigation { get; set; }
     }
 
-    public interface Navigation
+    public class Navigation
     {
-        public string HomeUrl { get; set; }
-        public IList<NavigationItem> Items { get; }
+        public virtual string HomeUrl { get; set; }
+        public virtual IList<NavigationItem> Items { get; set; }
     }
     
-    public interface NavigationItem
+    public class NavigationItem
     {
-        public string Label { get; set; }
-        public string Uri { get; set; }
+        public virtual string Label { get; set; }
+        public virtual string Uri { get; set; }
     }
-    public interface Hello 
+    public class Hello 
     {
-        public string One { get; set; }
-        public string Two { get; set; }
-        public string Three { get; set; }
+        public virtual string One { get; set; }
+        public virtual string Two { get; set; }
+        public virtual string Three { get; set; }
     }
 
-    public interface GoodBye 
+    public class GoodBye 
     {
         public string One { get; set; }
         public string Two { get; set; }
@@ -44,24 +44,22 @@ namespace LowKode.Tests
         [TestMethod]
         public void TestPriming()
         {
-            var LOS = new LosObjectSystem();
-            
-            // The prime branch should always have revision == -1
-            Assert.AreEqual(-1, LOS.Prime.Revision);
+            var application = new Application()
+            {
+                Title = "TPS Report Manager 3000"
+            };
 
-            // populate the object system with some data
-            LOS.Prime.Put<Application>(a => a.Title = "TPS Report Manager 3000");
+            var los = new LosObjectSystem();
+            var prime= los.Open();  
+            prime.Put(application);
+            var master= prime.Save();
 
-            var master= LOS.Prime.Save(); // save the data to create the master branch
-            Assert.AreEqual(0, master.Revision); /// the master branch always has revision 0
-
-            // we should get the title that we created
             Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
 
             // now change the title
-            master.Get<Application>(a => a.Title = "TPS Report Manager 3000 + 1");
+            var application2= master.Get<Application>();
+            application2.Title = "TPS Report Manager 3000 + 1";
             var branch= master.Save();
-            Assert.AreEqual(1, branch.Revision); 
 
             // the branch title should be updated and the master title should not have changed
             Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
@@ -71,22 +69,34 @@ namespace LowKode.Tests
         [TestMethod]
         public void TestNesting()
         {         
-            var LOS = new LosObjectSystem();
+            var los = new LosObjectSystem();
+            var prime= los.Open();
 
             // populate the object system with some data
-            LOS.Prime.Create<Application>(a => {
-                a.Title = "TPS Report Manager 3000";
-                a.Navigation= 
+            prime.Put(new Application()
+            { 
+                Title = "TPS Report Manager 3000",
+                Navigation= new Navigation()
+                {
+                    HomeUrl= "http://localhost:8080/Lowkoder",
+                    Items= new List<NavigationItem>() { 
+                        new NavigationItem()
+                        {
+                            Label= "Home",
+                            Uri= "/"
+                        }
+                    }
+                }
             });
 
-            var master = LOS.Prime.Save(); // save the data to create the master branch
+            var master = prime.Save(); // save the data to create the master branch
             Assert.AreEqual(0, master.Revision); /// the master branch always has revision 0
 
             // we should get the title that we created
             Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
 
             // now change the title
-            master.Get<Application>(a => a.Title = "TPS Report Manager 3000 + 1");
+            master.Get<Application>().Title = "TPS Report Manager 3000 + 1";
             var branch = master.Save();
             Assert.AreEqual(1, branch.Revision);
 
@@ -99,21 +109,21 @@ namespace LowKode.Tests
         [TestMethod]
         public void TestBranching()
         {
-            var LOS = new LosObjectSystem();
-            var prime = LOS.Prime; 
+            var los = new LosObjectSystem();
+            var prime = los.Open(); 
 
-            prime.Put<Hello>(h => 
+            prime.Put(new Hello() 
             {
-                h.One = "Howdy";
-                h.Two = "Hi";
-                h.Three = "Hello";
+                One = "Howdy",
+                Two = "Hi",
+                Three = "Hello"
             });
 
-            prime.Put<GoodBye>(g =>
+            prime.Put(new GoodBye()
             {
-                g.One = "Bye";
-                g.Two = "Goodby";
-                g.Three = "Later";
+                One = "Bye",
+                Two = "Goodby",
+                Three = "Later"
             });
 
             var master= prime.Save();

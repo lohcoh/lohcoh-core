@@ -49,6 +49,8 @@ To create an instance of a LOS object system you first create a system object, t
 	};
 
     var LOS = new LOSObjectSystem();
+	var 
+
 	LOS.AddRoot(application);
 	LOS.AddRoot(new LowkoderRoot());
 

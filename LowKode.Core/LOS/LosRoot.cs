@@ -26,15 +26,14 @@ namespace LowKode.Core.LOS
         }
 
 
-        object ILosObject.Put(string propertyName, Type valueType)
+        void ILosObject.Put(string propertyName, Type valueType)
         {
-            var valueHolder = new Dictionary<string, object>();
-            var objectAdapter = LOS.GetObjectAdapter(valueType, valueHolder);
-
             // record the addition, when the Save method is called these additions will be inserted into object system.
+            var valueHolder = new Dictionary<string, object>();
             Additions.Add(propertyName, new DocumentInfo() {  DocumentType= valueType, Document= valueHolder });
 
-            return objectAdapter;
+            //var objectAdapter = LOS.GetObjectAdapter(valueType, valueHolder);
+            //return objectAdapter;
         }
 
 

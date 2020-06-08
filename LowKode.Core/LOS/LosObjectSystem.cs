@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using Castle.Components;
 using Castle.Components.DictionaryAdapter;
+using Castle.DynamicProxy;
 
 namespace LowKode.Core.LOS
 {
     public class LosObjectSystem : ILosObjectSystem
     {
-        public ILosRoot Prime { get; private set; }
+        ILosRoot Prime { get; set; }
 
         private Dictionary<int, ObjectInfo> objectLookup = new Dictionary<int, ObjectInfo>();
 
@@ -19,6 +20,8 @@ namespace LowKode.Core.LOS
 
             Prime = new LosRoot(this, revision:-1, objectId: documentObject.Id);
         }
+
+        public ILosRoot Open() => Prime;
 
         /// <summary>
         /// 
@@ -89,14 +92,15 @@ namespace LowKode.Core.LOS
                 return value;
 
             // The value being retrieved is a nested object, return a proxy.
-            return GetObjectAdapter((value as ObjectInfo).DocumentType, new LosObjectAdapter());
+            var vobjectInfo= value as ObjectInfo;
+            return new ProxyGenerator().CreateClassProxy(
+                vobjectInfo.DocumentType, new IInterceptor[] { });
 
         }
 
 
         public object GetObjectAdapter(Type DocumentType, IDictionary<string, object> valueHolder)
         {
-            var losObjectAdapter = new LosObjectAdapter();
             return new DictionaryAdapterFactory().GetAdapter<object>(DocumentType, valueHolder);
         }
 
@@ -113,6 +117,12 @@ namespace LowKode.Core.LOS
 
         public Dictionary<string, PropertyStore> PropertyLookup { get; } = new Dictionary<string, PropertyStore>();
         public int Id { get=>GetHashCode(); }
+
+        public object GetObjectAdapter(int revision)
+        {
+            new ProxyGenerator().CreateClassProxy(DocumentType, new IInterceptor[] { });
+
+        }
 
     }
 }

@@ -16,11 +16,6 @@ namespace LowKode.Core.LOS
     public interface ILosObjectSystem
     {
         /// <summary>
-        /// A reference to the root object of the master branch of the system.
-        /// </summary>
-        ILosRoot Prime { get; }
-
-        /// <summary>
         /// Creates a new 'object', with Type valueType.
         /// Inserts the new object into the object with id == objectId as property propertyName.
         /// Returns the id of the new object

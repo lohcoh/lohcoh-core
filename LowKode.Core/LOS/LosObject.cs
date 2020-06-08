@@ -41,9 +41,9 @@ namespace LowKode.Core.LOS
             LOS.Remove(ObjectId, Revision, propertyName);
         }
 
-        virtual public object Put(string propertyName, Type interfaceType)
+        virtual public void Put(string propertyName, Type interfaceType)
         {
-            return LOS.Insert(ObjectId, Revision, propertyName, interfaceType);
+            LOS.Insert(ObjectId, Revision, propertyName, interfaceType);
         }
 
     }

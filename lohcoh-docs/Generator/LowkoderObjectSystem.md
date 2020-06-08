@@ -43,38 +43,30 @@ A tree 'root' is the LOS equivalent of an Entity Framework context, it represent
 in a LOS object tree.
 To create an instance of a LOS object system you first create a system object, then 'prime' the system by creating the master branch...
 
-	public interface Application {
-		string Title { get; set; }
+	public class Application {
+		public virtual string Title { get; set; }
 	}
 
 	public abstract class BloggingApplicationRoot : LosRoot
     {
-		Application Application { get; set; }
-        public List<BlogSubscription> Blogs { get; set; }
-        public PostsDashboard Posts { get; set; }        
-        public List<Reports> Reports { get; set; }        
+		public virtual Application Application { get; set; }
+        public virtual List<BlogSubscription> Blogs { get; set; }
+        public virtual PostsDashboard Posts { get; set; }        
+        public virtual List<Reports> Reports { get; set; }        
     }
-	
+
+	var bloggingRoot= new BloggingApplicationRoot() {
+		Application= new Application() { Title= "TPS Report Manager 3000" },
+		Blogs= blogConfig.GetBlogSubscriptions(),
+		// etc...
+	}
+
     var los = new LOSObjectSystem();
-	los.AddRoot<LowkoderRoot>();
-	los.AddRoot<BloggingApplicationRoot>();
+	var prime= los.Open();
+	prime.Put(lowkoder.GetLowkoderRoot());
+	prime.Put(bloggingRoot);
+	var master= prime.Save();
 
-
-	// Insert a new object
-	los.Prime.Put<Application>(a => Title = "TPS Report Manager 3000");
-
-	// Objects are indexed by name, the above line is the same as this...
-	//los.Prime.Put(typeof(Application).FullName, application);
-
-	var master= los.Prime.Save(); // Create master branch
-
-	// evaluates to true
-	Assert.AreEqual(application.Title, master.Get<Application>().Title);
-
-	// Note that inserting data into a LOS object system is like inserting data into a database
-	// So, you cannot now do this...
-	application.Title= "ACME";
-	// and then expect this to work, it throws an error...
 	Assert.AreEqual(application.Title, master.Get<Application>().Title);
 
 
