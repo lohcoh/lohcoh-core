@@ -1,5 +1,4 @@
-﻿using LowKode.Core.Common;
-using LowKode.Core.Metadata;
+﻿using LowKode.Core.Metadata;
 using System;
 using System.Linq.Expressions;
 
@@ -43,14 +42,14 @@ namespace LowKode.Core.Components
             return site;
         }
 
-        public static IComponentSite WithModelMember(this IComponentSite site, IDependencyPath modelMember)
+        public static IComponentSite WithModelMember(this IComponentSite site, MemberPath memberPath)
         {
             var siteSpecification = site.Context.ComponentSiteSpecification;
-            siteSpecification.ModelMember = modelMember;
+            siteSpecification.ModelMember = memberPath;
             return site;
         }
-        public static IComponentSite WithModelMember(this IComponentSite site, IDependencyProperty modelMember)
-            => WithModelMember(site, new DependencyPath(modelMember));
+        public static IComponentSite WithModelMember(this IComponentSite site, PropertyDescriptor modelMember)
+            => WithModelMember(site, modelMember.ToMemberPath());
 
     }
 }

@@ -9,7 +9,7 @@ namespace LowKode.Core.Metadata
 {
     public static class MemberSelectorExtensions
     {
-        public static MemberPath ToMemberSelector(this PropertyDescriptor descriptor) => new MemberPath(descriptor);
+        public static MemberPath ToMemberPath(this PropertyDescriptor descriptor) => new MemberPath(descriptor);
     }
 
     public class MemberPath : IEnumerable<PropertyDescriptor>

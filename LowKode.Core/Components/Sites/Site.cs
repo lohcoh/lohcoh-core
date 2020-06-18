@@ -1,6 +1,7 @@
 ﻿using LowKode.Core.Metadata;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
+using System.Linq;
 
 namespace LowKode.Core.Components
 {
@@ -23,7 +24,9 @@ namespace LowKode.Core.Components
             var siteType = this.GetType();  // Will be the type of a 'site' component, like <Display/> or <Input/>
             componentSpecification = Context.ComponentSiteSpecification;
             componentSpecification.SiteType = siteType;
-            componentSpecification.ComponentType = Metadata.ComponentTypes.Where(t => t.SiteType == siteType);
+            site.LowkoderRoot.Save(); // causes rules to be applied
+
+            componentSpecification.ComponentType = Metadata.ComponentTypes.Where(t => t.SiteType == siteType).FirstOrDefault().ComponentType;
             //componentFragment = new ComponentSiteFragment(Context);
         }
 

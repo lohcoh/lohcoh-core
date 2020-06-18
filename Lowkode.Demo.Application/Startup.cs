@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Lowkode.Demo.Application.Data;
-using LowKode.Core.Metadata;
+using LowKode.Core.Configuration;
 
 namespace Lowkode.Demo.Application
 {
@@ -29,6 +29,12 @@ namespace Lowkode.Demo.Application
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddLowKode(config =>
+            {
+                config.UseDefaultUIKit();
+                config.ContributeMetadataForType<WeatherForecast>();
+                config.ContributeMetadataForType<Starship>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +58,7 @@ namespace Lowkode.Demo.Application
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+
         }
     }
 }

@@ -10,18 +10,10 @@ namespace LowKode.Core.Metadata
     /// </summary>
     public class ReflectionMetaProvider
     {
-        public void Invoke(ILowKodeConfigurationService lowkode, Type entityType)
+        public void Invoke(ILowKodeConfigurationService config, Type entityType)
         {
             var typeMetadata = new TypeDescriptor(entityType);
-            typeMetadata.DisplayName= entityType.Name;
-
-            foreach (var propertInfo in entityType.GetProperties())
-            {
-                var propertyMetadata = new PropertyDescriptor(propertInfo);
-                typeMetadata.Properties.Add(propertyMetadata);
-            }
-
-            lowkode.Repository.AddMetadataRoot<ITypeMetadata>(typeMetadata);
+            config.Metadata.TypeDescriptors.Add(typeMetadata);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using LowKode.Core.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,6 +9,7 @@ namespace LowKode.Core.Metadata
     /// </summary>
     public class LowkoderMetadata 
     {
-        public virtual IEnumerable<TypeDescriptor> TypeDescriptors { get; set; }
+        public virtual ICollection<TypeDescriptor> TypeDescriptors { get; } = new List<TypeDescriptor>();
+        public virtual ICollection<ComponentTypeMapping> ComponentTypes { get; } = new List<ComponentTypeMapping>();
     }
 }

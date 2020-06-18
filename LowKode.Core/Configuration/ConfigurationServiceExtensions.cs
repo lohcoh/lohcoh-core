@@ -15,5 +15,11 @@ namespace LowKode.Core.Configuration
             new ReflectionMetaProvider().Invoke(lowkode, typeof(TEntity));
         }
 
+        public static void UseDefaultUIKit(this ILowKodeConfigurationService lowkode)
+        {
+            // todo:unfinished
+            throw new Exception();
+        }
+
     }
 }

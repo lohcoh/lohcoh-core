@@ -8,6 +8,6 @@ namespace LowKode.Core.Configuration
    
     public interface ILowKodeConfigurationService 
     {
-        
+        LowkoderMetadata Metadata { get; }
     }
 }
