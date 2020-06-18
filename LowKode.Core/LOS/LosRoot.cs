@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LowKode.Core.LOS
 {
-    class LosRoot : LosObjectAdapter, ILosRoot
+    class LosRoot :  ILosRoot
     {
 
         protected int ObjectId;
@@ -26,14 +26,10 @@ namespace LowKode.Core.LOS
         }
 
 
-        void ILosObject.Put(string propertyName, Type valueType)
+        void ILosObject.Put(string propertyName, Type valueType, object valueHolder)
         {
-            // record the addition, when the Save method is called these additions will be inserted into object system.
-            var valueHolder = new Dictionary<string, object>();
+            // record the addition, when the Save method is called these additions will be inserted into object system.            
             Additions.Add(propertyName, new DocumentInfo() {  DocumentType= valueType, Document= valueHolder });
-
-            //var objectAdapter = LOS.GetObjectAdapter(valueType, valueHolder);
-            //return objectAdapter;
         }
 
 
@@ -41,15 +37,23 @@ namespace LowKode.Core.LOS
         {
             // first: create the objects that have been added to the object tree
             // todo: need a proper generator of branch ids
-            var branch= new LosRoot(LOS, Revision+1, ObjectId);
+
             foreach (var propertyName in Additions.Keys)
             {
                 var documentInfo= Additions[propertyName];
-                LOS.Insert(ObjectId, branch.Revision, propertyName, documentInfo.DocumentType);
+                int additionId= LOS.Insert(ObjectId, Revision, propertyName, documentInfo.DocumentType);
+
+                foreach (var property in documentInfo.DocumentType.GetProperties())
+                {
+                    var propertyValue = property.GetValue(documentInfo.Document);
+                    if (propertyValue != null)
+                    {
+                        LOS.Update(additionId, Revision, property.Name, property.GetValue(documentInfo.Document));
+                    }                    
+                }
             }
 
-
-            return branch;
+            return new LosRoot(LOS, Revision + 1, ObjectId);
         }
 
 

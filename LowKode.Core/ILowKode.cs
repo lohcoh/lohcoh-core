@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using LowKode.Core.Components;
+﻿using LowKode.Core.Components;
 using LowKode.Core.Metadata;
-using LowKode.Core.Context;
 
 namespace LowKode.Core
 {
@@ -13,7 +9,7 @@ namespace LowKode.Core
     public interface ILowKode
     {
         ILowKodeComponentService Components { get; }
-        ILowKodeMetadata Metadata { get; }
-        IContext Context { get; }
+        LowkoderMetadata Metadata { get; }
+        LowkoderContext Context { get; }
     }
 }

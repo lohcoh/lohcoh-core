@@ -51,6 +51,23 @@ namespace LowKode.Core.LOS
 
             return documentObject.Id;
         }
+        public void Update(int objectId, int revision, string propertyName, object value)
+        {
+            ObjectInfo targetObject;
+            if (!objectLookup.TryGetValue(objectId, out targetObject))
+                throw new Exception("Unknown objectId:" + objectId);
+
+            // add object as property to target object
+            PropertyStore propertyStore;
+            if (!targetObject.PropertyLookup.TryGetValue(propertyName, out propertyStore))
+            {
+                propertyStore = new PropertyStore();                
+                targetObject.PropertyLookup.Add(propertyName, propertyStore);
+            }
+            propertyStore.UpdateValue(revision, value);
+           
+        }
+
 
         void RenderDocumentTree(int revision, Type documentType, ObjectInfo documentObject, object document)
         {
@@ -93,20 +110,14 @@ namespace LowKode.Core.LOS
 
             // The value being retrieved is a nested object, return a proxy.
             var vobjectInfo= value as ObjectInfo;
-            return new ProxyGenerator().CreateClassProxy(
-                vobjectInfo.DocumentType, new IInterceptor[] { });
-
-        }
-
-
-        public object GetObjectAdapter(Type DocumentType, IDictionary<string, object> valueHolder)
-        {
-            return new DictionaryAdapterFactory().GetAdapter<object>(DocumentType, valueHolder);
+            return vobjectInfo.CreateProxy(
+                (propertyName) => Get(vobjectInfo.Id, revision, propertyName),
+                (propertyName, value) => { Update(vobjectInfo.Id, revision, propertyName, value); });
         }
 
     }
 
-    class ObjectInfo
+    class ObjectInfo 
     {
         public Type DocumentType { get; private set; }
 
@@ -118,11 +129,36 @@ namespace LowKode.Core.LOS
         public Dictionary<string, PropertyStore> PropertyLookup { get; } = new Dictionary<string, PropertyStore>();
         public int Id { get=>GetHashCode(); }
 
-        public object GetObjectAdapter(int revision)
+        internal object CreateProxy(Func<string, object> getHandler, Action<string, object> setHandler)
         {
-            new ProxyGenerator().CreateClassProxy(DocumentType, new IInterceptor[] { });
-
+            return new ProxyGenerator().CreateClassProxy(
+                DocumentType, 
+                new IInterceptor[] { 
+                    new ObjectIntercetor(getHandler, setHandler) 
+                }); 
         }
 
+        class ObjectIntercetor : IInterceptor
+        {
+            Func<string, object> getHandler;
+            Action<string, object> setHandler;
+            public ObjectIntercetor(Func<string, object> getHandler, Action<string, object> setHandler)
+            {
+                this.getHandler = getHandler;
+                this.setHandler = setHandler;
+            }
+            public void Intercept(IInvocation invocation)
+            {
+                if (invocation.Method.Name.StartsWith("set"))
+                {
+                    setHandler(invocation.Method.Name.Substring(4), invocation.Arguments[0]);
+                }
+                else if (invocation.Method.Name.StartsWith("get"))
+                {
+                    invocation.ReturnValue = getHandler(invocation.Method.Name.Substring(4));
+                }
+                //invocation.Proceed();
+            }
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using LowKode.Core.Context;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using System;
 using System.Reflection;
 
@@ -21,7 +20,7 @@ namespace LowKode.Core.Components
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        ComponentBase Create(IContext context);
+        ComponentBase Create(LowkoderContext context);
 
        
     }

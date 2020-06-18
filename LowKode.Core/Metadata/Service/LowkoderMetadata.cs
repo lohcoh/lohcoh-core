@@ -6,10 +6,10 @@ using System.Text;
 namespace LowKode.Core.Metadata
 {
     /// <summary>
-    /// TODO: Unimplemented
+    /// Metadata supplied by Lowkoder
     /// </summary>
-
-    public class LowKodeMetadata : DependencyObject
+    public class LowkoderMetadata 
     {
+        public virtual IEnumerable<TypeDescriptor> TypeDescriptors { get; set; }
     }
 }

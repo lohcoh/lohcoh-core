@@ -1,4 +1,4 @@
-﻿namespace LowKode.Core.LOS
+﻿namespace LowKode.Core
 {
     /// <summary>
     /// The root of an object tree retrieved from a LOS object system.

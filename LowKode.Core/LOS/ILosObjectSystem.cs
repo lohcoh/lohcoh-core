@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LowKode.Core.LOS
+namespace LowKode.Core
 {
     /// <summary>
     /// The Lowkoder Object System(LOS) is an embedded object system designed to serve as a lightweight and extensible metadata repository.

@@ -15,12 +15,20 @@ namespace LowKode.Core.LOS
                 throw new Exception("Property already Added");
             values.Add(revision, value);
         }
+        internal void UpdateValue(int revision, object value)
+        {
+            values[revision]= value;
+        }
 
         internal object GetValue(int revision)
         {
             if (values.ContainsKey(revision))
                 return values[revision];
-            throw new NotImplementedException();
+            var lastRevision = values.Keys.Last(k => k <= revision);
+            if (values.ContainsKey(lastRevision))
+                return values[lastRevision];
+
+            return null;
         }
 
         internal void RemoveValue(int revision)

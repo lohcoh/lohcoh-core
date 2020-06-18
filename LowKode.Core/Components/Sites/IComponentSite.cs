@@ -1,5 +1,4 @@
 ﻿using LowKode.Core.Common;
-using LowKode.Core.Context;
 using LowKode.Core.Metadata;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -14,9 +13,9 @@ namespace LowKode.Core.Components
     /// </summary>
     public interface IComponentSite 
     {
-        // todo: use dependency property
-        IContext Context { get; }
-        ILowKodeMetadata Metadata { get; }
+        ILosRoot LowkoderRoot { get; }
+        LowkoderContext Context { get; }
+        LowkoderMetadata Metadata { get; }
 
         /// <summary>
         /// Creates a new site and renders the given fragment within the context of the new site

@@ -10,11 +10,10 @@ namespace LowKode.Core.Metadata
     public class LowKodeConfigurationService : ILowKodeConfigurationService
     {
 
-        ILowKodeMetaRepository repository;
+        
         public LowKodeConfigurationService()
         {
         }
 
-        public ILowKodeMetaRepository Repository => repository;
     }
 }

@@ -12,12 +12,12 @@ namespace LowKode.Core.Metadata
     {
         public void Invoke(ILowKodeConfigurationService lowkode, Type entityType)
         {
-            var typeMetadata = new TypeMetadata(entityType);
+            var typeMetadata = new TypeDescriptor(entityType);
             typeMetadata.DisplayName= entityType.Name;
 
             foreach (var propertInfo in entityType.GetProperties())
             {
-                var propertyMetadata = new PropertyMetadata(propertInfo);
+                var propertyMetadata = new PropertyDescriptor(propertInfo);
                 typeMetadata.Properties.Add(propertyMetadata);
             }
 

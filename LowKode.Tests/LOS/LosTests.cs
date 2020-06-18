@@ -59,11 +59,11 @@ namespace LowKode.Tests
             // now change the title
             var application2= master.Get<Application>();
             application2.Title = "TPS Report Manager 3000 + 1";
-            var branch= master.Save();
+            master.Save();
 
             // the branch title should be updated and the master title should not have changed
-            Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
-            Assert.AreEqual("TPS Report Manager 3000 + 1", branch.Get<Application>().Title);
+            Assert.AreEqual("TPS Report Manager 3000", prime.Get<Application>().Title);
+            Assert.AreEqual("TPS Report Manager 3000 + 1", master.Get<Application>().Title);
         }
 
         [TestMethod]
@@ -97,12 +97,12 @@ namespace LowKode.Tests
 
             // now change the title
             master.Get<Application>().Title = "TPS Report Manager 3000 + 1";
-            var branch = master.Save();
-            Assert.AreEqual(1, branch.Revision);
+            master.Save();
+            Assert.AreEqual(0, master.Revision);
 
             // the branch title should be updated and the master title should not have changed
-            Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
-            Assert.AreEqual("TPS Report Manager 3000 + 1", branch.Get<Application>().Title);
+            Assert.AreEqual("TPS Report Manager 3000", prime.Get<Application>().Title);
+            Assert.AreEqual("TPS Report Manager 3000 + 1", master.Get<Application>().Title);
         }
 
 
@@ -133,9 +133,9 @@ namespace LowKode.Tests
             hello.One = "Yo";
             hello.Two = null;
 
-            var branch= master.Save();
+            master.Save();
 
-            var bHello= branch.Get<Hello>();
+            var bHello= master.Get<Hello>();
 
             // all these assertions are true
             Assert.AreEqual("Yo", bHello.One);
@@ -145,7 +145,7 @@ namespace LowKode.Tests
             Assert.AreEqual("Hello", bHello.Three);
 
             // Note that changing properties in the branch did not change the master
-            var mHello = master.Get<Hello>();
+            var mHello = prime.Get<Hello>();
             Assert.AreEqual("Howdy", mHello.One);
             Assert.AreEqual("Hi", mHello.Two);
             Assert.AreEqual("Hello", mHello.Three);
