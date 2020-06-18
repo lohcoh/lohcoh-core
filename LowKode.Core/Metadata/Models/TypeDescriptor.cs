@@ -44,6 +44,10 @@ namespace LowKode.Core.Metadata
             }
 
         }
+
+        /// <summary>
+        /// Returns null if this TypeDescriptor is not associated with a .NET type
+        /// </summary>
         public Type SystemType { get; set; }
 
         public IReadOnlyCollection<PropertyDescriptor> Properties { get => _properties; }

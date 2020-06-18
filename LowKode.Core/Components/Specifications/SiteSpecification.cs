@@ -13,7 +13,7 @@ namespace LowKode.Core
 
         /// <summary>
         /// The site type indicates a general category of UI component that should be used to display the associated context.
-        /// This will be a type like <Input/> or <DisplayName/>
+        /// This will be a type like <Edit/>, <Display/>, or <DisplayName/>
         /// The actual component used to render the associated site is specified by the ComponentType property.
         /// ComponentType must be a subclass of SiteType.
         /// Required, may not be null.
@@ -28,7 +28,8 @@ namespace LowKode.Core
 
         /// <summary>
         /// The actual value to be displayed by the component
-        /// Can be null, because some components just display some essentially hard-coded content and they don't need a value.
+        /// Can be null, because some components just display hard-coded content and they don't need a value.
+        /// Must be an instance of ModelType.
         /// </summary>
         public virtual Object Model { get; set; }
 
@@ -48,6 +49,6 @@ namespace LowKode.Core
         /// <summary>
         /// Denotes the part of the model to be displayed by the component associated with this specification.
         /// </summary>
-        public virtual IDependencyPath ModelMember { get; set; }
+        public virtual MemberPath ModelMember { get; set; }
     }
 }
