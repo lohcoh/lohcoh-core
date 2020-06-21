@@ -19,7 +19,7 @@ namespace LowKode.Core.Configuration
         public ComponentSite(ILosObjectSystem los)
         {
             this.los= los;
-            root= los.Open();
+            root= los.Master;
             lowkoderRoot= root.Get<LowkoderRoot>();
             context= lowkoderRoot.Context;
             metadata= lowkoderRoot.Metadata;

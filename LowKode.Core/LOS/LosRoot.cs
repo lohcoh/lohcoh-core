@@ -28,8 +28,16 @@ namespace LowKode.Core.LOS
 
         void ILosObject.Put(string propertyName, Type valueType, object valueHolder)
         {
-            // record the addition, when the Save method is called these additions will be inserted into object system.            
-            Additions.Add(propertyName, new DocumentInfo() {  DocumentType= valueType, Document= valueHolder });
+            int additionId = LOS.Insert(ObjectId, Revision, propertyName, valueType);
+
+            foreach (var property in valueType.GetProperties())
+            {
+                var propertyValue = property.GetValue(valueHolder);
+                if (propertyValue != null)
+                {
+                    LOS.Update(additionId, Revision, property.Name, property.GetValue(valueHolder));
+                }
+            }
         }
 
 
@@ -67,6 +75,11 @@ namespace LowKode.Core.LOS
         void ILosObject.Remove(string propertyName)
         {
             throw new NotImplementedException();
+        }
+
+        public ILosRoot Branch()
+        {
+            return new LosRoot(LOS, Revision + 1, ObjectId);
         }
     }
 }

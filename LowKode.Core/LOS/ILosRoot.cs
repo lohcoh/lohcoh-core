@@ -7,5 +7,7 @@
     public interface ILosRoot : ILosObject
     {
         public int Revision { get; }
+
+        ILosRoot Branch();
     }
 }

@@ -4,21 +4,28 @@ using System.Text;
 using System.Linq;
 using LowKode.Core.Metadata;
 using LowKode.Core.Configuration;
+using LowKode.Core.Components;
 
 namespace LowKode.Core.Configuration
 {
     public static class ConfigurationServiceExtensions
     {
       
-        public static void ContributeMetadataForType<TEntity>(this ILowkoderConfigurationService lowkode)
+        public static void ContributeMetadataForType<TEntity>(this ILowkoderConfigurationService config)
         {
-            new ReflectionMetaProvider().Invoke(lowkode, typeof(TEntity));
+            var typeMetadata = new TypeDescriptor(typeof(TEntity));
+            config.Metadata.TypeDescriptors.Add(typeMetadata);
         }
 
-        public static void UseDefaultUIKit(this ILowkoderConfigurationService lowkode)
+        public static void UseDefaultUIKit(this ILowkoderConfigurationService config)
         {
             // todo:unfinished
-            throw new Exception();
+            config.Metadata.ComponentTypes.Add(new ComponentTypeMapping()
+            {
+                ComponentType = typeof(Input),
+                ModelType = new TypeDescriptor(typeof(String)),
+                SiteType = typeof(Input)
+            });
         }
 
     }

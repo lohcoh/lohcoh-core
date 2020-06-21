@@ -23,5 +23,24 @@ namespace LowKode.Core.Metadata
         public IEnumerator<PropertyDescriptor> GetEnumerator() => (IEnumerator<PropertyDescriptor>)descriptors.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => descriptors.GetEnumerator();
+
+        public virtual void Set(object model, object value)
+        {
+            // todo: unfinished, this isn't gonna work for nested properties
+            foreach (var descriptor in descriptors)
+            {
+                descriptor.SetMethod(model, value);
+            }
+        }
+
+        public virtual object Get(object model)
+        {
+            // todo: unfinished, this isn't gonna work for nested properties
+            foreach (var descriptor in descriptors)
+            {
+                return descriptor.GetMethod(model);
+            }
+            return default(Object);
+        }
     }
 }

@@ -130,8 +130,6 @@ namespace LowKode.Tests
             hello.One = "Yo";
             hello.Two = null;
 
-            master.Save();
-
             var bHello= master.Get<Hello>();
 
             // all these assertions are true
