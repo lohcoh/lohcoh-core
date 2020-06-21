@@ -6,7 +6,7 @@ using LowKode.Core.Metadata;
 namespace LowKode.Core.Configuration
 {
    
-    public interface ILowKodeConfigurationService 
+    public interface ILowkoderConfigurationService : IDisposable
     {
         LowkoderMetadata Metadata { get; }
     }

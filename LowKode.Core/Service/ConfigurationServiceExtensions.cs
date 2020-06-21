@@ -10,12 +10,12 @@ namespace LowKode.Core.Configuration
     public static class ConfigurationServiceExtensions
     {
       
-        public static void ContributeMetadataForType<TEntity>(this ILowKodeConfigurationService lowkode)
+        public static void ContributeMetadataForType<TEntity>(this ILowkoderConfigurationService lowkode)
         {
             new ReflectionMetaProvider().Invoke(lowkode, typeof(TEntity));
         }
 
-        public static void UseDefaultUIKit(this ILowKodeConfigurationService lowkode)
+        public static void UseDefaultUIKit(this ILowkoderConfigurationService lowkode)
         {
             // todo:unfinished
             throw new Exception();

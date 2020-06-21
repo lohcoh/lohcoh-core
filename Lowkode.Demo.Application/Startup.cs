@@ -31,7 +31,6 @@ namespace Lowkode.Demo.Application
             services.AddSingleton<WeatherForecastService>();
             services.AddLowKode(config =>
             {
-                config.UseDefaultUIKit();
                 config.ContributeMetadataForType<WeatherForecast>();
                 config.ContributeMetadataForType<Starship>();
             });

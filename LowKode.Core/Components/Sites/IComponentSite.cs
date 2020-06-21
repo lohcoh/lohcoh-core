@@ -12,8 +12,20 @@ namespace LowKode.Core.Components
     /// </summary>
     public interface IComponentSite 
     {
+        /// <summary>
+        /// The ILosRoot that contains the Context and Metadata documents.
+        /// todo: Remove.  Not sure its necessary to expose this.
+        /// </summary>
         ILosRoot LowkoderRoot { get; }
+
+        /// <summary>
+        /// Context document root for this site.
+        /// </summary>
         LowkoderContext Context { get; }
+
+        /// <summary>
+        /// Metadata document root for this site.
+        /// </summary>
         LowkoderMetadata Metadata { get; }
 
         /// <summary>

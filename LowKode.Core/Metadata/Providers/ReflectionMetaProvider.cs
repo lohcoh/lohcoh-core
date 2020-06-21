@@ -10,7 +10,7 @@ namespace LowKode.Core.Metadata
     /// </summary>
     public class ReflectionMetaProvider
     {
-        public void Invoke(ILowKodeConfigurationService config, Type entityType)
+        public void Invoke(ILowkoderConfigurationService config, Type entityType)
         {
             var typeMetadata = new TypeDescriptor(entityType);
             config.Metadata.TypeDescriptors.Add(typeMetadata);

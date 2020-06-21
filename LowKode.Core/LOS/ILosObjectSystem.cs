@@ -9,8 +9,9 @@ namespace LowKode.Core
     /// LOS enables users to create simple trees of metadata.
     /// LOS can create many branches, or versions, of it's object tree in a space efficient manner.
     /// Each branch can be initialized with new metadata.
-    /// Metadata trees are customized using rules that conditionally mutate metadata 
-    /// based metadata changes.
+    /// Metadata trees are customized using rules that conditionally mutate metadata.
+    /// 
+    /// Rules are executed on each invocation of the Insert
     /// 
     /// </summary>
     public interface ILosObjectSystem
