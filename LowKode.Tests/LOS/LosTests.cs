@@ -50,27 +50,25 @@ namespace LowKode.Tests
             };
 
             var los = new LosObjectSystem();
-            var prime= los.Open();  
-            prime.Put(application);
-            var master= prime.Save();
+            var master= los.Master;  
+            master.Put(application);
+            var branch= master.Branch();
 
-            Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
+            Assert.AreEqual("TPS Report Manager 3000", branch.Get<Application>().Title);
 
             // now change the title
-            var application2= master.Get<Application>();
-            application2.Title = "TPS Report Manager 3000 + 1";
-            master.Save();
+            branch.Get<Application>().Title = "TPS Report Manager 3000 + 1";
 
             // the branch title should be updated and the master title should not have changed
-            Assert.AreEqual("TPS Report Manager 3000", prime.Get<Application>().Title);
-            Assert.AreEqual("TPS Report Manager 3000 + 1", master.Get<Application>().Title);
+            Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
+            Assert.AreEqual("TPS Report Manager 3000 + 1", branch.Get<Application>().Title);
         }
 
         [TestMethod]
         public void TestNesting()
         {         
             var los = new LosObjectSystem();
-            var prime= los.Open();
+            var prime= los.Master;
 
             // populate the object system with some data
             prime.Put(new Application()
@@ -89,7 +87,7 @@ namespace LowKode.Tests
                 }
             });
 
-            var master = prime.Save(); // save the data to create the master branch
+            var master = prime.Branch(); // save the data to create the master branch
             Assert.AreEqual(0, master.Revision); /// the master branch always has revision 0
 
             // we should get the title that we created
@@ -97,7 +95,6 @@ namespace LowKode.Tests
 
             // now change the title
             master.Get<Application>().Title = "TPS Report Manager 3000 + 1";
-            master.Save();
             Assert.AreEqual(0, master.Revision);
 
             // the branch title should be updated and the master title should not have changed
@@ -110,7 +107,7 @@ namespace LowKode.Tests
         public void TestBranching()
         {
             var los = new LosObjectSystem();
-            var prime = los.Open(); 
+            var prime = los.Master; 
 
             prime.Put(new Hello() 
             {
@@ -126,7 +123,7 @@ namespace LowKode.Tests
                 Three = "Later"
             });
 
-            var master= prime.Save();
+            var master= prime.Branch();
 
             // creates a branch of the root and changes some properties
             var hello = master.Get<Hello>();

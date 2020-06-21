@@ -13,14 +13,14 @@ namespace LowKode.Core.Configuration
 
         public LowkoderConfigurationService(LowkoderService lowkoder)
         {
-            this.Metadata = lowkoder.los.Open().Get<LowkoderRoot>().Metadata;
+            this.Metadata = lowkoder.los.Master.Get<LowkoderRoot>().Metadata;
         }
 
         public LowkoderMetadata Metadata { get; private set; }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            // do nothing
         }
     }
 }

@@ -14,10 +14,16 @@ namespace LowKode.Core.Configuration
 
         public LowkoderService()
         {
+            los.Master.Put(
+                new LowkoderRoot()
+                {
+                    Metadata= new LowkoderMetadata(),
+                    Context= new LowkoderContext()
+                });
         }
         public IComponentSite CreateComponentSite(IServiceProvider serviceProvider)
         {
-            throw new NotImplementedException();
+            return new ComponentSite(los);
         }
     }
 }

@@ -17,14 +17,19 @@ namespace LowKode.Core
     public interface ILosObjectSystem
     {
         /// <summary>
+        /// The master branch of the object tree.
+        /// </summary>
+        ILosRoot Master { get; }
+
+        /// <summary>
         /// Creates a new 'object', with Type valueType.
         /// Inserts the new object into the object with id == objectId as property propertyName.
         /// Returns the id of the new object
         /// </summary>
-        int Insert(int objectId, int revision, string propertyName, Type valueType);
-        object Get(int objectId, int revision, string propertyName);
+        //int Insert(int objectId, int revision, string propertyName, Type valueType);
+        //object Get(int objectId, int revision, string propertyName);
         
-        void Remove(int objectId, int revision, string propertyName);
+        //void Remove(int objectId, int revision, string propertyName);
         
     }
 }

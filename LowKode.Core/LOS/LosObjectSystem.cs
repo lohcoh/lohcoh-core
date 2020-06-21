@@ -9,7 +9,7 @@ namespace LowKode.Core.LOS
 {
     public class LosObjectSystem : ILosObjectSystem
     {
-        ILosRoot Prime { get; set; }
+        public ILosRoot Master { get; set; }
 
         private Dictionary<int, ObjectInfo> objectLookup = new Dictionary<int, ObjectInfo>();
 
@@ -18,10 +18,9 @@ namespace LowKode.Core.LOS
             var documentObject = new ObjectInfo(typeof(LosRoot));
             objectLookup.Add(documentObject.Id, documentObject);
 
-            Prime = new LosRoot(this, revision:-1, objectId: documentObject.Id);
+            Master = new LosRoot(this, revision:-1, objectId: documentObject.Id);
         }
 
-        public ILosRoot Open() => Prime;
 
         /// <summary>
         /// 
@@ -102,7 +101,7 @@ namespace LowKode.Core.LOS
 
             PropertyStore propertyStore;
             if (!objectInfo.PropertyLookup.TryGetValue(propertyName, out propertyStore))
-                throw new Exception("Object[" + objectId + "] does not have a proiperty named '" + propertyName + "'");
+                throw new Exception("Object[" + objectId + "] does not have a property named '" + propertyName + "'");
 
             object value= propertyStore.GetValue(revision);
             if (!(value is ObjectInfo))
