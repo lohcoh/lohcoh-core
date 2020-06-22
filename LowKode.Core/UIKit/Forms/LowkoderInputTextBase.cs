@@ -10,7 +10,7 @@ namespace LowKode.Core.Components
     /// </summary>
     public class LowkoderInputTextBase : Input
     {
-        public LowkoderInputTextBase(IComponentSite site) : base(site) { }
+        public LowkoderInputTextBase() { }
 
 
         object Model;
@@ -27,8 +27,8 @@ namespace LowKode.Core.Components
         {
             base.OnInitialized();
 
-            Model = site.Context.ComponentSiteSpecification.Model;
-            MemberPath = site.Context.ComponentSiteSpecification.ModelMember;
+            Model = Site.Context.ComponentSiteSpecification.Model;
+            MemberPath = Site.Context.ComponentSiteSpecification.ModelMember;
 
         }
     }

@@ -19,6 +19,9 @@ namespace LowKode.Core.Configuration
                 {
                     Metadata= new LowkoderMetadata(),
                     Context= new LowkoderContext()
+                    {
+                        ComponentSiteSpecification= new SiteSpecification()
+                    }
                 });
         }
         public IComponentSite CreateComponentSite(IServiceProvider serviceProvider)

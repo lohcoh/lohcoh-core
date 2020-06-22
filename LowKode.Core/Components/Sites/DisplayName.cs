@@ -8,8 +8,8 @@ namespace LowKode.Core.Components
     /// <summary>
     /// Displays a name that identifies the associated model.
     /// </summary>
-    public class DisplayName : Site
+    public class DisplayName : SiteComponent
     {
-        public DisplayName(IComponentSite site) : base(site) { }
+        public DisplayName() { }
     }
 }

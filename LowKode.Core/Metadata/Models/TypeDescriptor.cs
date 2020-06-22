@@ -51,7 +51,7 @@ namespace LowKode.Core.Metadata
         public Type SystemType { get; set; }
 
         public IReadOnlyCollection<PropertyDescriptor> Properties { get => _properties; }
-      
+        public string Name { get => SystemType.FullName; }
     }
 
     public class TypeMetadata<TType> : TypeDescriptor
