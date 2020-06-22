@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace LowKode.Core.Metadata
@@ -16,7 +18,6 @@ namespace LowKode.Core.Metadata
     {
         static Dictionary<Type, TypeDescriptor> _descriptors = new Dictionary<Type, TypeDescriptor>();
 
-       
         public static TypeDescriptor ForSystemType(Type systemType)
         {
             TypeDescriptor descriptor;
@@ -29,13 +30,19 @@ namespace LowKode.Core.Metadata
         }
 
         private List<PropertyDescriptor> _properties = new List<PropertyDescriptor>();
+        public string DisplayName { get; set; }
 
         /// <summary>
         /// Creates a TypeDescriptor that represents the given .NET type
         /// </summary>
-        public TypeDescriptor(Type t)
+        TypeDescriptor(Type t)
         {
             SystemType = t;
+            DisplayName = t.FullName;
+
+            var displayNameAttribute= (DisplayNameAttribute)t.GetCustomAttributes(typeof(DisplayNameAttribute), false).SingleOrDefault();
+            if (displayNameAttribute != null)
+                DisplayName = displayNameAttribute.DisplayName;
 
             foreach (var propertInfo in t.GetProperties())
             {
@@ -51,13 +58,6 @@ namespace LowKode.Core.Metadata
         public Type SystemType { get; set; }
 
         public IReadOnlyCollection<PropertyDescriptor> Properties { get => _properties; }
-        public string Name { get => SystemType.FullName; }
     }
 
-    public class TypeMetadata<TType> : TypeDescriptor
-    {
-        public TypeMetadata() : base(typeof(TType)) 
-        {
-        }
-    }
 }

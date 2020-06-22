@@ -1,0 +1,21 @@
+﻿@using LowKode.Core.Metadata
+@using Microsoft.AspNetCore.Components.Forms
+@namespace LowKode.Core.Components
+@inherits LowKode.Core.Components.Input
+
+
+<label>@DisplayName</label>
+
+@code {
+
+    public string DisplayName { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        var typeDescriptor = Site.Context.ComponentSiteSpecification.ModelType;
+        DisplayName = typeDescriptor.DisplayName;
+    }
+}

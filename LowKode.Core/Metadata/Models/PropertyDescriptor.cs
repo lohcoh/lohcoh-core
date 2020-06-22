@@ -8,23 +8,21 @@ namespace LowKode.Core.Metadata
 {
     public class PropertyDescriptor 
     {
+        private PropertyInfo propertyInfo;
         public PropertyDescriptor(PropertyInfo propertyInfo)
         {
-            this.CanRead = propertyInfo.CanRead;
-            this.CanWrite = propertyInfo.CanWrite;
-            this.Name = propertyInfo.Name;
-            this.SystemType = propertyInfo.PropertyType;
-            this.GetMethod = (instance) => propertyInfo.GetMethod.Invoke(instance,null);
-            this.SetMethod = (instance, value) => propertyInfo.SetMethod.Invoke(instance, new object[] { value });
+            this.propertyInfo = propertyInfo;
         }
 
-        public virtual string Name { get; }
-        public virtual Func<Object, Object> GetMethod { get; }
-        public virtual bool CanWrite { get; }
-        public virtual bool CanRead { get; }
+        public virtual string Name { get => propertyInfo.Name; }
+        public virtual bool CanWrite { get=> propertyInfo.CanWrite; }
+        public virtual bool CanRead { get=> propertyInfo.CanRead; }
 
-        public virtual Type SystemType { get; }
-        public virtual Action<Object, Object> SetMethod { get; }
+        public virtual TypeDescriptor PropertyType { get => TypeDescriptor.ForSystemType(propertyInfo.PropertyType);  }
+        public virtual Type SystemType { get=> propertyInfo.PropertyType; }
+
+        public virtual Func<Object, Object> GetMethod { get => (instance) => propertyInfo.GetMethod.Invoke(instance, null); }
+        public virtual Action<Object, Object> SetMethod { get=> (instance, value) => propertyInfo.SetMethod.Invoke(instance, new object[] { value }); }
 
     }
 }

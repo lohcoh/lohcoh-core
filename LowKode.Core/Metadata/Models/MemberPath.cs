@@ -12,6 +12,11 @@ namespace LowKode.Core.Metadata
         public static MemberPath ToMemberPath(this PropertyDescriptor descriptor) => new MemberPath(descriptor);
     }
 
+
+    /// <summary>
+    /// A selector that identifies a node in a LOS object tree.
+    /// Basically a list of PropertyDescriptors that identify how to navigate from an object to some descendant of the object.
+    /// </summary>
     public class MemberPath : IEnumerable<PropertyDescriptor>
     {
         PropertyDescriptor[] descriptors;
@@ -23,6 +28,12 @@ namespace LowKode.Core.Metadata
         public IEnumerator<PropertyDescriptor> GetEnumerator() => (IEnumerator<PropertyDescriptor>)descriptors.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => descriptors.GetEnumerator();
+
+        /// <summary>
+        /// Returns the last descriptor in the MemberPath.
+        /// This descriptor identifies the property which the MemberPath identifies.
+        /// </summary>
+        public PropertyDescriptor TargetProperty { get => descriptors[descriptors.Length - 1]; }
 
         public virtual void Set(object model, object value)
         {

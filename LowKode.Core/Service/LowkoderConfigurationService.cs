@@ -18,9 +18,6 @@ namespace LowKode.Core.Configuration
 
         public LowkoderMetadata Metadata { get; private set; }
 
-        public void Dispose()
-        {
-            // do nothing
-        }
+        public void Dispose() { /* do nothing */ }
     }
 }

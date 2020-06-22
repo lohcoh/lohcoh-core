@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
+﻿using LowKode.Core.Components;
 using LowKode.Core.Metadata;
-using LowKode.Core.Configuration;
-using LowKode.Core.Components;
+using System;
 
 namespace LowKode.Core.Configuration
 {
@@ -13,7 +9,7 @@ namespace LowKode.Core.Configuration
       
         public static void ContributeMetadataForType<TEntity>(this ILowkoderConfigurationService config)
         {
-            var typeMetadata = new TypeDescriptor(typeof(TEntity));
+            var typeMetadata = TypeDescriptor.ForSystemType(typeof(TEntity));
             config.Metadata.TypeDescriptors.Add(typeMetadata);
         }
 
@@ -22,8 +18,21 @@ namespace LowKode.Core.Configuration
             // todo:unfinished
             config.Metadata.ComponentTypes.Add(new ComponentTypeMapping()
             {
-                ComponentType = typeof(Input),
-                ModelType = new TypeDescriptor(typeof(String)),
+                ComponentType = typeof(LowkoderInputText),
+                ModelType = TypeDescriptor.ForSystemType(typeof(String)),
+                SiteType = typeof(Input)
+            });
+
+            config.Metadata.ComponentTypes.Add(new ComponentTypeMapping()
+            {
+                ComponentType = typeof(LowkoderDisplayName),
+                SiteType = typeof(DisplayName)
+            });
+
+            config.Metadata.ComponentTypes.Add(new ComponentTypeMapping()
+            {
+                ComponentType = typeof(LowkoderInputDate),
+                ModelType = TypeDescriptor.ForSystemType(typeof(DateTime)),
                 SiteType = typeof(Input)
             });
         }
