@@ -6,35 +6,36 @@ using System.Linq;
 
 namespace LowKode.Core.Components
 {
-    public class SiteComponent : ComponentBase
+    /// <summary>
+    ///     Base class for components that serve as replacements for 'site' components.
+    ///     ContentProviders must subclass the site component that they replace.
+    ///     
+    ///     Unlike 
+    /// </summary>
+    public class ContentProvider : ComponentBase
     {
-        [Inject]
         [Parameter]
         public IComponentSite Site { get; set; }
 
-        public SiteComponent() { }
-
-        protected LowkoderContext Context { get => Site.Context; }
-        protected LowkoderMetadata Metadata { get => Site.Metadata; }
-        protected SiteSpecification SiteSpecification { get => Site.Context.ComponentSiteSpecification; }
-
-        
+        public ContentProvider() { }
 
         Type ComponentType;
         protected override void OnInitialized()
         {
-            // This component's only job is create the component used to render this site.         
             var siteType = this.GetType();  // Will be the type of a 'site' component, like <Display/> or <Input/>
+
+            var SiteSpecification = Site.Context.ComponentSiteSpecification;
             SiteSpecification.SiteType = siteType;
+
             var modelType= SiteSpecification.ModelType;
             if (SiteSpecification.ModelMember != null)
             {
-                var propertyDescriptor = SiteSpecification.ModelMember.TargetProperty;
-                modelType = propertyDescriptor.PropertyType;
+                modelType = SiteSpecification.ModelMember.TargetProperty.PropertyType;
             }
-            var componentMapping = Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == modelType).FirstOrDefault();
+
+            var componentMapping = Site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == modelType).FirstOrDefault();
             if (componentMapping == null)
-                componentMapping = Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == null).FirstOrDefault();
+                componentMapping = Site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == null).FirstOrDefault();
             if (componentMapping == null)
                 throw new Exception("No component mapping found for SiteType '"+siteType.FullName +"' and  ModelType '"+modelType.DisplayName+"'");
 
