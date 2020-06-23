@@ -1,7 +1,6 @@
 ﻿@using LowKode.Core.Metadata
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
-@inherits LowKode.Core.Components.Input
 
 
 <Microsoft.AspNetCore.Components.Forms.InputText id="name" @bind-Value="MemberValue" />
@@ -15,6 +14,9 @@
             get { return (string)MemberPath.Get(Model); }
             set { MemberPath.Set(Model, value); }
         }
+    
+    [Parameter]
+    public IComponentSite Site { get; set; }
 
 
         protected override void OnInitialized()

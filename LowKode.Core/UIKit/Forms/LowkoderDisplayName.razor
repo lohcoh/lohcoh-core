@@ -1,7 +1,6 @@
 ﻿@using LowKode.Core.Metadata
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
-@inherits LowKode.Core.Components.Input
 
 
 <label>@DisplayName</label>
@@ -9,6 +8,9 @@
 @code {
 
     public string DisplayName { get; set; }
+
+    [Parameter]
+    public IComponentSite Site { get; set; }
 
 
     protected override void OnInitialized()

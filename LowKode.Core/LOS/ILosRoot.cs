@@ -1,4 +1,6 @@
-﻿namespace LowKode.Core
+﻿using LowKode.Core.LOS;
+
+namespace LowKode.Core
 {
     /// <summary>
     /// The root of an object tree retrieved from a LOS object system.
@@ -7,6 +9,8 @@
     public interface ILosRoot : ILosObject
     {
         public int Revision { get; }
+
+        public LosObjectSystem LOS { get; }
 
         ILosRoot Branch();
     }

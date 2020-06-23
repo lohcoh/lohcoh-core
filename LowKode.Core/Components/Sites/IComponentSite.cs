@@ -16,7 +16,7 @@ namespace LowKode.Core.Components
         /// The ILosRoot that contains the Context and Metadata documents.
         /// todo: Remove.  Not sure its necessary to expose this.
         /// </summary>
-        ILosRoot LowkoderRoot { get; }
+        //ILosRoot LowkoderRoot { get; }
 
         /// <summary>
         /// Context document root for this site.

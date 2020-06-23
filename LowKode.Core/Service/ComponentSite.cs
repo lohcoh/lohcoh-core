@@ -24,7 +24,7 @@ namespace LowKode.Core.Configuration
             context= lowkoderRoot.Context;
             metadata= lowkoderRoot.Metadata;
         }
-        public ILosRoot LowkoderRoot => root;
+        //public ILosRoot LowkoderRoot => root;
 
         public LowkoderContext Context => context;
 
@@ -32,7 +32,10 @@ namespace LowKode.Core.Configuration
 
         public RenderFragment RenderWithSite(RenderFragment content, Action<IComponentSite> siteInitializer)
         {
-            throw new NotImplementedException();
+            return treebuilder =>
+            {
+
+            };           
         }
     }
 }
