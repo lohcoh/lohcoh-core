@@ -7,8 +7,7 @@
 @{
     foreach (var property in modelMetadata.Properties)
     {
-        site.Context.ComponentSiteSpecification.ModelMember = property.ToMemberPath();            
-        @ChildContent
+        @site.RenderWithSite(ChildContent, site => site.Context.ComponentSiteSpecification.ModelMember = property.ToMemberPath());        
     }    
 }
 

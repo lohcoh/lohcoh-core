@@ -3,15 +3,16 @@
 @namespace LowKode.Core.Components
 
 
-<Microsoft.AspNetCore.Components.Forms.InputText id="name" @bind-Value="MemberValue" />
+
+<Microsoft.AspNetCore.Components.Forms.InputDate id="name" @bind-Value="MemberValue" />
 
 @code {
         object Model;
         MemberPath MemberPath;
 
-        public string MemberValue
+        public DateTime MemberValue
         {
-            get { return (string)MemberPath.Get(Model); }
+            get { return Convert.ToDateTime(MemberPath.Get(Model)); }
             set { MemberPath.Set(Model, value); }
         }
     
