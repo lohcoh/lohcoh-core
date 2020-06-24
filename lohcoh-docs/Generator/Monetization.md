@@ -7,11 +7,17 @@ LowKode will *NOT* provide support for commercial component libraies out of the 
 	Free...
 		Blazorize
 		Razden
+		Lowkoder Open Source
 	Commercial...
 		SyncFusion
 		Telerik
 		DevExpress
 		PatternFly
+
+# tutorial videos
+
+Some open source projects make money by providing video tutorials on a subscription basis...
+https://calebporzio.com/i-just-hit-dollar-100000yr-on-github-sponsors-heres-how-i-did-it
 
 ## extended components
 Data Tables (should be in the free project?)

@@ -12,29 +12,23 @@ namespace LowKode.Core.Configuration
     public class ComponentSite : IComponentSite
     {
         LowkoderService lowkoder;
+        ILosRoot root;
         public ComponentSite(LowkoderService lowkoder, ILosRoot root)
         {
             this.lowkoder= lowkoder;
+            this.root = root;
             var lowkoderRoot= root.Get<LowkoderRoot>();
             Context= lowkoderRoot.Context;
             Metadata= lowkoderRoot.Metadata;
         }
+
+        public ComponentSite Branch() => new ComponentSite(lowkoder, root.Branch());
 
         public LowkoderContext Context { get; }
 
         public LowkoderMetadata Metadata { get; }
 
         public RenderFragment RenderWithSite(RenderFragment content, Action<IComponentSite> siteInitializer)
-        {
-            /*
-             * A new site is created and the given content is wrapped in a component that holds the new site.
-             * The wrapper component's BuildRenderTree method posts events to the lowkoder service to mark the 
-             * start and end of rendering (would use before/after render lifecycle methods but Blazor has no before 
-             * render method).  
-             * The lowkoder service uses these notifications to inject branches of the site associated with the 
-             * currently rendering component into children.
-             */
-            throw new NotImplementedException();
-        }
+            => lowkoder.RenderWithSite(content, siteInitializer);
     }
 }

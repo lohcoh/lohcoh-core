@@ -10,6 +10,6 @@
 
         public ILosRoot Branch();
 
-        public ILosObjectSystem LOS { get; }
+        //public ILosObjectSystem LOS { get; }
     }
 }
