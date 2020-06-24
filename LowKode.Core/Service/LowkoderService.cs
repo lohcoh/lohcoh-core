@@ -14,19 +14,12 @@ namespace LowKode.Core.Configuration
 
         public LowkoderService()
         {
-            los.Master.Put(
-                new LowkoderRoot()
-                {
-                    Metadata= new LowkoderMetadata(),
-                    Context= new LowkoderContext()
-                    {
-                        ComponentSiteSpecification= new SiteSpecification()
-                    }
-                });
+            los.Master.Put(new LowkoderRoot());
         }
-        public IComponentSite CreateComponentSite(IServiceProvider serviceProvider)
+        public IComponentSite CreateTransientService(IServiceProvider serviceProvider)
         {
-            return new ComponentSite(los);
+            var branch= los.Master.Branch();
+            return new ComponentSite(this, branch);
         }
     }
 }

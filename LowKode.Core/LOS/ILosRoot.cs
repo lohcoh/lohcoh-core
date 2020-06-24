@@ -8,6 +8,8 @@
     {
         public int Revision { get; }
 
-        ILosRoot Branch();
+        public ILosRoot Branch();
+
+        public ILosObjectSystem LOS { get; }
     }
 }

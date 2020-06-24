@@ -8,6 +8,6 @@ namespace LowKode.Core.Configuration
    
     public interface ILowkoderService 
     {
-        public IComponentSite CreateComponentSite(IServiceProvider serviceProvider);
+        public IComponentSite CreateTransientService(IServiceProvider serviceProvider);
     }
 }

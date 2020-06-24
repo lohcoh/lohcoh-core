@@ -15,7 +15,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             var lowkoder = new LowkoderService();
             services.AddSingleton(typeof(ILowkoderService), lowkoder);
-            services.AddTransient(typeof(IComponentSite), serviceProvider => lowkoder.CreateComponentSite(serviceProvider));
+            services.AddTransient(typeof(IComponentSite), serviceProvider => lowkoder.CreateTransientService(serviceProvider));
 
             using (var config = new LowkoderConfigurationService(lowkoder))
             {
