@@ -67,6 +67,10 @@ namespace LowKode.Core.LOS
            
         }
 
+        internal void Prune(LosRoot losRoot)
+        {
+            // todo: unfinished
+        }
 
         void RenderDocumentTree(int revision, Type documentType, ObjectInfo documentObject, object document)
         {

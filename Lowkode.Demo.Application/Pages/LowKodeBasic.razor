@@ -2,7 +2,8 @@
 @using Lowkode.Demo.Application.Data
 @using LowKode.Core.Metadata
 @using LowKode.Core.Components
-@inject IComponentSite site;
+@using LowKode.Core.Configuration
+@inject ILowkoderService lowkoder;
 
 
 <h1>Starfleet Starship Database</h1>
@@ -14,20 +15,27 @@
     <ValidationSummary />
 
     @{
-        var modelMetadata = site.Metadata.ForSystemType<Starship>();
-        <Scope Init=@(site => site.WithModel<Starship>(_starship)) Context="modelSite">
-            @foreach (var property in modelMetadata.Properties)
+        using (var formSite = lowkoder.RenderWithSite())
+        {
+            var modelMetadata = formSite.Metadata.ForSystemType<Starship>();
+            formSite.Context.ComponentSiteSpecification.ModelType = modelMetadata;
+
+            foreach (var property in modelMetadata.Properties)
             {
-                <Scope Init=@(site => site.WithModelMember(property)) Context="propertySite">
+                using (var propertySite = lowkoder.RenderWithSite())
+                {
+                    propertySite.WithModelMember(property);
+
                     <p>
                         <label>
                             <DisplayName />:
                             <Input />
                         </label>
                     </p>
-                </Scope>
+
+                }
             }
-        </Scope>
+        }
     }
 
 

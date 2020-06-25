@@ -28,7 +28,9 @@ namespace LowKode.Core.Configuration
 
         public LowkoderMetadata Metadata { get; }
 
-        public RenderFragment RenderWithSite(RenderFragment content, Action<IComponentSite> siteInitializer)
-            => lowkoder.RenderWithSite(content, siteInitializer);
+        public void Dispose()
+        {
+            root.Dispose();
+        }
     }
 }

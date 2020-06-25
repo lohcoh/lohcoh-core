@@ -81,5 +81,10 @@ namespace LowKode.Core.LOS
         {
             return new LosRoot(LOS, Revision + 1, ObjectId);
         }
+
+        public void Dispose()
+        {
+            LOS.Prune(this);
+        }
     }
 }

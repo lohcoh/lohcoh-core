@@ -7,10 +7,9 @@ using System.Text;
 namespace LowKode.Core.Components
 {
     /// <summary>
-    /// A scoped service through which a lowkode component accesses lowkode services and data.
-    /// Injected into every lowkode component.
+    /// A service that provides access to context and metadata for rendering UI elements.
     /// </summary>
-    public interface IComponentSite 
+    public interface IComponentSite :IDisposable
     {
         /// <summary>
         /// The ILosRoot that contains the Context and Metadata documents.
@@ -28,9 +27,5 @@ namespace LowKode.Core.Components
         /// </summary>
         LowkoderMetadata Metadata { get; }
 
-        /// <summary>
-        /// Creates a new site and renders the given fragment within the context of the new site
-        /// </summary>
-        RenderFragment RenderWithSite(RenderFragment content, Action<IComponentSite> siteInitializer);
     }
 }

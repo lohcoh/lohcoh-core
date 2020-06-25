@@ -1,29 +1,26 @@
 ﻿@using LowKode.Core.Metadata
+@using LowKode.Core.Configuration
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
+@inject ILowkoderService lowkoder
 
 
-<Microsoft.AspNetCore.Components.Forms.InputText id="name" @bind-Value="MemberValue" />
+@using (var site = lowkoder.RenderWithSite())
+{
+    Model = site.Context.ComponentSiteSpecification.Model;
+    MemberPath = site.Context.ComponentSiteSpecification.ModelMember;
+    <InputText id="name" @bind-Value="MemberValue" />
+}
+
 
 @code {
-        object Model;
-        MemberPath MemberPath;
+    object Model;
+    MemberPath MemberPath;
 
-        public string MemberValue
-        {
-            get { return (string)MemberPath.Get(Model); }
-            set { MemberPath.Set(Model, value); }
-        }
-    
-    [Parameter]
-    public IComponentSite Site { get; set; }
+    public string MemberValue
+    {
+        get { return Convert.ToString(MemberPath.Get(Model)); }
+        set { MemberPath.Set(Model, value); }
+    }
 
-
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            Model = Site.Context.ComponentSiteSpecification.Model;
-            MemberPath = Site.Context.ComponentSiteSpecification.ModelMember;
-        }
 }
