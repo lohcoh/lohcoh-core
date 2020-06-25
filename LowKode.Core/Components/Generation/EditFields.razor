@@ -1,14 +1,22 @@
 ﻿@using LowKode.Core.Metadata
+@using LowKode.Core.Configuration
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
-@inject IComponentSite site
-
+@inject ILowkoderService lowkoder
+@implements IDisposable
 
 @{
-    foreach (var property in modelMetadata.Properties)
+    using (var outerScope = lowkoder.CreateScope(site))
     {
-        @site.RenderWithSite(ChildContent, site => site.Context.ComponentSiteSpecification.ModelMember = property.ToMemberPath());        
-    }    
+        foreach (var property in modelMetadata.Properties)
+        {
+            using (var propertyScope = lowkoder.CreateScope())
+            {
+                propertyScope.Context.ComponentSiteSpecification.ModelMember = property.ToMemberPath();
+                @ChildContent
+            }
+        }
+    }
 }
 
 
@@ -24,10 +32,13 @@
     EditContext EditContext { get; set; }
 
     TypeDescriptor modelMetadata;
+    IComponentSite site;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
+
+        site = lowkoder.CreateSite();
 
         if (EditContext == null)
         {
@@ -44,5 +55,10 @@
         site.Context.ComponentSiteSpecification.Model = EditContext.Model;
         site.Context.ComponentSiteSpecification.ModelType = modelMetadata;
 
+    }
+
+    public void Dispose()
+    {
+        if (site != null) site.Dispose();
     }
 }
