@@ -5,7 +5,7 @@
 @inject ILowkoderService lowkoder
 
 
-@using (var site = lowkoder.RenderWithSite())
+@using (lowkoder.RenderWithSite(site))
 {
     Model = site.Context.ComponentSiteSpecification.Model;
     MemberPath = site.Context.ComponentSiteSpecification.ModelMember;
@@ -16,11 +16,17 @@
 @code {
     object Model;
     MemberPath MemberPath;
+    IComponentSite site;
 
     public string MemberValue
     {
         get { return Convert.ToString(MemberPath.Get(Model)); }
         set { MemberPath.Set(Model, value); }
     }
-
+    
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        site = lowkoder.CreateSite();
+    }
 }

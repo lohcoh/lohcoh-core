@@ -15,14 +15,14 @@
     <ValidationSummary />
 
     @{
-        using (var formSite = lowkoder.RenderWithSite())
+        using (var formSite = lowkoder.RenderWithSite(site))
         {
             var modelMetadata = formSite.Metadata.ForSystemType<Starship>();
             formSite.Context.ComponentSiteSpecification.ModelType = modelMetadata;
 
             foreach (var property in modelMetadata.Properties)
             {
-                using (var propertySite = lowkoder.RenderWithSite())
+                using (var propertySite = lowkoder.RenderWithBranch())
                 {
                     propertySite.WithModelMember(property);
 
@@ -50,10 +50,17 @@
 
 @code {
     private Starship _starship = new Starship();
+    IComponentSite site;
 
     private void HandleValidSubmit()
     {
         Console.WriteLine("OnValidSubmit");
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        site = lowkoder.CreateSite();
     }
 
 }

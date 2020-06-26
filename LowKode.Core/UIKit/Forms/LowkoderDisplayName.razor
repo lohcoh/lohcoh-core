@@ -2,8 +2,20 @@
 @namespace LowKode.Core.Components
 @inject ILowkoderService lowkoder
 
-@using (var site = lowkoder.RenderWithSite())
+@using (lowkoder.RenderWithSite(site))
 {
     <label>@site.Context.ComponentSiteSpecification.ModelType.DisplayName</label>
 }
 
+
+
+
+@code {
+    IComponentSite site;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        site = lowkoder.CreateSite();
+    }
+}

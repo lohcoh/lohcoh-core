@@ -9,6 +9,9 @@ namespace LowKode.Core.Configuration
     public interface ILowkoderService 
     {
       
-        public IComponentSite RenderWithSite();
+        //public IComponentSite RenderWithSite();
+        IComponentSite CreateSite();
+        IComponentSite RenderWithSite(IComponentSite site);
+        IComponentSite RenderWithBranch();
     }
 }

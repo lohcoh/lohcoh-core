@@ -26,6 +26,8 @@ namespace LowKode.Core.Components
 
         [Inject] ILowkoderService lowkoder { get; set; }
 
+        IComponentSite site;
+
         public EditFields()
         {
         }
@@ -44,25 +46,30 @@ namespace LowKode.Core.Components
             {
                 TModel = EditContext.Model.GetType();
             }
+
+            site = lowkoder.CreateSite();
         }
 
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
-            using (var formSite = lowkoder.RenderWithSite())
+            var framesBefore = builder.GetFrames();
+            using (lowkoder.RenderWithSite(site))
             {
-                TypeDescriptor modelMetadata = formSite.Metadata.ForSystemType(TModel);
-                formSite.Context.ComponentSiteSpecification.Model = EditContext.Model;
-                formSite.Context.ComponentSiteSpecification.ModelType = modelMetadata;
+                TypeDescriptor modelMetadata = site.Metadata.ForSystemType(TModel);
+                site.Context.ComponentSiteSpecification.Model = EditContext.Model;
+                site.Context.ComponentSiteSpecification.ModelType = modelMetadata;               
 
                 foreach (var property in modelMetadata.Properties)
                 {
-                    using (var propertySite = lowkoder.RenderWithSite())
+                    using (var propertySite = lowkoder.RenderWithBranch())
                     {
                         propertySite.Context.ComponentSiteSpecification.ModelMember = property.ToMemberPath();
                         builder.AddContent(0, ChildContent);
                     }
                 }
             }
+
+            var framesAfter = builder.GetFrames();
         }
     }
 }

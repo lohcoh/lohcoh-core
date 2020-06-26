@@ -6,7 +6,7 @@
 
 
 
-@using (var site = lowkoder.RenderWithSite())
+@using (lowkoder.RenderWithSite(site))
 {
     Model = site.Context.ComponentSiteSpecification.Model;
     MemberPath = site.Context.ComponentSiteSpecification.ModelMember;
@@ -17,11 +17,18 @@
 @code {
     object Model;
     MemberPath MemberPath;
+    IComponentSite site;
 
     public DateTime MemberValue
     {
         get { return Convert.ToDateTime(MemberPath.Get(Model)); }
         set { MemberPath.Set(Model, value); }
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        site = lowkoder.CreateSite();
     }
 
 }

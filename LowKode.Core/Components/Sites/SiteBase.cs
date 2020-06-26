@@ -16,15 +16,22 @@ namespace LowKode.Core.Components
         [Inject] public ILowkoderService lowkoder { get; set; }
 
         Type siteType;
+        IComponentSite site;
         public SiteBase() 
         {
             this.siteType = typeof(TSite);
         }
 
-     
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            site = lowkoder.CreateSite();
+        }
+
+
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
-            using (var site = lowkoder.RenderWithSite())
+            using (lowkoder.RenderWithSite(site))
             {
                 var specification = site.Context.ComponentSiteSpecification;
                 specification.SiteType = siteType;
