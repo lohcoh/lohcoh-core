@@ -1,0 +1,38 @@
+﻿@using LowKode.Core.Configuration
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Rendering
+@using System
+@using System.Collections.Generic
+@using System.Text
+@namespace LowKode.Core.Components
+@inject ILowkoderService lowkoder;
+@ChildContent(Site)
+@code
+{
+    /// <summary>
+    /// Applys a site to it's child content.
+    /// 
+    /// Componenents discover their associated site by navigating up the DOM tree until it finds 
+    /// a Scope component, the site held by the Scope component is the site for the descendant component.
+    /// 
+    /// A Scope component will dispose of the given Site component when it itself is disposed.
+    /// So, in general any component that uses ILowkoderService.CreateSite to create a site should also dispose 
+    /// of that site, but the component puts the site in a Scope component (which it should) then there is no need 
+    /// for the component to concern itself with managing the site's lifetime.
+    /// 
+    /// </summary>
+
+    public IComponentSite Site { get; private set; }
+
+    [Parameter]
+    public RenderFragment<IComponentSite> ChildContent { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Site = lowkoder.CreateSite(this);
+
+    }
+
+}

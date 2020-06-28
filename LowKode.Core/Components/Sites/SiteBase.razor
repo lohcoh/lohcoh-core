@@ -1,0 +1,50 @@
+﻿
+@using Microsoft.AspNetCore.Components
+@using System
+@using System.Linq
+@namespace LowKode.Core.Components
+@typeparam TSite
+
+<Scope @ref="scope">
+    @RenderSiteComponent
+</Scope>
+
+@code
+{
+    /// <summary>
+    /// Base class for site components.
+    /// </summary>
+
+    Scope scope;
+    RenderFragment RenderSiteComponent;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        var siteType= typeof(TSite);
+        var specification = scope.Site.Context.ComponentSiteSpecification;
+        specification.SiteType = siteType;
+
+        var modelType = specification.ModelType;
+        if (specification.ModelMember != null)
+        {
+            modelType = specification.ModelMember.TargetProperty.PropertyType;
+        }
+
+        var componentMapping = scope.Site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == modelType).FirstOrDefault();
+        if (componentMapping == null)
+            componentMapping = scope.Site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == null).FirstOrDefault();
+        if (componentMapping == null)
+            throw new Exception("No component mapping found for SiteType '" + siteType.FullName + "' and  ModelType '" + modelType.DisplayName + "'");
+
+        var componentType = componentMapping.ComponentType;
+        RenderSiteComponent = (builder) =>
+        {
+            builder.OpenComponent(0, componentType);
+            builder.CloseComponent();
+        };
+
+    }
+
+}

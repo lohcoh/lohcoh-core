@@ -14,17 +14,17 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    @{
-        using (var formSite = lowkoder.RenderWithSite(site))
-        {
-            var modelMetadata = formSite.Metadata.ForSystemType<Starship>();
-            formSite.Context.ComponentSiteSpecification.ModelType = modelMetadata;
+    <Scope Context="FormSite">
+        @{
+            TypeDescriptor modelType;
+            FormSite.UseModelType<Starship>(out modelType);
 
-            foreach (var property in modelMetadata.Properties)
+            foreach (var property in modelType.Properties)
             {
-                using (var propertySite = lowkoder.RenderWithBranch())
-                {
-                    propertySite.WithModelMember(property);
+                <Scope Context="PropertySite">
+                    @{
+                        PropertySite.UseModelMember(property);
+                    }
 
                     <p>
                         <label>
@@ -32,12 +32,10 @@
                             <Input />
                         </label>
                     </p>
-
-                }
+                </Scope>
             }
         }
-    }
-
+    </Scope>
 
     <button type="submit">Submit</button>
 
@@ -50,17 +48,10 @@
 
 @code {
     private Starship _starship = new Starship();
-    IComponentSite site;
 
     private void HandleValidSubmit()
     {
         Console.WriteLine("OnValidSubmit");
-    }
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        site = lowkoder.CreateSite();
     }
 
 }

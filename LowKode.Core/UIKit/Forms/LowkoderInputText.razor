@@ -3,20 +3,13 @@
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
 @inject ILowkoderService lowkoder
-
-
-@using (lowkoder.RenderWithSite(site))
-{
-    Model = site.Context.ComponentSiteSpecification.Model;
-    MemberPath = site.Context.ComponentSiteSpecification.ModelMember;
+<Scope @ref="scope">
     <InputText id="name" @bind-Value="MemberValue" />
-}
-
-
+</Scope>
 @code {
+    Scope scope;
     object Model;
     MemberPath MemberPath;
-    IComponentSite site;
 
     public string MemberValue
     {
@@ -27,6 +20,7 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        site = lowkoder.CreateSite();
+        Model = scope.Site.Context.ComponentSiteSpecification.Model;
+        MemberPath = scope.Site.Context.ComponentSiteSpecification.ModelMember;
     }
 }

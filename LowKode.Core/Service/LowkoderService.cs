@@ -4,6 +4,7 @@ using System.Text;
 using LowKode.Core.Components;
 using LowKode.Core.LOS;
 using LowKode.Core.Metadata;
+using LowKode.Core.Service;
 using Microsoft.AspNetCore.Components;
 
 namespace LowKode.Core.Configuration
@@ -14,6 +15,7 @@ namespace LowKode.Core.Configuration
         public LosObjectSystem los { get; } = new LosObjectSystem();
 
         Stack<ComponentSite> sites = new Stack<ComponentSite>();
+        BlazorInterOp blazorInterOp = new BlazorInterOp();
 
         public LowkoderService()
         {
@@ -21,16 +23,8 @@ namespace LowKode.Core.Configuration
             sites.Push(new ComponentSite(this, los.Master));
         }
 
+        /*
 
-        /// <summary>
-        /// Creates a new site for rendering metadata-driven content.
-        /// </summary>
-        public IComponentSite RenderWithSite()
-        {
-            var branch= sites.Peek().Branch();
-            sites.Push(branch);
-            return new SiteWrapper(this, branch);
-        }
 
         internal void DisposeSite(ComponentSite site)
         {
@@ -42,42 +36,27 @@ namespace LowKode.Core.Configuration
             }
             site.Dispose();
         }
-
         public IComponentSite CreateSite()
         {
             var branch = sites.Peek().Branch();
             return branch;
         }
 
-        public IComponentSite RenderWithSite(IComponentSite site)
+        /// <summary>
+        /// Create and returns a new branch of the given site.
+        /// </summary>
+        public IComponentSite CreateSite(IComponentSite site)
+            => ((ComponentSite)site).Branch();
+        */
+
+        /// <summary>
+        /// Create and returns a new branch of the component's parent site.
+        /// </summary>
+        public IComponentSite CreateSite(ComponentBase component)
         {
-            sites.Push((ComponentSite)site);
-            return site;
-        }
-
-        public IComponentSite RenderWithBranch()
-        {
-            return RenderWithSite(sites.Peek().Branch());
-        }
-    }
-
-    class SiteWrapper : IComponentSite
-    {
-        ComponentSite site;
-        LowkoderService lowkoder;
-        public SiteWrapper(LowkoderService lowkoder, ComponentSite site)
-        {
-            this.site = site;
-            this.lowkoder = lowkoder;
-        }
-
-        public LowkoderContext Context => site.Context;
-
-        public LowkoderMetadata Metadata => site.Metadata;
-
-        public void Dispose()
-        {
-            lowkoder.DisposeSite(site);
+            var scope = blazorInterOp.FindFirstAncestor<Scope>(component);
+            return ((ComponentSite)scope.Site).Branch(); 
         }
     }
+
 }

@@ -1,0 +1,60 @@
+﻿@using LowKode.Core.Configuration
+@using LowKode.Core.Metadata
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Rendering
+@using System
+@namespace LowKode.Core.Components
+
+<Scope @ref="scope">
+    @foreach (var property in modelMetadata.Properties)
+    {
+        <Scope Context="propertySite">
+            @{
+                propertySite.Context.ComponentSiteSpecification.ModelMember = property.ToMemberPath();
+            }
+            @ChildContent
+        </Scope>
+    }
+</Scope>
+
+
+@code
+{
+    /// <summary>
+    /// Renders the properties of a form model.
+    /// Can only be used with an <EditForm/> component.
+    /// </summary>
+
+        /// <summary>
+        /// The template for rendering properties
+        /// </summary>
+        [Parameter]
+        public RenderFragment ChildContent { get; set; }
+
+        [CascadingParameter]
+        EditContext EditContext { get; set; }
+
+        Scope scope;
+        TypeDescriptor modelMetadata;
+        Type modelType;
+        
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            if (EditContext == null)
+            {
+                throw new InvalidOperationException("No EditContext found");
+            }
+
+            modelType = EditContext.Model.GetType();
+
+            // add the model and it's type to the current context
+            modelMetadata = scope.Site.Metadata.ForSystemType(modelType);
+            scope.Site.Context.ComponentSiteSpecification.Model = EditContext.Model;
+            scope.Site.Context.ComponentSiteSpecification.ModelType = modelMetadata;
+
+        }
+
+}
