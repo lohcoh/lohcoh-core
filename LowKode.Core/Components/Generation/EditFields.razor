@@ -6,7 +6,7 @@
 @using System
 @namespace LowKode.Core.Components
 
-<Scope @ref="scope">
+<Scope OnInit="BindModel">
     @foreach (var property in modelMetadata.Properties)
     {
         <Scope Context="propertySite">
@@ -35,7 +35,6 @@
         [CascadingParameter]
         EditContext EditContext { get; set; }
 
-        Scope scope;
         TypeDescriptor modelMetadata;
         Type modelType;
         
@@ -49,12 +48,13 @@
             }
 
             modelType = EditContext.Model.GetType();
-
-            // add the model and it's type to the current context
-            modelMetadata = scope.Site.Metadata.ForSystemType(modelType);
-            scope.Site.Context.ComponentSiteSpecification.Model = EditContext.Model;
-            scope.Site.Context.ComponentSiteSpecification.ModelType = modelMetadata;
-
+        }
+        void BindModel(IComponentSite site)
+        {
+            // add the model and it's type to the current context before rendering properties
+            modelMetadata = site.Metadata.ForSystemType(modelType);
+            site.Context.ComponentSiteSpecification.Model = EditContext.Model;
+            site.Context.ComponentSiteSpecification.ModelType = modelMetadata;
         }
 
 }

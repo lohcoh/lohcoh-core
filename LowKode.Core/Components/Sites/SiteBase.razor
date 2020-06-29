@@ -5,7 +5,7 @@
 @namespace LowKode.Core.Components
 @typeparam TSite
 
-<Scope @ref="scope">
+<Scope OnInit="BindModel">
     @RenderSiteComponent
 </Scope>
 
@@ -15,15 +15,12 @@
     /// Base class for site components.
     /// </summary>
 
-    Scope scope;
     RenderFragment RenderSiteComponent;
 
-    protected override void OnInitialized()
+    void BindModel(IComponentSite site)
     {
-        base.OnInitialized();
-
         var siteType= typeof(TSite);
-        var specification = scope.Site.Context.ComponentSiteSpecification;
+        var specification = site.Context.ComponentSiteSpecification;
         specification.SiteType = siteType;
 
         var modelType = specification.ModelType;
@@ -32,9 +29,9 @@
             modelType = specification.ModelMember.TargetProperty.PropertyType;
         }
 
-        var componentMapping = scope.Site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == modelType).FirstOrDefault();
+        var componentMapping = site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == modelType).FirstOrDefault();
         if (componentMapping == null)
-            componentMapping = scope.Site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == null).FirstOrDefault();
+            componentMapping = site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == null).FirstOrDefault();
         if (componentMapping == null)
             throw new Exception("No component mapping found for SiteType '" + siteType.FullName + "' and  ModelType '" + modelType.DisplayName + "'");
 

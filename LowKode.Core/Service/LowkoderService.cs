@@ -14,13 +14,11 @@ namespace LowKode.Core.Configuration
     {
         public LosObjectSystem los { get; } = new LosObjectSystem();
 
-        Stack<ComponentSite> sites = new Stack<ComponentSite>();
         BlazorInterOp blazorInterOp = new BlazorInterOp();
 
         public LowkoderService()
         {
             los.Master.Put(new LowkoderRoot());
-            sites.Push(new ComponentSite(this, los.Master));
         }
 
         /*
@@ -55,7 +53,15 @@ namespace LowKode.Core.Configuration
         public IComponentSite CreateSite(ComponentBase component)
         {
             var scope = blazorInterOp.FindFirstAncestor<Scope>(component);
-            return ((ComponentSite)scope.Site).Branch(); 
+            if (scope != null)
+            {
+                return ((ComponentSite)scope.Site).Branch();
+            }
+
+            /*
+             * If no ancestor scope was found then the calling scope is an entry scope.
+             */
+            return new ComponentSite(this, los.Master);
         }
     }
 

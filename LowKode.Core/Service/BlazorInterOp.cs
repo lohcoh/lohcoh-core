@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Components.RenderTree;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 using System.Text;
+using System.Collections;
 
 namespace LowKode.Core.Service
 {
@@ -30,11 +32,12 @@ namespace LowKode.Core.Service
          * the renderer is discovered it's reused for future calls.
          */
         private Renderer _renderer;
+        FieldInfo _rhComponentIdField;
 
-        Dictionary<int, object> _componentStateById;
-        PropertyInfo _componentIdPropertyInfo;
-        PropertyInfo _componentPropertyInfo;
-        PropertyInfo _parentComponentPropertyInfo;
+        IDictionary _componentStateById;
+        PropertyInfo _csComponentIdPropertyInfo;
+        PropertyInfo _csComponentPropertyInfo;
+        PropertyInfo _csParentComponentPropertyInfo;
         /*
          *  public int ComponentId { get; }
         public IComponent Component { get; }
@@ -50,12 +53,40 @@ namespace LowKode.Core.Service
             var ancestor = FindFirstAncestor<TComponent>(renderer, component);
             return ancestor;
         }
+        internal int GetComponentId(ComponentBase component)
+        {
+            var renderHandle = GetRenderHandle(component);
+            return GetComponentId(renderHandle);
+        }
 
 #pragma warning disable BL0006 // Do not use RenderTree types
         private TComponent FindFirstAncestor<TComponent>(Renderer renderer, ComponentBase component)
 #pragma warning restore BL0006 // Do not use RenderTree types
         {
-            throw new NotImplementedException();
+            int componentId= GetComponentId(component);
+            object ancestor= FindFirstAncestor<TComponent>(componentId);
+            return (TComponent)ancestor;
+        }
+
+        /// <summary>
+        ///   returns ComponentState of first ancestor with component type == TComponent
+        /// </summary>
+        private object FindFirstAncestor<TComponent>(int componentId)
+        {
+            object componentState= _componentStateById[componentId];
+            if (componentState == null)
+                throw new Exception("Unknown componentId: "+componentId);
+
+            while(true)
+            {
+                var csParent = GetParentComponentState(componentState);
+                if (csParent == null)
+                    return null;
+                object csComponent = GetComponent(csParent);
+                if (csComponent.GetType().IsAssignableFrom(typeof(TComponent)))
+                    return csParent;
+                componentState= csParent;
+            }
         }
 
         private Renderer GetRenderer(ComponentBase component)
@@ -63,6 +94,8 @@ namespace LowKode.Core.Service
             if (_renderer != null)
                 return _renderer;
             var renderHandle = GetRenderHandle(component);
+            _rhComponentIdField = typeof(RenderHandle).GetField("_componentId", BindingFlags.Instance | BindingFlags.NonPublic);
+
             _renderer = GetRenderer(renderHandle);
             GetComponentStatePropertyInfo(_renderer);
             return _renderer;
@@ -72,13 +105,31 @@ namespace LowKode.Core.Service
         private void GetComponentStatePropertyInfo(Renderer renderer)
 #pragma warning restore BL0006 // Do not use RenderTree types
         {
-            throw new NotImplementedException();
+
+            /*
+             * In order to make fetching hierarchy data less inefficient, save a reference to the 
+             * renderer's internal component state dictionary.
+             */
+            var field = typeof(Renderer).GetField("_componentStateById", BindingFlags.Instance | BindingFlags.NonPublic);
+            _componentStateById = (IDictionary)field.GetValue(renderer);
+
+
+            /*
+             * We also need to fetch property values from ComponentState objects
+             */
+            var e = _componentStateById.Values.GetEnumerator();
+            e.MoveNext();
+            var csInstance = e.Current;
+            var csType = csInstance.GetType();
+            _csComponentIdPropertyInfo = csType.GetProperty("ComponentId");
+            _csComponentPropertyInfo = csType.GetProperty("Component");
+            _csParentComponentPropertyInfo = csType.GetProperty("ParentComponentState");
         }
 
         private RenderHandle GetRenderHandle(ComponentBase component)
         {
             var componentBaseType = typeof(ComponentBase);
-            var rhField = componentBaseType.GetField("_renderHandle", System.Reflection.BindingFlags.NonPublic);
+            var rhField = componentBaseType.GetField("_renderHandle", BindingFlags.Instance | BindingFlags.NonPublic);
             var rh= (RenderHandle)rhField.GetValue(component);
             return rh;
         }
@@ -86,22 +137,27 @@ namespace LowKode.Core.Service
         private Renderer GetRenderer(RenderHandle renderHandle)
         {
             var typ = typeof(RenderHandle);
-            var field = typ.GetField("_renderer", System.Reflection.BindingFlags.NonPublic);
+            var field = typ.GetField("_renderer", BindingFlags.Instance | BindingFlags.NonPublic);
             var r = (Renderer)field.GetValue(renderHandle);
             return r;
+        }
+        int GetComponentId(RenderHandle renderHandle)
+        {
+            return (int)_rhComponentIdField.GetValue(renderHandle);
         }
 
         int GetComponentId(object componentState)
         {
-
+            return (int)_csComponentIdPropertyInfo.GetValue(componentState);
         }
         IComponent GetComponent(object componentState)
         {
+            return (IComponent)_csComponentPropertyInfo.GetValue(componentState);
 
         }
         public object GetParentComponentState(object componentState)
         {
-
+            return _csParentComponentPropertyInfo.GetValue(componentState);
         }
 
     }

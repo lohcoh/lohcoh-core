@@ -27,12 +27,19 @@
     [Parameter]
     public RenderFragment<IComponentSite> ChildContent { get; set; }
 
+    [Parameter]
+    public Action<IComponentSite> OnInit { private get; set; }
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
         Site = lowkoder.CreateSite(this);
 
+        if (OnInit != null)
+        {
+            OnInit(Site);
+        }
     }
 
 }

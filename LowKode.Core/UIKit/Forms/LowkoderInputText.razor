@@ -3,11 +3,10 @@
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
 @inject ILowkoderService lowkoder
-<Scope @ref="scope">
+<Scope @OnInit="BindModel">
     <InputText id="name" @bind-Value="MemberValue" />
 </Scope>
 @code {
-    Scope scope;
     object Model;
     MemberPath MemberPath;
 
@@ -17,10 +16,9 @@
         set { MemberPath.Set(Model, value); }
     }
     
-    protected override void OnInitialized()
+    void BindModel(IComponentSite site)
     {
-        base.OnInitialized();
-        Model = scope.Site.Context.ComponentSiteSpecification.Model;
-        MemberPath = scope.Site.Context.ComponentSiteSpecification.ModelMember;
+        Model = site.Context.ComponentSiteSpecification.Model;
+        MemberPath = site.Context.ComponentSiteSpecification.ModelMember;
     }
 }

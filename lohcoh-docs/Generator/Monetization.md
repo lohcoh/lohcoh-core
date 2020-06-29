@@ -14,6 +14,9 @@ LowKode will *NOT* provide support for commercial component libraies out of the 
 		DevExpress
 		PatternFly
 
+## cross-platform components
+Makes the core components work across multiple platform.
+
 # tutorial videos
 
 Some open source projects make money by providing video tutorials on a subscription basis...
