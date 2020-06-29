@@ -64,8 +64,11 @@ namespace LowKode.Core.Service
 #pragma warning restore BL0006 // Do not use RenderTree types
         {
             int componentId= GetComponentId(component);
-            object ancestor= FindFirstAncestor<TComponent>(componentId);
-            return (TComponent)ancestor;
+            object csAncestor= FindFirstAncestor<TComponent>(componentId);
+            if (csAncestor == null)
+                return default(TComponent);
+            object tComponent= GetComponent(csAncestor);
+            return (TComponent)tComponent;
         }
 
         /// <summary>

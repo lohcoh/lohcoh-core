@@ -6,13 +6,10 @@
 @using System
 @namespace LowKode.Core.Components
 
-<Scope OnInit="BindModel">
+<Scope OnInit="BindModel" Context="FormSite">
     @foreach (var property in modelMetadata.Properties)
     {
-        <Scope Context="propertySite">
-            @{
-                propertySite.Context.ComponentSiteSpecification.ModelMember = property.ToMemberPath();
-            }
+        <Scope OnInit="site => BindProperty(site, property)">
             @ChildContent
         </Scope>
     }
@@ -48,6 +45,10 @@
             }
 
             modelType = EditContext.Model.GetType();
+        }
+        void BindProperty(IComponentSite site, PropertyDescriptor property)
+        {
+            site.Context.ComponentSiteSpecification.ModelMember = property.ToMemberPath();
         }
         void BindModel(IComponentSite site)
         {

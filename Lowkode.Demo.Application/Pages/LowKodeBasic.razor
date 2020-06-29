@@ -3,7 +3,7 @@
 @using LowKode.Core.Metadata
 @using LowKode.Core.Components
 @using LowKode.Core.Configuration
-@inject ILowkoderService lowkoder;
+@inject ILowkoderService lowkoder
 
 
 <h1>Starfleet Starship Database</h1>
@@ -22,10 +22,9 @@
             foreach (var property in modelType.Properties)
             {
                 <Scope Context="PropertySite">
-                    @{
-                        PropertySite.UseModelMember(property);
+                    @{ 
+                        PropertySite.Context.ComponentSiteSpecification.ModelMember = property.ToMemberPath();
                     }
-
                     <p>
                         <label>
                             <DisplayName />:
