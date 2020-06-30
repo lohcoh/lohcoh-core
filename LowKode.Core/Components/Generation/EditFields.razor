@@ -9,8 +9,8 @@
 <Scope OnInit="BindModel" Context="FormSite">
     @foreach (var property in modelMetadata.Properties)
     {
-        <Scope OnInit="site => BindProperty(site, property)">
-            @ChildContent
+        <Scope OnInit="_=>BindProperty(_, property)">
+            @ChildContent;
         </Scope>
     }
 </Scope>

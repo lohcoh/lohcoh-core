@@ -1,3 +1,4 @@
+using LowKode.Core;
 using LowKode.Core.LOS;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -41,8 +42,48 @@ namespace LowKode.Tests
     [TestClass]
     public class LosTests
     {
+
         [TestMethod]
-        public void TestPriming()
+        public void TestBranching_MultipleBranchSingleParent()
+        {
+            var application = new Application()
+            {
+                Title = "TPS Report Manager 3000"
+            };
+
+            var los = new LosObjectSystem();
+            var master = los.Master;
+            master.Put(application);
+
+            var branches = new List<ILosRoot>();
+            for (int i= 1; i <= 10; i++)
+            {
+                var branch = master.Branch();
+                branches.Add(branch);
+
+                Assert.AreEqual("TPS Report Manager 3000", branch.Get<Application>().Title);
+
+                // now change the title
+                var title= "TPS Report Manager " + (3000 + i).ToString();
+                branch.Get<Application>().Title = title;
+
+                // the branch title should be updated and the master title should not have changed
+                Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
+                Assert.AreEqual(title, branch.Get<Application>().Title);
+            }
+            for (int i = 1; i <= 10; i++)
+            {
+                var branch = branches[i - 1];
+                var title = "TPS Report Manager " + (3000 + i).ToString();
+                
+                Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
+                Assert.AreEqual(title, branch.Get<Application>().Title);
+            }
+
+        }
+
+        [TestMethod]
+        public void Test_Branching_Basic()
         {
             var application = new Application()
             {
@@ -65,7 +106,7 @@ namespace LowKode.Tests
         }
 
         [TestMethod]
-        public void TestNesting()
+        public void Test_Nesting()
         {         
             var los = new LosObjectSystem();
             var prime= los.Master;
@@ -104,7 +145,7 @@ namespace LowKode.Tests
 
 
         [TestMethod]
-        public void TestBranching()
+        public void Test_Branching_MultipleChangesAcrossMultipleObjects()
         {
             var los = new LosObjectSystem();
             var prime = los.Master; 
