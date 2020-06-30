@@ -32,12 +32,19 @@ namespace LowKode.Core
             return ((IEnumerable<int>)path).GetEnumerator();
         }
 
+        public int Depth { get => path.Length; }
+
         internal RevisionTag AddBranch(int nextBranch)
         {
             var newPath = new int[path.Length + 1];
             path.CopyTo(newPath, 0);
             newPath[path.Length] = nextBranch;
             return new RevisionTag(newPath);
+        }
+
+        public override string ToString()
+        {
+            return "root:"+string.Join(":", path);
         }
     }
 }

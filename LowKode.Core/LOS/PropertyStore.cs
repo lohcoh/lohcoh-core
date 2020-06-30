@@ -17,6 +17,8 @@ namespace LowKode.Core.LOS
 
             foreach (int branch in revision)
             {
+                if (node.Children == null)
+                    return null;
                 if (node.Children.Count <= branch)
                     return null;
                 var values = node.Children[branch];
@@ -33,7 +35,14 @@ namespace LowKode.Core.LOS
             var node = root;
             foreach (int branch in revision)
             {
-                if (node.Children.Count <= branch)
+                if (node.Children == null)
+                {
+                    var newNode = new ValueTreeNode();
+                    node.Children = new List<ValueTreeNode>(branch+1);
+                    node.Children.Insert(branch, newNode);
+                    node = newNode;
+                }
+                else if (node.Children.Count <= branch)
                 {
                     var newNode = new ValueTreeNode();
                     node.Children.Insert(branch, newNode);
@@ -61,7 +70,14 @@ namespace LowKode.Core.LOS
             var node = root;
             foreach (int branch in revision)
             {
-                if (node.Children.Count <= branch)
+                if (node.Children == null)
+                {
+                    var newNode = new ValueTreeNode();
+                    node.Children = new List<ValueTreeNode>(branch + 1);
+                    node.Children.Insert(branch, newNode);
+                    node = newNode;
+                }
+                else if (node.Children.Count <= branch)
                 {
                     var newNode = new ValueTreeNode();
                     node.Children.Insert(branch, newNode);
@@ -89,6 +105,8 @@ namespace LowKode.Core.LOS
 
             foreach (int branch in revision)
             {
+                if (node.Children == null)
+                    return value;
                 if (node.Children.Count <= branch)
                     return value;
                 var values = node.Children[branch];
@@ -109,7 +127,7 @@ namespace LowKode.Core.LOS
             foreach (int branch in revision)
             {
                 branch2delete = branch;
-                if (node.Children.Count <= branch)
+                if (node.Children == null || node.Children.Count <= branch)
                     return;
 
                 var childNode = node.Children[branch];

@@ -27,9 +27,11 @@ namespace LowKode.Core.LOS
         {
             var rootRevision = root.Revision;
             var rootNode = Roots.GetNode(root.Revision);
-            int nextBranch = rootNode.Children.Count;
-            var branchRevision = rootRevision.AddBranch(nextBranch);
-            return new LosRoot(this, branchRevision, ((LosRoot)Master).ObjectId);
+            int nextBranchId = rootNode.Children != null ? rootNode.Children.Count : 0;
+            var branchRevision = rootRevision.AddBranch(nextBranchId);
+            var branch= new LosRoot(this, branchRevision, ((LosRoot)Master).ObjectId);
+            Roots.AddValue(branchRevision, branch);
+            return branch;
         }
 
 
