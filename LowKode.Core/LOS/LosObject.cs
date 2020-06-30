@@ -18,13 +18,13 @@ namespace LowKode.Core.LOS
     {
         protected int ObjectId;
 
-        public int Revision { get; private set; }
+        public RevisionTag Revision { get; private set; }
         public LosObjectSystem LOS { get; private set; }
 
         /// <summary>
         /// Create a proxy to object with id == objectId in the given revision of the given object system.
         /// </summary>
-        public LosObject(LosObjectSystem los, int revision, int objectId)
+        public LosObject(LosObjectSystem los, RevisionTag revision, int objectId)
         {
             this.LOS= los;
             this.Revision= revision;

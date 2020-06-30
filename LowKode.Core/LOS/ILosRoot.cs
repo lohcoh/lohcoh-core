@@ -8,7 +8,7 @@ namespace LowKode.Core
     /// </summary>
     public interface ILosRoot : ILosObject, IDisposable
     {
-        public int Revision { get; }
+        public RevisionTag Revision { get; }
 
         public ILosRoot Branch();
 

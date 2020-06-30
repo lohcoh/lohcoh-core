@@ -30,7 +30,7 @@ namespace LowKode.Core.LOS
         /// <param name="propertyName"></param>
         /// <param name="documentType"></param>
         /// <param name="document"></param>
-        public int Insert(int objectId, int revision, string propertyName, Type documentType)
+        public int Insert(int objectId, RevisionTag revision, string propertyName, Type documentType)
         {
             ObjectInfo targetObject;
             if (!objectLookup.TryGetValue(objectId, out targetObject))
@@ -50,7 +50,7 @@ namespace LowKode.Core.LOS
 
             return documentObject.Id;
         }
-        public void Update(int objectId, int revision, string propertyName, object value)
+        public void Update(int objectId, RevisionTag revision, string propertyName, object value)
         {
             ObjectInfo targetObject;
             if (!objectLookup.TryGetValue(objectId, out targetObject))
@@ -72,19 +72,8 @@ namespace LowKode.Core.LOS
             // todo: unfinished
         }
 
-        void RenderDocumentTree(int revision, Type documentType, ObjectInfo documentObject, object document)
-        {
-            foreach (var propertyInfo in documentType.GetProperties())
-            {
-                // todo: this just saves value types, must properly handle nested objects by inserting them into the LOS DOM
-                var propertyStore = new PropertyStore();
-                var value= propertyInfo.GetValue(document);
-                propertyStore.AddValue(revision, value);
-                documentObject.PropertyLookup.Add(propertyInfo.Name, propertyStore);
-            }
-        }
 
-        public void Remove(int objectId, int revision, string propertyName)
+        public void Remove(int objectId, RevisionTag revision, string propertyName)
         {
             ObjectInfo objectInfo;
             if (!objectLookup.TryGetValue(objectId, out objectInfo))
@@ -97,7 +86,7 @@ namespace LowKode.Core.LOS
             propertyStore.RemoveValue(revision);
         }
 
-        public object Get(int objectId, int revision, string propertyName)
+        public object Get(int objectId, RevisionTag revision, string propertyName)
         {
             ObjectInfo objectInfo;
             if (!objectLookup.TryGetValue(objectId, out objectInfo))
