@@ -7,7 +7,7 @@ namespace LowKode.Core.LOS
     class LosRoot :  ILosRoot
     {
 
-        protected int ObjectId;
+        internal protected int ObjectId;
         public RevisionTag Revision { get; private set; }
         public LosObjectSystem LOS { get; private set; }
 
@@ -51,7 +51,7 @@ namespace LowKode.Core.LOS
 
         public ILosRoot Branch()
         {
-            return new LosRoot(LOS, Revision + 1, ObjectId);
+            return LOS.Branch(this);
         }
 
         public void Dispose()

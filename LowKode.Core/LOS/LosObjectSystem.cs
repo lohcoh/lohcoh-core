@@ -9,16 +9,27 @@ namespace LowKode.Core.LOS
 {
     public class LosObjectSystem : ILosObjectSystem
     {
-        public ILosRoot Master { get; set; }
+        public ILosRoot Master { get; private set; }
 
         private Dictionary<int, ObjectInfo> objectLookup = new Dictionary<int, ObjectInfo>();
+        PropertyStore<LosRoot> Roots { get; } = new PropertyStore<LosRoot>();
 
         public LosObjectSystem()
         {
             var documentObject = new ObjectInfo(typeof(LosRoot));
             objectLookup.Add(documentObject.Id, documentObject);
 
-            Master = new LosRoot(this, revision:-1, objectId: documentObject.Id);
+            Master = new LosRoot(this, RevisionTag.ROOT, objectId: documentObject.Id);
+            Roots.AddValue(Master.Revision, Master);
+        }
+
+        internal LosRoot Branch(LosRoot root)
+        {
+            var rootRevision = root.Revision;
+            var rootNode = Roots.GetNode(root.Revision);
+            int nextBranch = rootNode.Children.Count;
+            var branchRevision = rootRevision.AddBranch(nextBranch);
+            return new LosRoot(this, branchRevision, ((LosRoot)Master).ObjectId);
         }
 
 
@@ -69,7 +80,7 @@ namespace LowKode.Core.LOS
 
         internal void Prune(LosRoot losRoot)
         {
-            // todo: unfinished
+            Roots.RemoveValue(losRoot.Revision);
         }
 
 
