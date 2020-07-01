@@ -1,6 +1,3 @@
 ﻿@using LowKode.Core.Configuration
 @namespace LowKode.Core.Components
-<Scope Context="site">
-    <label>site.Context.ComponentSiteSpecification.ModelType.DisplayName</label>
-</Scope>
-
+<Scope Context="site"><label>@site.Context.SiteSpecification.ModelMember.TargetProperty.DisplayName</label></Scope>

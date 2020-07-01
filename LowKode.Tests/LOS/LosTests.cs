@@ -129,14 +129,14 @@ namespace LowKode.Tests
             });
 
             var master = prime.Branch(); // save the data to create the master branch
-            Assert.AreEqual(0, master.Revision); /// the master branch always has revision 0
+            Assert.AreEqual("root:0", master.Revision.ToString()); /// the master branch always has revision 0
 
             // we should get the title that we created
             Assert.AreEqual("TPS Report Manager 3000", master.Get<Application>().Title);
 
             // now change the title
             master.Get<Application>().Title = "TPS Report Manager 3000 + 1";
-            Assert.AreEqual(0, master.Revision);
+            Assert.AreEqual("root:0", master.Revision.ToString());
 
             // the branch title should be updated and the master title should not have changed
             Assert.AreEqual("TPS Report Manager 3000", prime.Get<Application>().Title);

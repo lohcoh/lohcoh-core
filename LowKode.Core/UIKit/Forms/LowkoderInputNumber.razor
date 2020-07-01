@@ -1,0 +1,25 @@
+﻿@using LowKode.Core.Metadata
+@using LowKode.Core.Configuration
+@using Microsoft.AspNetCore.Components.Forms
+@namespace LowKode.Core.Components
+@inject ILowkoderService lowkoder
+<Scope OnInit="BindModel">
+    <InputNumber @bind-Value="MemberValue" />
+</Scope>
+@code {
+    object Model;
+    MemberPath MemberPath;
+
+    public int MemberValue
+    {
+        get { return Convert.ToInt32(MemberPath.Get(Model)); }
+        set { MemberPath.Set(Model, value); }
+    }
+
+    void BindModel(IComponentSite site)
+    {
+        Model = site.Context.SiteSpecification.Model;
+        MemberPath = site.Context.SiteSpecification.ModelMember;
+    }
+
+}

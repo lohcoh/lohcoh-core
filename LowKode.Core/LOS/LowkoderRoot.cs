@@ -7,7 +7,7 @@ namespace LowKode.Core
 {
     public class LowkoderRoot
     {
-        public virtual LowkoderContext Context { get; set; } = new LowkoderContext();
-        public virtual LowkoderMetadata Metadata { get; set; } = new LowkoderMetadata();
+        public virtual LowkoderContext Context { get; } = new LowkoderContext();
+        public virtual LowkoderMetadata Metadata { get; } = new LowkoderMetadata();
     }
 }

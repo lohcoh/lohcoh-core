@@ -1,10 +1,11 @@
-﻿using System;
+﻿using LowKode.Core.Common;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace LowKode.Core.LOS
 {
-    class LosRoot :  ILosRoot
+    class LosRoot : ILosRoot
     {
 
         internal protected int ObjectId;
@@ -14,7 +15,7 @@ namespace LowKode.Core.LOS
         /// <summary>
         /// Create a proxy to object with id == objectId in the given revision of the given object system.
         /// </summary>
-        public LosRoot(LosObjectSystem los, RevisionTag revision, int objectId) 
+        public LosRoot(LosObjectSystem los, RevisionTag revision, int objectId)
         {
             this.LOS = los;
             this.Revision = revision;
@@ -22,16 +23,50 @@ namespace LowKode.Core.LOS
         }
 
 
-        void ILosObject.Put(string propertyName, Type valueType, object valueHolder)
+        private class PutRequest { public int objectId; public string propertyName; public Type valueType; public object valueHolder; }
+        void ILosObject.Put(string propertyNam, Type valueTyp, object valueHolde)
         {
-            int additionId = LOS.Insert(ObjectId, Revision, propertyName, valueType);
-
-            foreach (var property in valueType.GetProperties())
+            var requests = new Stack<PutRequest>();
+            requests.Push(new PutRequest()
             {
-                var propertyValue = property.GetValue(valueHolder);
-                if (propertyValue != null)
+                objectId = ObjectId,
+                propertyName = propertyNam,
+                valueType = valueTyp,
+                valueHolder = valueHolde
+            });
+
+            while (0 < requests.Count)
+            {
+                var request = requests.Pop();
+
+                int additionId = LOS.Insert(request.objectId, Revision, request.propertyName, request.valueType);
+
+                foreach (var property in request.valueType.GetProperties())
                 {
-                    LOS.Update(additionId, Revision, property.Name, property.GetValue(valueHolder));
+                    var propertyValue = request.valueHolder != null ? property.GetValue(request.valueHolder) : null;
+
+                    //var isLosObject = !(property.PropertyType.IsSimpleType()
+                    //    || typeof(System.Collections.IEnumerable).IsAssignableFrom(property.PropertyType));
+
+                    var isLosObject = property.PropertyType.Namespace == valueTyp.Namespace;
+
+                    if (isLosObject)
+                    {
+                        requests.Push(new PutRequest()
+                        {
+                            objectId = additionId,
+                            propertyName = property.Name,
+                            valueType = property.PropertyType,
+                            valueHolder = propertyValue
+                        });
+                    }
+                    else
+                    {
+                        if (request.valueHolder != null)
+                        {
+                            LOS.Update(additionId, Revision, property.Name, propertyValue);
+                        }
+                    }
                 }
             }
         }
@@ -42,10 +77,11 @@ namespace LowKode.Core.LOS
             return LOS.Get(ObjectId, Revision, propertyName);
         }
 
-       
+
 
         void ILosObject.Remove(string propertyName)
         {
+            // todo: leaving this unimplemented is causing memory leaks but I have bigger problems rights now
             throw new NotImplementedException();
         }
 

@@ -13,6 +13,6 @@ namespace LowKode.Core
     /// </summary>
     public class LowkoderContext 
     {
-        public virtual SiteSpecification SiteSpecification { get; set; } = new SiteSpecification();
+        public virtual SiteSpecification SiteSpecification { get; } = new SiteSpecification();
     }
 }

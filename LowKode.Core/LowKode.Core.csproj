@@ -14,7 +14,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Common\" />
     <Folder Include="Metadata\Forms\" />
     <Folder Include="Rules\" />
   </ItemGroup>

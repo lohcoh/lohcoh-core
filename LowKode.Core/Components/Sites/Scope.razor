@@ -28,7 +28,7 @@
     public RenderFragment<IComponentSite> ChildContent { get; set; }
 
     [Parameter]
-    public Action<IComponentSite> OnInit { private get; set; }
+    public Action<IComponentSite> OnInit { get; set; }
 
     protected override void OnInitialized()
     {

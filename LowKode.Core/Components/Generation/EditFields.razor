@@ -10,7 +10,7 @@
     @foreach (var property in modelMetadata.Properties)
     {
         <Scope OnInit="_=>BindProperty(_, property)">
-            @ChildContent;
+            @ChildContent
         </Scope>
     }
 </Scope>

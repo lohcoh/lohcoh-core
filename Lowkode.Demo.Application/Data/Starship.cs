@@ -10,6 +10,7 @@ namespace Lowkode.Demo.Application.Data
         [StringLength(16, ErrorMessage = "Identifier too long (16 character limit).")]        
         public string Identifier { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         [Required]

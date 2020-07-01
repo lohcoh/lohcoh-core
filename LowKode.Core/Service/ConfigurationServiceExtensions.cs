@@ -16,12 +16,7 @@ namespace LowKode.Core.Configuration
         public static void UseDefaultUIKit(this ILowkoderConfigurationService config)
         {
             // todo:unfinished
-            config.Metadata.ComponentTypes.Add(new ComponentTypeMapping()
-            {
-                ComponentType = typeof(LowkoderInputText),
-                ModelType = TypeDescriptor.ForSystemType(typeof(String)),
-                SiteType = typeof(Input)
-            });
+            
 
             config.Metadata.ComponentTypes.Add(new ComponentTypeMapping()
             {
@@ -29,6 +24,25 @@ namespace LowKode.Core.Configuration
                 SiteType = typeof(DisplayName)
             });
 
+            
+            config.Metadata.ComponentTypes.Add(new ComponentTypeMapping()
+            {
+                ComponentType = typeof(LowkoderInputText),
+                ModelType = TypeDescriptor.ForSystemType(typeof(String)),
+                SiteType = typeof(Input)
+            });
+            config.Metadata.ComponentTypes.Add(new ComponentTypeMapping()
+            {
+                ComponentType = typeof(LowkoderInputNumber),
+                ModelType = TypeDescriptor.ForSystemType(typeof(Int32)),
+                SiteType = typeof(Input)
+            });
+            config.Metadata.ComponentTypes.Add(new ComponentTypeMapping()
+            {
+                ComponentType = typeof(LowkoderInputCheckbox),
+                ModelType = TypeDescriptor.ForSystemType(typeof(Boolean)),
+                SiteType = typeof(Input)
+            });
             config.Metadata.ComponentTypes.Add(new ComponentTypeMapping()
             {
                 ComponentType = typeof(LowkoderInputDate),
