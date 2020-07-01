@@ -31,9 +31,9 @@ namespace LowKode.Tests
             master.Put(new LowkoderRoot());
 
             var lowkoderRoot= master.Get<LowkoderRoot>();
-            lowkoderRoot.Context.ComponentSiteSpecification.Model = new Starship();
+            lowkoderRoot.Context.SiteSpecification.Model = new Starship();
             var modelMetadata = Core.Metadata.TypeDescriptor.ForSystemType(typeof(Starship));
-            lowkoderRoot.Context.ComponentSiteSpecification.ModelType = modelMetadata;
+            lowkoderRoot.Context.SiteSpecification.ModelType = modelMetadata;
 
             var propertyRoots= new List<ILosRoot>();
             var memberPaths = new Dictionary<ILosRoot, MemberPath>();
@@ -43,7 +43,7 @@ namespace LowKode.Tests
 
                 var propertyRoot = master.Branch();
                 var lkRoot = propertyRoot.Get<LowkoderRoot>();
-                lkRoot.Context.ComponentSiteSpecification.ModelMember = memberPath;
+                lkRoot.Context.SiteSpecification.ModelMember = memberPath;
 
                 propertyRoots.Add(propertyRoot);
                 memberPaths.Add(propertyRoot, memberPath);
@@ -53,7 +53,7 @@ namespace LowKode.Tests
             {
                 var originalPath = memberPaths[propertyRoot];
                 var lkRoot = propertyRoot.Get<LowkoderRoot>();
-                var savedPath= lkRoot.Context.ComponentSiteSpecification.ModelMember;
+                var savedPath= lkRoot.Context.SiteSpecification.ModelMember;
                 Assert.AreEqual(originalPath.TargetProperty.Name, savedPath.TargetProperty.Name);
             }
 

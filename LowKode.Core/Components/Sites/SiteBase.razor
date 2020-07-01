@@ -20,7 +20,7 @@
     void BindModel(IComponentSite site)
     {
         var siteType= typeof(TSite);
-        var specification = site.Context.ComponentSiteSpecification;
+        var specification = site.Context.SiteSpecification;
         specification.SiteType = siteType;
 
         var modelType = specification.ModelType;

@@ -18,8 +18,8 @@
 
     void BindModel(IComponentSite site)
     {
-        Model = site.Context.ComponentSiteSpecification.Model;
-        MemberPath = site.Context.ComponentSiteSpecification.ModelMember;
+        Model = site.Context.SiteSpecification.Model;
+        MemberPath = site.Context.SiteSpecification.ModelMember;
     }
 
 }

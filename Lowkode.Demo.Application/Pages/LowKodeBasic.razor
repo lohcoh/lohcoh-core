@@ -17,13 +17,13 @@
     <Scope Context="FormSite">
         @{
             TypeDescriptor modelType= FormSite.Metadata.ForSystemType<Starship>();
-            FormSite.Context.ComponentSiteSpecification.ModelType= modelType;
+            FormSite.Context.SiteSpecification.ModelType= modelType;
 
             foreach (var property in modelType.Properties)
             {
                 <Scope Context="PropertySite">
                     @{ 
-                        PropertySite.Context.ComponentSiteSpecification.ModelMember = property.ToMemberPath();
+                        PropertySite.Context.SiteSpecification.ModelMember = property.ToMemberPath();
                     }
                     <p>
                         <label>

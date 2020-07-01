@@ -48,14 +48,14 @@
         }
         void BindProperty(IComponentSite site, PropertyDescriptor property)
         {
-            site.Context.ComponentSiteSpecification.ModelMember = property.ToMemberPath();
+            site.Context.SiteSpecification.ModelMember = property.ToMemberPath();
         }
         void BindModel(IComponentSite site)
         {
             // add the model and it's type to the current context before rendering properties
             modelMetadata = site.Metadata.ForSystemType(modelType);
-            site.Context.ComponentSiteSpecification.Model = EditContext.Model;
-            site.Context.ComponentSiteSpecification.ModelType = modelMetadata;
+            site.Context.SiteSpecification.Model = EditContext.Model;
+            site.Context.SiteSpecification.ModelType = modelMetadata;
         }
 
 }

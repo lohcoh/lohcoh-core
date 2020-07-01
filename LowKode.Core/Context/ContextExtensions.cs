@@ -10,13 +10,13 @@ namespace LowKode.Core.Components
         public static IComponentSite UseModelType(this IComponentSite site, Type modelType)
         {
             var type = site.Metadata.ForSystemType(modelType);
-            site.Context.ComponentSiteSpecification.ModelType= type;
+            site.Context.SiteSpecification.ModelType= type;
             return site;
         }
         public static IComponentSite UseModelType(this IComponentSite site, Type modelType, out TypeDescriptor descriptor)
         {
             var type = site.Metadata.ForSystemType(modelType);
-            site.Context.ComponentSiteSpecification.ModelType = type;
+            site.Context.SiteSpecification.ModelType = type;
             descriptor = type;
             return site;
         }
@@ -33,7 +33,7 @@ namespace LowKode.Core.Components
 
         public static IComponentSite UseModel(this IComponentSite site, object model)
         {
-            var siteSpecification = site.Context.ComponentSiteSpecification;
+            var siteSpecification = site.Context.SiteSpecification;
             siteSpecification.Model = model;
 
             if (siteSpecification.ModelType == null)
@@ -45,7 +45,7 @@ namespace LowKode.Core.Components
         }
         public static IComponentSite UseModel<TModel>(this IComponentSite site, TModel model)
         {
-            var siteSpecification = site.Context.ComponentSiteSpecification;
+            var siteSpecification = site.Context.SiteSpecification;
             siteSpecification.Model = model;
 
             if (siteSpecification.ModelType == null)
@@ -58,7 +58,7 @@ namespace LowKode.Core.Components
 
         public static IComponentSite UseModelMember(this IComponentSite site, MemberPath memberPath)
         {
-            var siteSpecification = site.Context.ComponentSiteSpecification;
+            var siteSpecification = site.Context.SiteSpecification;
             siteSpecification.ModelMember = memberPath;
             return site;
         }
