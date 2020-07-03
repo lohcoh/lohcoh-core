@@ -4,6 +4,8 @@ using System.Text;
 using Castle.Components;
 using Castle.Components.DictionaryAdapter;
 using Castle.DynamicProxy;
+using System.Threading;
+using LowKode.Core.Common;
 
 namespace LowKode.Core.LOS
 {
@@ -13,6 +15,7 @@ namespace LowKode.Core.LOS
 
         private Dictionary<int, ObjectInfo> objectLookup = new Dictionary<int, ObjectInfo>();
         PropertyStore<LosRoot> Roots { get; } = new PropertyStore<LosRoot>();
+
 
         public LosObjectSystem()
         {
@@ -29,7 +32,7 @@ namespace LowKode.Core.LOS
             var rootNode = Roots.GetNode(root.Revision);
             int nextBranchId = rootNode.Children != null ? rootNode.Children.Count : 0;
             var branchRevision = rootRevision.AddBranch(nextBranchId);
-            var branch= new LosRoot(this, branchRevision, ((LosRoot)Master).ObjectId);
+            var branch = new LosRoot(this, branchRevision, ((LosRoot)Master).ObjectId);
             Roots.AddValue(branchRevision, branch);
             return branch;
         }
@@ -44,7 +47,7 @@ namespace LowKode.Core.LOS
         /// <param name="documentType"></param>
         /// <param name="document"></param>
         public int Insert(int objectId, RevisionTag revision, string propertyName, Type documentType)
-        {
+        {           
             ObjectInfo targetObject;
             if (!objectLookup.TryGetValue(objectId, out targetObject))
                 throw new Exception("Unknown objectId:"+objectId);
@@ -124,6 +127,8 @@ namespace LowKode.Core.LOS
 
     class ObjectInfo 
     {
+
+        private static ProxyGenerator __proxyGenerator = new ProxyGenerator();
         public Type DocumentType { get; private set; }
 
         public ObjectInfo(Type documentType)
@@ -136,7 +141,7 @@ namespace LowKode.Core.LOS
 
         internal object CreateProxy(Func<string, object> getHandler, Action<string, object> setHandler)
         {
-            return new ProxyGenerator().CreateClassProxy(
+            return __proxyGenerator.CreateClassProxy(
                 DocumentType, 
                 new IInterceptor[] { 
                     new ObjectIntercetor(getHandler, setHandler) 

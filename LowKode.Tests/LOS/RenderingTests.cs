@@ -31,8 +31,8 @@ namespace LowKode.Tests
             master.Put(new LowkoderRoot());
 
             var lowkoderRoot= master.Get<LowkoderRoot>();
-            lowkoderRoot.Context.SiteSpecification.Model = new Starship();
-            var modelMetadata = Core.Metadata.TypeDescriptor.ForSystemType(typeof(Starship));
+            lowkoderRoot.Context.SiteSpecification.Model = new TestStarship();
+            var modelMetadata = Core.Metadata.TypeDescriptor.ForSystemType(typeof(TestStarship));
             lowkoderRoot.Context.SiteSpecification.ModelType = modelMetadata;
 
             var propertyRoots= new List<ILosRoot>();
@@ -60,7 +60,7 @@ namespace LowKode.Tests
         }
     }
 
-    class Starship
+    class TestStarship
     {
         public string Identifier { get; set; }
         public DateTime ProductionDate { get; set; }
