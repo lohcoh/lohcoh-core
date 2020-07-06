@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Components
 @using System
 @using System.Linq
+@using LowKode.Core.Metadata
 @namespace LowKode.Core.Components
 @typeparam TSite
 
@@ -13,28 +14,42 @@
 {
     /// <summary>
     /// Base class for site components.
+    /// A site component is a placeholder for a 'kit' component, a 'kit' component being 
+    /// a concrete implementation of site component loaded from a UI kit.
+    /// A site component chooses it's associated kit component based on the site type, model type, etc.
+    /// Site components use IComponentSite.Metadata.ComponentTypes to find an associated kit component.
     /// </summary>
 
     RenderFragment RenderSiteComponent;
 
     void BindModel(IComponentSite site)
     {
+        // set site type, one of: Input, Display, etc...
         var siteType= typeof(TSite);
         var specification = site.Context.SiteSpecification;
         specification.SiteType = siteType;
 
+        // get model type
         var modelType = specification.ModelType;
         if (specification.ModelMember != null)
         {
             modelType = specification.ModelMember.TargetProperty.PropertyType;
         }
 
-        var componentMapping = site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == modelType).FirstOrDefault();
+        // get kit component type
+        ComponentTypeMapping componentMapping= null;
+        if (componentMapping == null && specification.ModelMember.TargetProperty.EnumType != null)
+        {
+            componentMapping = site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == TypeDescriptor.ForSystemType(typeof(Enum))).FirstOrDefault();
+        }
+        if (componentMapping == null)
+            componentMapping = site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == modelType).FirstOrDefault();
         if (componentMapping == null)
             componentMapping = site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == null).FirstOrDefault();
         if (componentMapping == null)
             throw new Exception("No component mapping found for SiteType '" + siteType.FullName + "' and  ModelType '" + modelType.DisplayName + "'");
 
+        // render 'kit' component
         var componentType = componentMapping.ComponentType;
         RenderSiteComponent = (builder) =>
         {

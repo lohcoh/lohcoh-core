@@ -2,6 +2,8 @@
 
 The Lowkoder Object System(LOS) is an embedded object system designed to serve as a lightweight and extensible metadata repository.
 
+LOS can also be thought of as a state management system, similar to Redux, but simpler.
+
 Background...
 
 In Lowkoder, *metadata* is a tree of data objects that contain, among other things, schema and how to display them.

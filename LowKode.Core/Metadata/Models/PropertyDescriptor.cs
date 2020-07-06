@@ -25,15 +25,27 @@ namespace LowKode.Core.Metadata
             var datatypeAttribute = (DataTypeAttribute)propertyInfo.GetCustomAttributes(typeof(DataTypeAttribute), false).SingleOrDefault();
             if (datatypeAttribute != null)
                 DataType = datatypeAttribute.DataType;
+
+            var enumTypeAttribute = (EnumDataTypeAttribute)propertyInfo.GetCustomAttributes(typeof(EnumDataTypeAttribute), false).SingleOrDefault();
+            if (enumTypeAttribute != null)
+                EnumType = enumTypeAttribute.EnumType;
         }
 
         public virtual string DisplayName { get; set; }
+
+        public virtual TypeDescriptor PropertyType { get => TypeDescriptor.ForSystemType(propertyInfo.PropertyType); }
+
         public virtual DataType DataType { get; set; }
+
+        /// <summary>
+        /// If this property represents an enum element then the EnumDataType property denotes the associated enum type.
+        /// </summary>
+        public Type EnumType { get; set; }
+
         public virtual string Name { get => propertyInfo.Name; }
         public virtual bool CanWrite { get=> propertyInfo.CanWrite; }
         public virtual bool CanRead { get=> propertyInfo.CanRead; }
 
-        public virtual TypeDescriptor PropertyType { get => TypeDescriptor.ForSystemType(propertyInfo.PropertyType);  }
         public virtual Type SystemType { get=> propertyInfo.PropertyType; }
 
         public virtual Func<Object, Object> GetMethod { get => (instance) => propertyInfo.GetMethod.Invoke(instance, null); }

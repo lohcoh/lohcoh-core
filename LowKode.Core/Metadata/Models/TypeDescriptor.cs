@@ -53,7 +53,7 @@ namespace LowKode.Core.Metadata
         }
 
         /// <summary>
-        /// Returns null if this TypeDescriptor is not associated with a .NET type
+        /// Returns null if this TypeDescriptor does not have an associated .NET type
         /// </summary>
         public Type SystemType { get; set; }
 

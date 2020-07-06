@@ -17,6 +17,12 @@ LowKode will *NOT* provide support for commercial component libraies out of the 
 ## cross-platform components
 Makes the core components work across multiple platform.
 
+## Apollo-like state management engine for .NET.
+Focused on idiomatic C#.
+Doesn't use GraphQL, uses LINQ, the .NET type system, MediatR-based mutations.
+Integrated with lowkoder, automagically binds queries and mutations to ASP.NET backend services.
+
+
 # tutorial videos
 
 Some open source projects make money by providing video tutorials on a subscription basis...
@@ -26,7 +32,7 @@ https://calebporzio.com/i-just-hit-dollar-100000yr-on-github-sponsors-heres-how-
 Data Tables (should be in the free project?)
 Layouts (should definitely be in the free project, is needed for forms)
 
-Search Filters UI + Query API 
+Search Filters UI + Query API +++++
 	The idea here is to provide a metadata-driven GraphQL-like query facility along with search filter UI that enables users to 
 	filter search results or even create ad-hoc reports.
 
@@ -35,23 +41,23 @@ Cards
 Lists
 
 ## built with lowkode
-- admin panel, generated from a variety of metadata sources.
+- complete admin UI, generated from a variety of metadata sources.
 
 - User Admin extension for LowKode apps.
 
 - Autocomplete extension
 	Remembers the values entered into fields by users and uses those past values to provide autocomplete.
 
+- Tag UI extension +++++
+	I think it would be possible to create an extension that would automaginally add tags to 
+	LowKode forms, without extending the underlying Entities or forms.
+	And, if they have the LowKode Search extension, automagically use tags to find data.
+
 - Preferences UI extension
 	A UI for configuring user preferences.
 	Enables developers to declare Configuration entities, lowKode generates the UI. 
 	Configuration is UI only, not for business rules.  
 	Configuration is available via Context, can be used with Rules to customize LowKode UI.
-
-- Tag UI extension
-	Would it be possible to create an extension that would automaginally add tags to 
-	LowKode forms, without extending the underlying Entities? 
-	And, if they have the LowKode Search extension, automagically use tags to find data?
 
 ## for developers
 - Visual Studio extension that provides a generated UI for 

@@ -49,6 +49,12 @@ namespace LowKode.Core.Configuration
                 ModelType = TypeDescriptor.ForSystemType(typeof(DateTime)),
                 SiteType = typeof(Input)
             });
+            config.Metadata.ComponentTypes.Add(new ComponentTypeMapping()
+            {
+                ComponentType = typeof(LowkoderInputSelect),
+                ModelType = TypeDescriptor.ForSystemType(typeof(Enum)),
+                SiteType = typeof(Input)
+            });
         }
 
     }

@@ -14,7 +14,8 @@ namespace Lowkode.Demo.Application.Data
         public string Description { get; set; }
 
         [Required]
-        [DisplayName("Primary Classification")]    
+        [DisplayName("Primary Classification")]
+        [EnumDataType(typeof(Classification))]
         public string Classification { get; set; }
 
         [Range(1, 100000, ErrorMessage = "Accommodation invalid (1-100000).")]
