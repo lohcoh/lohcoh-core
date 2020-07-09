@@ -2,20 +2,22 @@
 
 ## library plugins
 
-LowKode will *NOT* provide support for commercial component libraies out of the box but will instead sell packages for them.
+Lowkoder works with any component library. 
+Components are 'plugged into' Lowkoder via a 'UI Kit'.
+Lowkoder will *NOT* provide support for commercial component libraies out of the box but will instead sell UI kits for them.
 
-	Free...
-		Blazorize
-		Razden
+	Free UI kits...
+		Blazorized
+		Radzen
 		Lowkoder Open Source
-	Commercial...
+	Commercial UI kits...
 		SyncFusion
 		Telerik
 		DevExpress
 		PatternFly
 
 ## cross-platform components
-Makes the core components work across multiple platform.
+Makes the core components work across multiple platform; web, phone, desktop
 
 ## Apollo-like state management engine for .NET.
 Focused on idiomatic C#.
@@ -48,9 +50,9 @@ Lists
 - Autocomplete extension
 	Remembers the values entered into fields by users and uses those past values to provide autocomplete.
 
-- Tag UI extension +++++
+### Tag UI extension +++++
 	I think it would be possible to create an extension that would automaginally add tags to 
-	LowKode forms, without extending the underlying Entities or forms.
+	Lowkoder forms, without extending the underlying Entities or forms.
 	And, if they have the LowKode Search extension, automagically use tags to find data.
 
 - Preferences UI extension
@@ -58,6 +60,13 @@ Lists
 	Enables developers to declare Configuration entities, lowKode generates the UI. 
 	Configuration is UI only, not for business rules.  
 	Configuration is available via Context, can be used with Rules to customize LowKode UI.
+
+## UI generators
+- A web application that can generate a complete application, ala Radzen, or HoneyCode. 
+
+- An in-IDE component generator, ala Windows Template Studio.
+https://github.com/Microsoft/WindowsTemplateStudio
+
 
 ## for developers
 - Visual Studio extension that provides a generated UI for 

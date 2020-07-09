@@ -10,6 +10,11 @@
     object Model;
     MemberPath MemberPath;
 
+    public SiteSpecification SiteSpecification
+    {
+        get {  return }
+    }
+
     public DateTime MemberValue
     {
         get { return Convert.ToDateTime(MemberPath.Get(Model)); }

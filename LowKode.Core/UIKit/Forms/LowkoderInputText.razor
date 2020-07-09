@@ -3,34 +3,40 @@
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
 @inject ILowkoderService lowkoder
-    <Scope OnInit="BindModel">
-        @if (isMultiline)
-        {
-            <InputTextArea @bind-Value="MemberValue" />
-        }
-        else
-        {
-            <InputText @bind-Value="MemberValue" />
-        }
-    </Scope>
+    @if (isMultiline)
+    {
+        <InputTextArea @bind-Value="MemberValue" @onclick="@(e=> { })" />
+    }
+    else
+    {
+        <InputText @bind-Value="MemberValue" />
+    }
 @code {
     object Model;
-    MemberPath MemberPath;
+    MemberPath ModelMember;
     bool isMultiline = false;
 
-    public string MemberValue
-    {
-        get { return Convert.ToString(MemberPath.Get(Model)); }
-        set { MemberPath.Set(Model, value); }
-    }
+    [ContextParameter]
+    SiteSpecification SiteSpecification { get; set; }
 
-    void BindModel(IComponentSite site)
+
+    protected override void OnInitialized()
     {
-        Model = site.Context.SiteSpecification.Model;
-        MemberPath = site.Context.SiteSpecification.ModelMember;
-        if (MemberPath.TargetProperty.DataType == System.ComponentModel.DataAnnotations.DataType.MultilineText)
+        base.OnInitialized();
+
+        Model = SiteSpecification.Model;
+        ModelMember = SiteSpecification.ModelMember;
+        if (ModelMember.TargetProperty.DataType == System.ComponentModel.DataAnnotations.DataType.MultilineText)
         {
             isMultiline = true;
         }
     }
+
+
+    public string MemberValue
+    {
+        get { return Convert.ToString(ModelMember.Get(Model)); }
+        set { ModelMember.Set(Model, value); }
+    }
+
 }

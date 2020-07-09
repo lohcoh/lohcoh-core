@@ -63,6 +63,9 @@ Lowkode also provides a set of components specifically designed to make form cre
 	- Display a status value from a database in a way that's meanful to an end-user.
 		Uses: Uses: metadata(Enum schema definition that maps status values to view models), custom component for displaying status 
 
+	- Customize components via event handling.  For instance, make InputText components select all text when the componet gains the focus.
+		https://stackoverflow.com/questions/815797/add-dependency-property-to-control
+
 ##
 
 Idea...

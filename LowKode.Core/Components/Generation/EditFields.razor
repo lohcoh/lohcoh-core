@@ -6,14 +6,19 @@
 @using System
 @namespace LowKode.Core.Components
 
-<Scope OnInit="BindModel" Context="FormSite">
     @foreach (var property in modelMetadata.Properties)
     {
-        <Scope OnInit="_=>BindProperty(_, property)">
-            @ChildContent
-        </Scope>
+        <ContextContainer>
+            @{
+                var specification = Context.Get<SiteSpecification>();
+                specification.Model = EditContext.Model;
+                specification.ModelType = modelMetadata;
+                specification.ModelMember = property.ToMemberPath();
+
+                @ChildContent
+            }
+        </ContextContainer>
     }
-</Scope>
 
 
 @code
@@ -23,39 +28,33 @@
     /// Can only be used with an <EditForm/> component.
     /// </summary>
 
-        /// <summary>
-        /// The template for rendering properties
-        /// </summary>
-        [Parameter]
-        public RenderFragment ChildContent { get; set; }
+    /// <summary>
+    /// The template for rendering properties
+    /// </summary>
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
 
-        [CascadingParameter]
-        EditContext EditContext { get; set; }
+    [CascadingParameter]
+    EditContext EditContext { get; set; }
 
-        TypeDescriptor modelMetadata;
-        Type modelType;
-        
-        protected override void OnInitialized()
+    [ContextParameter]
+    TypeDescriptors TypeDescriptors { get; set; }
+
+    TypeDescriptor modelMetadata;
+    Type modelType;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        if (EditContext == null)
         {
-            base.OnInitialized();
+            throw new InvalidOperationException("No EditContext found");
+        }
 
-            if (EditContext == null)
-            {
-                throw new InvalidOperationException("No EditContext found");
-            }
-
-            modelType = EditContext.Model.GetType();
-        }
-        void BindProperty(IComponentSite site, PropertyDescriptor property)
-        {
-            site.Context.SiteSpecification.ModelMember = property.ToMemberPath();
-        }
-        void BindModel(IComponentSite site)
-        {
-            // add the model and it's type to the current context before rendering properties
-            modelMetadata = site.Metadata.ForSystemType(modelType);
-            site.Context.SiteSpecification.Model = EditContext.Model;
-            site.Context.SiteSpecification.ModelType = modelMetadata;
-        }
+        modelType = EditContext.Model.GetType();
+        modelMetadata = TypeDescriptors.ForSystemType(modelType);
+    }
+   
 
 }
