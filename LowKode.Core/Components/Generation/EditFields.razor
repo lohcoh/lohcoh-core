@@ -6,19 +6,21 @@
 @using System
 @namespace LowKode.Core.Components
 
-    @foreach (var property in modelMetadata.Properties)
-    {
-        <ContextContainer>
-            @{
-                var specification = Context.Get<SiteSpecification>();
-                specification.Model = EditContext.Model;
-                specification.ModelType = modelMetadata;
-                specification.ModelMember = property.ToMemberPath();
+    <Lowkoder>
+        @foreach (var property in modelMetadata.Properties)
+        {
+            <ContextBoundary>
+                @{
+                    var specification = Context.Get<SiteSpecification>();
+                    specification.Model = EditContext.Model;
+                    specification.ModelType = modelMetadata;
+                    specification.ModelMember = property.ToMemberPath();
 
-                @ChildContent
-            }
-        </ContextContainer>
-    }
+                    @ChildContent
+                }
+            </ContextBoundary>
+        }
+    </Lowkoder>
 
 
 @code
