@@ -2,29 +2,24 @@
 @using LowKode.Core.Configuration
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
-@inject ILowkoderService lowkoder
-<Scope OnInit="BindModel">
-    <InputDate @bind-Value="MemberValue" />
-</Scope>
+<InputDate @bind-Value="MemberValue" />
 @code {
     object Model;
     MemberPath MemberPath;
 
-    public SiteSpecification SiteSpecification
+    [ContextParameter]
+    SiteSpecification SiteSpecification { get; set; }
+
+    protected override void OnInitialized()
     {
-        get {  return }
+        Model = SiteSpecification.Model;
+        MemberPath = SiteSpecification.ModelMember;
     }
 
     public DateTime MemberValue
     {
         get { return Convert.ToDateTime(MemberPath.Get(Model)); }
         set { MemberPath.Set(Model, value); }
-    }
-
-    void BindModel(IComponentSite site)
-    {
-        Model = site.Context.SiteSpecification.Model;
-        MemberPath = site.Context.SiteSpecification.ModelMember;
     }
 
 }

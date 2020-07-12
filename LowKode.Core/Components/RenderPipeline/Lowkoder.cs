@@ -16,13 +16,13 @@ namespace LowKode.Core.Components
         [Parameter]
         public RenderFragment ChildContent { get; set; }
 
-        Action<RenderTreeBuilder> translatedChildContent;
+        RenderFragment translatedChildContent;
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
-            translatedChildContent = new RenderFragmentTranslator().Translate(ChildContent);
+            translatedChildContent = RenderFragmentTranslator.Translate( ChildContent);
         }
 
         protected override void BuildRenderTree(RenderTreeBuilder builder)

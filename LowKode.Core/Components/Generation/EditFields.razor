@@ -9,6 +9,7 @@
     <Lowkoder>
         @foreach (var property in modelMetadata.Properties)
         {
+            <!--
             <ContextBoundary>
                 @{
                     var specification = Context.Get<SiteSpecification>();
@@ -19,6 +20,7 @@
                     @ChildContent
                 }
             </ContextBoundary>
+            -->
         }
     </Lowkoder>
 
@@ -39,8 +41,8 @@
     [CascadingParameter]
     EditContext EditContext { get; set; }
 
-    [ContextParameter]
-    TypeDescriptors TypeDescriptors { get; set; }
+    //[ContextParameter]
+    //TypeDescriptors TypeDescriptors { get; set; }
 
     TypeDescriptor modelMetadata;
     Type modelType;
@@ -55,8 +57,8 @@
         }
 
         modelType = EditContext.Model.GetType();
-        modelMetadata = TypeDescriptors.ForSystemType(modelType);
+        //modelMetadata = TypeDescriptors.ForSystemType(modelType);
     }
-   
+
 
 }
