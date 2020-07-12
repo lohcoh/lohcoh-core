@@ -16,7 +16,7 @@ namespace LowKode.Tests
     {
 
         /// <summary>
-        /// This test reproduces a specific rendering example which, at the time this test was written, was not working.
+        /// This test reproduces a specific rendering example which, at the time this test was written very early in Lowkoder's development, was not working.
         /// Here, editFieldsRoot is the root scope of a form that will display a Starship instance.
         /// Scopes (branches) are created for each property in Starship, and ComponentSiteSpecification.ModelMember is 
         /// assigned in each property scope.

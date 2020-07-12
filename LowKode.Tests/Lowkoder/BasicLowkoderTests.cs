@@ -11,7 +11,7 @@ namespace LowKode.Tests
 {
 
     [TestClass]
-    public class BasicPerformanceTests
+    public class BasicLowkoderTests
     {
 
         /// <summary>

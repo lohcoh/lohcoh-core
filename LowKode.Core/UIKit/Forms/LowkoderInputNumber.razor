@@ -1,14 +1,14 @@
 ﻿@using LowKode.Core.Metadata
-@using LowKode.Core.Configuration
+@using LowKode.Core.Context
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
-@inject ILowkoderService lowkoder
-<Scope OnInit="BindModel">
-    <InputNumber @bind-Value="MemberValue" />
-</Scope>
+<InputNumber @bind-Value="MemberValue" />
 @code {
     object Model;
     MemberPath MemberPath;
+
+    [ContextParameter]
+    SiteSpecification SiteSpecification { get; set; }
 
     public int MemberValue
     {
@@ -16,10 +16,10 @@
         set { MemberPath.Set(Model, value); }
     }
 
-    void BindModel(IComponentSite site)
+    protected override void OnInitialized()
     {
-        Model = site.Context.SiteSpecification.Model;
-        MemberPath = site.Context.SiteSpecification.ModelMember;
+        Model = SiteSpecification.Model;
+        MemberPath = SiteSpecification.ModelMember;
     }
 
 }

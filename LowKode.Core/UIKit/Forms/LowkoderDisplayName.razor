@@ -1,3 +1,9 @@
 ﻿@using LowKode.Core.Configuration
+@using LowKode.Core.Components
+@using LowKode.Core.Context
 @namespace LowKode.Core.Components
-<Scope Context="site"><label>@site.Context.SiteSpecification.ModelMember.TargetProperty.DisplayName</label></Scope>
+<label>@SiteSpecification.ModelMember.TargetProperty.DisplayName</label>
+@code {
+    [ContextParameter]
+    SiteSpecification SiteSpecification { get; set; }
+}

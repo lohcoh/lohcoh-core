@@ -1,12 +1,13 @@
 ﻿@using LowKode.Core.Metadata
-@using LowKode.Core.Configuration
+@using LowKode.Core.Context
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
-@inject ILowkoderService lowkoder
-<Scope OnInit="BindModel">
-    <InputCheckbox @bind-Value="MemberValue" />
-</Scope>
+<InputCheckbox @bind-Value="MemberValue" />
 @code {
+
+    [ContextParameter]
+    SiteSpecification SiteSpecification { get; set; }
+
     object Model;
     MemberPath MemberPath;
 
@@ -16,10 +17,12 @@
         set { MemberPath.Set(Model, value); }
     }
 
-    void BindModel(IComponentSite site)
+    protected override void OnInitialized()
     {
-        Model = site.Context.SiteSpecification.Model;
-        MemberPath = site.Context.SiteSpecification.ModelMember;
+        base.OnInitialized();
+
+        Model = SiteSpecification.Model;
+        MemberPath = SiteSpecification.ModelMember;
     }
 
 }

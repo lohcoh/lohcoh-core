@@ -1,16 +1,17 @@
 ﻿@using LowKode.Core.Metadata
 @using LowKode.Core.Configuration
+@using LowKode.Core.Context
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
 @inject ILowkoderService lowkoder
-    @if (isMultiline)
-    {
-        <InputTextArea @bind-Value="MemberValue" @onclick="@(e=> { })" />
-    }
-    else
-    {
-        <InputText @bind-Value="MemberValue" />
-    }
+@if (isMultiline)
+{
+    <InputTextArea @bind-Value="MemberValue" @onclick="@(e=> { })" />
+}
+else
+{
+    <InputText @bind-Value="MemberValue" />
+}
 @code {
     object Model;
     MemberPath ModelMember;
