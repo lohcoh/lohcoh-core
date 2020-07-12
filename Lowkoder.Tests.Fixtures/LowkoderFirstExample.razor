@@ -1,0 +1,28 @@
+﻿@using System;
+@using LowKode.Core.Metadata
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Forms
+@using LowKode.Core.Components
+@using Microsoft.AspNetCore.Components.Rendering;
+
+@namespace LowKode.Tests.Fixtures
+
+    <Lowkoder>
+        <h1>Hello world from Lowkoder</h1>
+        <InputText Value="Hello0"/>
+        <div>
+            <div>
+                <InputText Value="Hello1" />
+            </div>
+            <div>
+                <InputText Value="Hello2" />
+            </div>
+        </div>
+    </Lowkoder>
+
+@code {
+
+    string Hello {  get; set; } = "$$$ from Lowkoder";
+
+
+}

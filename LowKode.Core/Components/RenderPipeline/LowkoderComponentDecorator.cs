@@ -16,13 +16,14 @@ namespace LowKode.Core.Components
         [Parameter]
         public object ComponentKey { get; set; }
 
+        public ILowkoderService Lowkoder { get; set; }
+
+
         IComponent ComponentInstance { get; set; }
         private ParameterView parameterView;
-        private ILowkoderService lowkoder;
 
-        public LowkoderComponentDecorator(ILowkoderService lowkoder)
+        public LowkoderComponentDecorator()
         {
-            this.lowkoder= lowkoder;
         }
 
         protected override void BuildRenderTree(RenderTreeBuilder builder)

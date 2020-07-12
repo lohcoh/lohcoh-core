@@ -43,6 +43,7 @@ namespace LowKode.Core.Components
                         builder.OpenElement(frame.Sequence, frame.ElementName);
 
                         BuildRenderTree(builder, aFrames.AsSpan(iFrame + 1, frame.ElementSubtreeLength));
+                        iFrame+= frame.ElementSubtreeLength;
 
                         builder.CloseElement();
                         break;
@@ -58,11 +59,21 @@ namespace LowKode.Core.Components
                     case RenderTreeFrameType.Component:
                         builder.OpenComponent(frame.Sequence, typeof(LowkoderComponentDecorator));
 
-                        builder.AddAttribute(frame.Sequence, nameof(LowkoderComponentDecorator.ComponentType), frame.ComponentType);
-                        builder.AddAttribute(frame.Sequence, nameof(LowkoderComponentDecorator.ComponentReferenceCaptureAction), frame.ComponentReferenceCaptureAction);
-                        builder.AddAttribute(frame.Sequence, nameof(LowkoderComponentDecorator.ComponentKey), frame.ComponentKey);
+                        if (frame.ComponentType != null)
+                        {
+                            builder.AddAttribute(frame.Sequence, nameof(LowkoderComponentDecorator.ComponentType), frame.ComponentType);
+                        }
+                        if (frame.ComponentReferenceCaptureAction != null)
+                        {
+                            builder.AddAttribute(frame.Sequence, nameof(LowkoderComponentDecorator.ComponentReferenceCaptureAction), frame.ComponentReferenceCaptureAction);
+                        }
+                        if (frame.ComponentType != null)
+                        {
+                            builder.AddAttribute(frame.Sequence, nameof(LowkoderComponentDecorator.ComponentKey), frame.ComponentKey);
+                        }
 
                         BuildRenderTree(builder, aFrames.AsSpan(iFrame + 1, frame.ComponentSubtreeLength));
+                        iFrame += frame.ComponentSubtreeLength;
 
                         builder.CloseComponent();
                         break;
@@ -71,6 +82,7 @@ namespace LowKode.Core.Components
                         builder.OpenRegion(frame.Sequence);
 
                         BuildRenderTree(builder, aFrames.AsSpan(iFrame + 1, frame.RegionSubtreeLength));
+                        iFrame += frame.RegionSubtreeLength;
 
                         builder.CloseRegion();
                         break;
