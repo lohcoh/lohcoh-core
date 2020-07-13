@@ -1,20 +1,25 @@
 ﻿@using System;
-@using LowKode.Core.Metadata
-@using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Forms
 @using LowKode.Core.Components
 @using Microsoft.AspNetCore.Components.Rendering;
 
+
 @namespace LowKode.Tests.Fixtures
 
-    <Lowkoder>
-        <h1>Hello world from Lowkoder</h1>
-        <InputText Value="Hello0"/>
-    </Lowkoder>
+<Lowkoder>
+    <h1>Hello world from Lowkoder</h1>
+    <EditForm Model="@_starship" OnValidSubmit="HandleValidSubmit" />
+</Lowkoder>
 
 @code {
+    private string _starship = "Starship()";
 
-    string Hello {  get; set; } = "$$$ from Lowkoder";
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine("OnValidSubmit");
+    }
+
+    string Hello { get; set; } = "$$$ from Lowkoder";
 
 
 }

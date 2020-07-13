@@ -18,9 +18,17 @@ namespace LowKode.Core.Components
 
         public ILowkoderService Lowkoder { get; set; }
 
-
+        /// <summary>
+        /// This is a reference to the decorated component.
+        /// Blazor will call the CaptureComponentReference method when then decorated 
+        /// component is rendered.
+        /// </summary>
         IComponent ComponentInstance { get; set; }
-        private ParameterView parameterView;
+
+        /// <summary>
+        /// parameters meant for the decored component
+        /// </summary>
+        private Dictionary<string,object> parameterView;
 
         public LowkoderComponentDecorator()
         {
@@ -29,29 +37,44 @@ namespace LowKode.Core.Components
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
             builder.OpenComponent(0, ComponentType);
-            builder.AddComponentReferenceCapture(1, r => CaptureComponentReference((IComponent)r));
-            if (ComponentKey != null)
-            {
-                builder.AddAttribute(2, "@key", ComponentKey);
-            }
-
-            var attribtes= new Dictionary<string,object>(parameterView.ToDictionary());
-            attribtes.Remove(nameof(ComponentType));
-            builder.AddMultipleAttributes(3, attribtes);
-
+            builder.AddMultipleAttributes(1, parameterView);
+            builder.AddComponentReferenceCapture(2, r => CaptureComponentReference((IComponent)r));           
             builder.CloseComponent();
         }
 
         public override Task SetParametersAsync(ParameterView parameters)
         {
-            parameterView = parameters;
-            return base.SetParametersAsync(parameters);
+            /*
+             * The given parameters contain the original parameters meant for the 
+             * decorated component *and* parameters for this component.
+             * Separate this component's params from the decorated components params .
+             * Save params meant for decorated component fr later.
+             */
+            var thisParams = new Dictionary<string, object>();
+            thisParams[nameof(ComponentType)] = parameters.GetValueOrDefault<Type>(nameof(ComponentType));
+            thisParams[nameof(ComponentReferenceCaptureAction)] = parameters.GetValueOrDefault<Action<object>>(nameof(ComponentReferenceCaptureAction));
+            {
+                object key;
+                if (parameters.TryGetValue("@key", out key))
+                {
+                    thisParams["@key"] = key;
+                }
+            }
+
+
+            var decorParams = new Dictionary<string,object>(parameters.ToDictionary());
+            decorParams.Remove(nameof(ComponentType));
+            decorParams.Remove(nameof(ComponentKey));
+            decorParams.Remove(nameof(ComponentReferenceCaptureAction));
+            parameterView = decorParams;
+
+            return base.SetParametersAsync(ParameterView.FromDictionary(thisParams));
         }
 
         void CaptureComponentReference(IComponent component)
         {
             ComponentInstance= component;
-            ComponentReferenceCaptureAction?.Invoke(component);
+            //ComponentReferenceCaptureAction?.Invoke(component);
         }
 
         protected override void OnInitialized()

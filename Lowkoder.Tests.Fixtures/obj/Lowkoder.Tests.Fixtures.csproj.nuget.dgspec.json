@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\zen\\source\\repos\\lohcoh-core\\Lowkoder.Tests.Fixtures\\Lowkoder.Tests.Fixtures.csproj": {}
+    "C:\\Users\\tedsto01\\source\\repos\\lohcoh-core\\Lowkoder.Tests.Fixtures\\Lowkoder.Tests.Fixtures.csproj": {}
   },
   "projects": {
-    "C:\\Users\\zen\\source\\repos\\lohcoh-core\\LowKode.Core\\LowKode.Core.csproj": {
+    "C:\\Users\\tedsto01\\source\\repos\\lohcoh-core\\LowKode.Core\\LowKode.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\zen\\source\\repos\\lohcoh-core\\LowKode.Core\\LowKode.Core.csproj",
+        "projectUniqueName": "C:\\Users\\tedsto01\\source\\repos\\lohcoh-core\\LowKode.Core\\LowKode.Core.csproj",
         "projectName": "LowKode.Core",
-        "projectPath": "C:\\Users\\zen\\source\\repos\\lohcoh-core\\LowKode.Core\\LowKode.Core.csproj",
-        "packagesPath": "C:\\Users\\zen\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\zen\\source\\repos\\lohcoh-core\\LowKode.Core\\obj\\",
+        "projectPath": "C:\\Users\\tedsto01\\source\\repos\\lohcoh-core\\LowKode.Core\\LowKode.Core.csproj",
+        "packagesPath": "C:\\Users\\tedsto01\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tedsto01\\source\\repos\\lohcoh-core\\LowKode.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\zen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tedsto01\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -64,29 +64,35 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "NETStandard.Library.Ref",
+              "version": "[2.1.0, 2.1.0]"
+            }
+          ],
           "frameworkReferences": {
             "NETStandard.Library": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\zen\\source\\repos\\lohcoh-core\\Lowkoder.Tests.Fixtures\\Lowkoder.Tests.Fixtures.csproj": {
+    "C:\\Users\\tedsto01\\source\\repos\\lohcoh-core\\Lowkoder.Tests.Fixtures\\Lowkoder.Tests.Fixtures.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\zen\\source\\repos\\lohcoh-core\\Lowkoder.Tests.Fixtures\\Lowkoder.Tests.Fixtures.csproj",
+        "projectUniqueName": "C:\\Users\\tedsto01\\source\\repos\\lohcoh-core\\Lowkoder.Tests.Fixtures\\Lowkoder.Tests.Fixtures.csproj",
         "projectName": "Lowkoder.Tests.Fixtures",
-        "projectPath": "C:\\Users\\zen\\source\\repos\\lohcoh-core\\Lowkoder.Tests.Fixtures\\Lowkoder.Tests.Fixtures.csproj",
-        "packagesPath": "C:\\Users\\zen\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\zen\\source\\repos\\lohcoh-core\\Lowkoder.Tests.Fixtures\\obj\\",
+        "projectPath": "C:\\Users\\tedsto01\\source\\repos\\lohcoh-core\\Lowkoder.Tests.Fixtures\\Lowkoder.Tests.Fixtures.csproj",
+        "packagesPath": "C:\\Users\\tedsto01\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tedsto01\\source\\repos\\lohcoh-core\\Lowkoder.Tests.Fixtures\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\zen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tedsto01\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -99,8 +105,8 @@
         "frameworks": {
           "netstandard2.1": {
             "projectReferences": {
-              "C:\\Users\\zen\\source\\repos\\lohcoh-core\\LowKode.Core\\LowKode.Core.csproj": {
-                "projectPath": "C:\\Users\\zen\\source\\repos\\lohcoh-core\\LowKode.Core\\LowKode.Core.csproj"
+              "C:\\Users\\tedsto01\\source\\repos\\lohcoh-core\\LowKode.Core\\LowKode.Core.csproj": {
+                "projectPath": "C:\\Users\\tedsto01\\source\\repos\\lohcoh-core\\LowKode.Core\\LowKode.Core.csproj"
               }
             }
           }
@@ -133,12 +139,18 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "NETStandard.Library.Ref",
+              "version": "[2.1.0, 2.1.0]"
+            }
+          ],
           "frameworkReferences": {
             "NETStandard.Library": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

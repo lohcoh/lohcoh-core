@@ -61,11 +61,15 @@ namespace LowKode.Core.Components
 
                         if (frame.ComponentType != null)
                         {
+                            
                             builder.AddAttribute(frame.Sequence, nameof(LowkoderComponentDecorator.ComponentType), frame.ComponentType);
                         }
                         if (frame.ComponentReferenceCaptureAction != null)
                         {
-                            builder.AddAttribute(frame.Sequence, nameof(LowkoderComponentDecorator.ComponentReferenceCaptureAction), frame.ComponentReferenceCaptureAction);
+                            builder.AddAttribute(
+                                frame.Sequence, 
+                                nameof(LowkoderComponentDecorator.ComponentReferenceCaptureAction),
+                                new System.Action<object>(frame.ComponentReferenceCaptureAction));
                         }
                         if (frame.ComponentKey != null)
                         {

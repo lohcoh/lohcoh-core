@@ -1,0 +1,16 @@
+﻿
+<h1>XXX</h1>
+
+@code {
+
+    [Parameter]
+    public Action<IComponent> ActionJackson { get; set; }
+
+    [Parameter]
+    public Dictionary<string, object> InputAttributes { get; set; } =
+        new Dictionary<string, object>()
+        {
+            { "placeholder", "Child Component Placeholder" }
+        };
+
+}
