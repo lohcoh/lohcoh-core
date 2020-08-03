@@ -1,0 +1,9 @@
+﻿@using System;
+@using Microsoft.AspNetCore.Components.Forms
+@using LowKode.Core.Components
+@using Microsoft.AspNetCore.Components.Rendering;
+@namespace LowKode.Tests.Fixtures
+<label>@ProvidedMessage</label>
+@code {
+    [CascadingParameter] string ProvidedMessage { get; set; }
+}

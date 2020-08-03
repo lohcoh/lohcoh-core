@@ -3,6 +3,7 @@
 @using LowKode.Core.Metadata
 @using LowKode.Core.Components
 @using LowKode.Core.Configuration
+@using LowKode.Core
 @inject ILowkoderService lowkoder
 
 
@@ -16,15 +17,15 @@
 
     <Scope Context="FormSite">
         @{
-            TypeDescriptor modelType= FormSite.Metadata.ForSystemType<Starship>();
-            FormSite.Context.SiteSpecification.ModelType= modelType;
+            TypeDescriptor modelType= LowkoderMetadata.ForSystemType<Starship>();
 
             foreach (var property in modelType.Properties)
             {
-                <Scope Context="PropertySite">
-                    @{ 
-                        PropertySite.Context.SiteSpecification.ModelMember = property.ToMemberPath();
-                    }
+                var siteSpecification= new SiteSpecification() { 
+                    ModelType= modelType,
+                    ModelMember = property.ToMemberPath()
+                 };
+                <Scope Context="_site" Value="@siteSpecification">
                     <p>
                         <label>
                             <DisplayName />:
@@ -47,6 +48,9 @@
 
 @code {
     private Starship _starship = new Starship();
+
+    [CascadingParameter]
+    LowkoderMetadata LowkoderMetadata { get; set; }
 
     private void HandleValidSubmit()
     {
