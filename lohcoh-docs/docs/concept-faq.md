@@ -1,12 +1,14 @@
-﻿# ToDo
+﻿# Questions I ask myself repeatedly about how to build Lowkoder
 
 ## Rewrite Lowkoder Context API so that it uses POCO objects
 I just know that folks will never b able to wrap thier p brains around the LOS API.
 
-## Context data should be cascading parameters
-Context data is application data. it doesn't belong in LOS.
-Actually, no.  Context data needs to be in LOS so that it's available to rules.
+## Should context data be stored as cascading parameters?
+Context data is application data, and it doesn't belong in LOS.
+But context data needs to be in LOS so that it's available to rules.
 
+## Is it possible to store data in LOS AND as CascadingParameters?
+That seems doable
 
 
 ### Implementation

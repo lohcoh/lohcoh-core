@@ -17,15 +17,14 @@
 
     <Scope Context="FormSite">
         @{
-            TypeDescriptor modelType= LowkoderMetadata.ForSystemType<Starship>();
-
+            TypeDescriptor modelType= FormSite.Metadata.ForSystemType<Starship>();
             foreach (var property in modelType.Properties)
             {
                 var siteSpecification= new SiteSpecification() { 
                     ModelType= modelType,
                     ModelMember = property.ToMemberPath()
                  };
-                <Scope Context="_site" Value="@siteSpecification">
+                <Scope Context="FieldSite" Value=@siteSpecification>
                     <p>
                         <label>
                             <DisplayName />:
@@ -49,12 +48,8 @@
 @code {
     private Starship _starship = new Starship();
 
-    [CascadingParameter]
-    LowkoderMetadata LowkoderMetadata { get; set; }
-
     private void HandleValidSubmit()
     {
         Console.WriteLine("OnValidSubmit");
     }
-
 }
