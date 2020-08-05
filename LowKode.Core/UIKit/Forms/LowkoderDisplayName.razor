@@ -2,8 +2,10 @@
 @using LowKode.Core.Components
 @using LowKode.Core.Context
 @namespace LowKode.Core.Components
-<label>@SiteSpecification.ModelMember.TargetProperty.DisplayName</label>
+<Scope Context="_"><label>@_.Lookup<SiteSpecification>().ModelMember.TargetProperty.DisplayName</label></Scope>
+
 @code {
-    [ContextParameter]
-    SiteSpecification SiteSpecification { get; set; }
+//
+//<Scope Context="_"><label>@_.SiteSpecification.ModelMember.TargetProperty.DisplayName</label></Scope>
+//
 }

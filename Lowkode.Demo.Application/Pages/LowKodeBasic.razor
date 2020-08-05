@@ -15,22 +15,24 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <Scope Context="FormSite">
+    <Scope Context="FormScope">
         @{
-            TypeDescriptor modelType= FormSite.Metadata.ForSystemType<Starship>();
+            var modelType= FormScope.Query<TypeDescriptor>().ForSystemType<Starship>().First();
             foreach (var property in modelType.Properties)
             {
-                var siteSpecification= new SiteSpecification() { 
-                    ModelType= modelType,
-                    ModelMember = property.ToMemberPath()
-                 };
-                <Scope Context="FieldSite" Value=@siteSpecification>
-                    <p>
-                        <label>
-                            <DisplayName />:
-                            <Input />
-                        </label>
-                    </p>
+                <Scope Context="FieldScope">
+                    @{
+                        FieldScope.Provide(new SiteSpecification() { 
+                            ModelType= modelType,
+                            ModelMember = property.ToMemberPath()
+                        });
+                        <p>
+                            <label>
+                                <DisplayName />:
+                                <Input />
+                            </label>
+                        </p>
+                    }
                 </Scope>
             }
         }
