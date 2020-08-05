@@ -17,7 +17,7 @@
 
     <Scope Context="FormScope">
         @{
-            var modelType= FormScope.Query<TypeDescriptor>().ForSystemType<Starship>().First();
+            var modelType= FormScope.Query<TypeDescriptorCollection>().ForSystemType<Starship>().First();
             foreach (var property in modelType.Properties)
             {
                 <Scope Context="FieldScope">
