@@ -1,12 +1,10 @@
 ﻿@using LowKode.Core.Metadata
-@using LowKode.Core.Context
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
 <InputCheckbox @bind-Value="MemberValue" />
 @code {
-
-    [ContextParameter]
-    SiteSpecification SiteSpecification { get; set; }
+    [CascadingParameter]
+    IComponentSite Scope { get; set; }
 
     object Model;
     MemberPath MemberPath;
@@ -21,6 +19,7 @@
     {
         base.OnInitialized();
 
+        var SiteSpecification = Scope.GetContext<SiteSpecification>();
         Model = SiteSpecification.Model;
         MemberPath = SiteSpecification.ModelMember;
     }

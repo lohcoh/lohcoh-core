@@ -1,25 +1,26 @@
 ﻿@using LowKode.Core.Metadata
-@using LowKode.Core.Context
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
 <InputDate @bind-Value="MemberValue" />
 @code {
+    [CascadingParameter]
+    IComponentSite Scope { get; set; }
+
     object Model;
     MemberPath MemberPath;
 
-    [ContextParameter]
-    SiteSpecification SiteSpecification { get; set; }
-
-    protected override void OnInitialized()
+    public Boolean MemberValue
     {
-        Model = SiteSpecification.Model;
-        MemberPath = SiteSpecification.ModelMember;
-    }
-
-    public DateTime MemberValue
-    {
-        get { return Convert.ToDateTime(MemberPath.Get(Model)); }
+        get { return Convert.ToBoolean(MemberPath.Get(Model)); }
         set { MemberPath.Set(Model, value); }
     }
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        var SiteSpecification = Scope.GetContext<SiteSpecification>();
+        Model = SiteSpecification.Model;
+        MemberPath = SiteSpecification.ModelMember;
+    }
 }

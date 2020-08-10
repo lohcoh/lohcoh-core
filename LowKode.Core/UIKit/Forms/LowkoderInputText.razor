@@ -1,6 +1,5 @@
 ﻿@using LowKode.Core.Metadata
 @using LowKode.Core.Configuration
-@using LowKode.Core.Context
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
 @inject ILowkoderService lowkoder
@@ -13,17 +12,18 @@ else
     <InputText @bind-Value="MemberValue" />
 }
 @code {
+    [CascadingParameter]
+    IComponentSite Scope { get; set; }
+
     object Model;
     MemberPath ModelMember;
     bool isMultiline = false;
-
-    [ContextParameter]
-    SiteSpecification SiteSpecification { get; set; }
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
+        var SiteSpecification = Scope.GetContext<SiteSpecification>();
         Model = SiteSpecification.Model;
         ModelMember = SiteSpecification.ModelMember;
         if (ModelMember.TargetProperty.DataType == System.ComponentModel.DataAnnotations.DataType.MultilineText)

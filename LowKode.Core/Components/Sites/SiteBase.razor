@@ -6,9 +6,7 @@
 @namespace LowKode.Core.Components
 @typeparam TSite
 
-<Scope OnInit="BindModel">
-    @RenderSiteComponent
-</Scope>
+@SiteComponentRenderFragment
 
 @code
 {
@@ -19,44 +17,28 @@
     /// A site component chooses it's associated kit component based on the site type, model type, etc.
     /// Site components use IComponentSite.Metadata.ComponentTypes to find an associated kit component.
     /// </summary>
+    /// 
 
-    RenderFragment RenderSiteComponent;
+    [CascadingParameter]
+    IComponentSite Scope { get; set; }
 
-    void BindModel(IComponentSite site)
+    RenderFragment SiteComponentRenderFragment;
+
+    protected override void OnInitialized()
     {
+        base.OnInitialized();
+
+        var specification= Scope.GetContext<SiteSpecification>();
+
         // set site type, one of: Input, Display, etc...
-        var siteType= typeof(TSite);
-        var specification = site.Context.SiteSpecification;
-        specification.SiteType = siteType;
-
-        // get model type
-        var modelType = specification.ModelType;
-        if (specification.ModelMember != null)
-        {
-            modelType = specification.ModelMember.TargetProperty.PropertyType;
-        }
-
-        // get kit component type
-        ComponentTypeMapping componentMapping= null;
-        if (componentMapping == null && specification.ModelMember.TargetProperty.EnumType != null)
-        {
-            componentMapping = site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == TypeDescriptor.ForSystemType(typeof(Enum))).FirstOrDefault();
-        }
-        if (componentMapping == null)
-            componentMapping = site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == modelType).FirstOrDefault();
-        if (componentMapping == null)
-            componentMapping = site.Metadata.ComponentTypes.Where(t => t.SiteType == siteType && t.ModelType == null).FirstOrDefault();
-        if (componentMapping == null)
-            throw new Exception("No component mapping found for SiteType '" + siteType.FullName + "' and  ModelType '" + modelType.DisplayName + "'");
+        specification.SiteType = typeof(TSite);
 
         // render 'kit' component
-        var componentType = componentMapping.ComponentType;
-        RenderSiteComponent = (builder) =>
+        var componentType = Scope.FindKitType(specification);
+        SiteComponentRenderFragment = (builder) =>
         {
             builder.OpenComponent(0, componentType);
             builder.CloseComponent();
         };
-
     }
-
 }

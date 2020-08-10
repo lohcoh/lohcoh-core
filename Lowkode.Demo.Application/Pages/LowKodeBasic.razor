@@ -15,28 +15,26 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <Scope Context="FormScope">
-        @{
-            var modelType= FormScope.Query<TypeDescriptorCollection>().ForSystemType<Starship>().First();
-            foreach (var property in modelType.Properties)
-            {
-                <Scope Context="FieldScope">
-                    @{
-                        FieldScope.Provide(new SiteSpecification() { 
-                            ModelType= modelType,
-                            ModelMember = property.ToMemberPath()
-                        });
-                        <p>
-                            <label>
-                                <DisplayName />:
-                                <Input />
-                            </label>
-                        </p>
-                    }
-                </Scope>
-            }
+    @{
+        var modelType= Scope.FindTypeDescriptor<Starship>();
+        foreach (var property in modelType.Properties)
+        {
+            <Scope Context="FieldScope">
+                @{
+                    FieldScope.Insert(new SiteSpecification() { 
+                        ModelType= modelType,
+                        ModelMember = property.ToMemberPath()
+                    });
+                    <p>
+                        <label>
+                            <DisplayName />:
+                            <Input />
+                        </label>
+                    </p>
+                }
+            </Scope>
         }
-    </Scope>
+    }
 
     <button type="submit">Submit</button>
 
@@ -49,6 +47,9 @@
 
 @code {
     private Starship _starship = new Starship();
+
+    [CascadingParameter]
+    IComponentSite Scope { get; set; }
 
     private void HandleValidSubmit()
     {

@@ -7,25 +7,24 @@ using System.Text;
 namespace LowKode.Core.Components
 {
     /// <summary>
-    /// A service that provides access to context and metadata for rendering UI elements.
+    /// A service for providing and consuming context data.
+    /// Context data is indexed by type, similar to cascading parameters.
     /// </summary>
     public interface IComponentSite :IDisposable
     {
         /// <summary>
-        /// The ILosRoot that contains the Context and Metadata documents.
-        /// todo: Remove.  Not sure its necessary to expose this.
+        /// Get context data
         /// </summary>
-        //ILosRoot LowkoderRoot { get; }
+        TContext Get<TContext>();
 
         /// <summary>
-        /// Context document root for this site.
+        /// Replaces any existing instance with the given instance
         /// </summary>
-        LowkoderContext Context { get; }
+        void Insert<TContext>(TContext value);
 
         /// <summary>
-        /// Metadata document root for this site.
+        /// Updates any existing instance with values from the given value
         /// </summary>
-        LowkoderMetadata Metadata { get; }
-
+        void Update<TContext>(TContext value);
     }
 }

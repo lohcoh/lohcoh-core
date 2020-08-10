@@ -1,5 +1,4 @@
 ﻿@using LowKode.Core.Metadata
-@using LowKode.Core.Context
 @using Microsoft.AspNetCore.Components.Forms
 @namespace LowKode.Core.Components
 <InputSelect @bind-Value="MemberValue">
@@ -9,14 +8,17 @@
     <option value="Defense">Defense</option>
 </InputSelect>        
 @code {
+    [CascadingParameter]
+    IComponentSite Scope { get; set; }
+
     object Model;
     MemberPath MemberPath;
 
-    [ContextParameter]
-    SiteSpecification SiteSpecification { get; set; }  
-
     protected override void OnInitialized()
     {
+        base.OnInitialized();
+
+        var SiteSpecification = Scope.GetContext<SiteSpecification>();
         Model = SiteSpecification.Model;
         MemberPath = SiteSpecification.ModelMember;
     }

@@ -1,11 +1,9 @@
 ﻿@using LowKode.Core.Configuration
 @using LowKode.Core.Components
-@using LowKode.Core.Context
 @namespace LowKode.Core.Components
-<Scope Context="_"><label>@_.Lookup<SiteSpecification>().ModelMember.TargetProperty.DisplayName</label></Scope>
+<label>@Scope.GetContext<SiteSpecification>().ModelMember.TargetProperty.DisplayName</label>
 
 @code {
-//
-//<Scope Context="_"><label>@_.SiteSpecification.ModelMember.TargetProperty.DisplayName</label></Scope>
-//
+    [CascadingParameter]
+    IComponentSite Scope { get; set; }
 }
