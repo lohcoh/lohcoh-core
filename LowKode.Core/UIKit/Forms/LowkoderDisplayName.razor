@@ -1,7 +1,7 @@
 ﻿@using LowKode.Core.Configuration
 @using LowKode.Core.Components
 @namespace LowKode.Core.Components
-<label>@Scope.GetContext<SiteSpecification>().ModelMember.TargetProperty.DisplayName</label>
+<label>@{Scope.Get<SiteSpecification>().ModelMember.TargetProperty.DisplayName}</label>
 
 @code {
     [CascadingParameter]

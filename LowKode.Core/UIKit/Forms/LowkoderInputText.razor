@@ -23,7 +23,7 @@ else
     {
         base.OnInitialized();
 
-        var SiteSpecification = Scope.GetContext<SiteSpecification>();
+        var SiteSpecification = Scope.Get<SiteSpecification>();
         Model = SiteSpecification.Model;
         ModelMember = SiteSpecification.ModelMember;
         if (ModelMember.TargetProperty.DataType == System.ComponentModel.DataAnnotations.DataType.MultilineText)

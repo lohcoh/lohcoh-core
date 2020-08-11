@@ -6,7 +6,7 @@ using LowKode.Core.LOS;
 using LowKode.Core.Metadata;
 using Microsoft.AspNetCore.Components;
 
-namespace LowKode.Core.Components
+namespace LowKode.Core.UIKit
 {
     public class FindKitType : IContextRequest<Type> 
     {
@@ -16,7 +16,7 @@ namespace LowKode.Core.Components
             SiteSpecification= specification;
         }
     }
-    public class FindKitTypeHandler : IContextHandler<FindKitType>
+    public class FindKitTypeHandler : IContextService<FindKitType>
     {
         public Type Handle(FindKitType request, CancellationToken cancellationToken)
         {

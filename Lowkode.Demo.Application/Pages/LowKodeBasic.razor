@@ -16,7 +16,7 @@
     <ValidationSummary />
 
     @{
-        var modelType= Scope.FindTypeDescriptor<Starship>();
+        var modelType= Scope.GetService<ITypeDescriptorService>().GetTypeDescriptor<Starship>();
         foreach (var property in modelType.Properties)
         {
             <Scope Context="FieldScope">

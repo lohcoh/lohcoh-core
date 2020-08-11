@@ -25,7 +25,6 @@ C:\Users\tedsto01\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\net
 C:\Users\tedsto01\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\staticwebassets\Lowkoder.Tests.Fixtures.StaticWebAssets.xml
 C:\Users\tedsto01\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\Lowkoder.Tests.Fixtures.dll
 C:\Users\tedsto01\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\Lowkoder.Tests.Fixtures.pdb
-C:\Users\zen\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\Lowkoder.Tests.Fixtures.csprojAssemblyReference.cache
 C:\Users\zen\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\Lowkoder.Tests.Fixtures.AssemblyInfoInputs.cache
 C:\Users\zen\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\Lowkoder.Tests.Fixtures.AssemblyInfo.cs
 C:\Users\zen\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\Lowkoder.Tests.Fixtures.csproj.CoreCompileInputs.cache
@@ -35,3 +34,4 @@ C:\Users\zen\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstand
 C:\Users\zen\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\RazorDeclaration\Component1.razor.g.cs
 C:\Users\zen\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\RazorDeclaration\LowkoderFirstExample.razor.g.cs
 C:\Users\zen\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\RazorDeclaration\_Imports.razor.g.cs
+C:\Users\zen\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\Lowkoder.Tests.Fixtures.csprojAssemblyReference.cache

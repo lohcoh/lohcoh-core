@@ -26,5 +26,11 @@ namespace LowKode.Core.Components
         /// Updates any existing instance with values from the given value
         /// </summary>
         void Update<TContext>(TContext value);
+
+        /// <summary>
+        /// Returns a service that uses the current context data to generate a result.
+        /// </summary>
+        TService GetService<TService>() where TService:IContextService;
+        void AddService<TService>(TService service) where TService : IContextService;
     }
 }

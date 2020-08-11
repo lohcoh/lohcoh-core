@@ -18,7 +18,7 @@
     {
         base.OnInitialized();
 
-        var SiteSpecification = Scope.GetContext<SiteSpecification>();
+        var SiteSpecification = Scope.Get<SiteSpecification>();
         Model = SiteSpecification.Model;
         MemberPath = SiteSpecification.ModelMember;
     }

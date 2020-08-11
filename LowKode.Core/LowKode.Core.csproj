@@ -5,6 +5,13 @@
     <RazorLangVersion>3.0</RazorLangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Metadata\Forms\**" />
+    <Content Remove="Metadata\Forms\**" />
+    <EmbeddedResource Remove="Metadata\Forms\**" />
+    <None Remove="Metadata\Forms\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.4.1" />
@@ -14,7 +21,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Metadata\Forms\" />
     <Folder Include="Rules\" />
   </ItemGroup>
 
