@@ -20,12 +20,12 @@ namespace LowKode.Core.Components
         /// <summary>
         /// Replaces any existing instance with the given instance
         /// </summary>
-        void Insert<TContext>(TContext value);
+        void Add<TContext>(TContext value);
 
         /// <summary>
-        /// Updates any existing instance with values from the given value
+        /// The updater function is given the current value and returns the new value
         /// </summary>
-        void Update<TContext>(TContext value);
+        void Update<TContext>(Func<TContext,TContext> updater);
 
         /// <summary>
         /// Returns a service that uses the current context data to generate a result.

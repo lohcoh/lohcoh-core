@@ -1,0 +1,30 @@
+﻿@using System;
+@using Microsoft.AspNetCore.Components.Forms
+@using LowKode.Core.Components
+@using Microsoft.AspNetCore.Components.Rendering;
+
+
+@namespace LowKode.Tests.Fixtures
+
+<Scope>
+    <h1>Hello world from Lowkoder</h1>
+    <EditForm Model="@_starship" OnValidSubmit="HandleValidSubmit" />
+</Scope>
+
+@code {
+    SiteSpecification SiteSpecification= new SiteSpecification()
+    {
+        ModelType = typeof(string),
+        Model = "Hello World"
+    }
+    private string _starship = "Starship()";
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine("OnValidSubmit");
+    }
+
+    string Hello { get; set; } = "$$$ from Lowkoder";
+
+
+}

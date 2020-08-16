@@ -6,24 +6,22 @@
 @using System
 @namespace LowKode.Core.Components
 
-    <Lowkoder>
-        @foreach (var property in modelMetadata.Properties)
-        {
-            <!--
-            <ContextBoundary>
-                @{
-                    var specification = Context.Get<SiteSpecification>();
-                    specification.Model = EditContext.Model;
-                    specification.ModelType = modelMetadata;
-                    specification.ModelMember = property.ToMemberPath();
-
-                    @ChildContent
-                }
-            </ContextBoundary>
-            -->
-        }
-    </Lowkoder>
-
+    @foreach (var property in ModelMetadata.Properties)
+    {
+        <Scope Context="FieldScope">
+            @{
+                FieldScope.Update<SiteSpecification>(value =>
+                    {
+                        var s= (SiteSpecification)value.MemberwiseClone();
+                        s.Model = EditContext.Model;
+                        s.ModelType = ModelMetadata;
+                        s.ModelMember = property.ToMemberPath();
+                        return s;
+                    });
+            }
+            @ChildContent
+        </Scope>
+    }
 
 @code
 {
@@ -41,11 +39,12 @@
     [CascadingParameter]
     EditContext EditContext { get; set; }
 
-    //[ContextParameter]
-    //TypeDescriptors TypeDescriptors { get; set; }
+    [CascadingParameter]
+    IComponentSite Scope { get; set; }
 
-    TypeDescriptor modelMetadata;
-    Type modelType;
+
+    TypeDescriptor ModelMetadata;
+    Type ModelType;
 
     protected override void OnInitialized()
     {
@@ -56,8 +55,8 @@
             throw new InvalidOperationException("No EditContext found");
         }
 
-        modelType = EditContext.Model.GetType();
-        //modelMetadata = TypeDescriptors.ForSystemType(modelType);
+        ModelType = EditContext.Model.GetType();
+        ModelMetadata = Scope.GetService<ITypeDescriptorService>().GetTypeDescriptor(ModelType);
     }
 
 

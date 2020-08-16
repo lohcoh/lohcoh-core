@@ -15,23 +15,17 @@ namespace LowKode.Tests
     public class CascadingValuesExampleTest
     {
 
+        /// <summary>
+        /// Verifies that CascadingValues in Blazor are not the same as a global context variable.
+        /// The <CascadingValue/> tag creates a context in which the value is stored.
+        /// </summary>
         [TestMethod]
         public void Test_CascadingValues()
         {
-            // Arrange
             using var ctx = new Bunit.TestContext();
 
-            // Register services
-            ctx.Services.AddLowKode(config =>
-            {
-                config.ContributeMetadataForType<WeatherForecast>();
-                config.ContributeMetadataForType<Starship>();
-            });
-
-            // Act
             var cut = ctx.RenderComponent<CascadingValuesExample>();
 
-            // Assert
             Assert.IsTrue(
                 cut.Markup.Contains("<label>context-value-one</label>")
                 && cut.Markup.Contains("<label>context-value-two</label>"));

@@ -35,3 +35,4 @@ C:\Users\zen\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstand
 C:\Users\zen\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\RazorDeclaration\LowkoderFirstExample.razor.g.cs
 C:\Users\zen\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\RazorDeclaration\_Imports.razor.g.cs
 C:\Users\zen\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\Lowkoder.Tests.Fixtures.csprojAssemblyReference.cache
+C:\Users\zen\source\repos\lohcoh-core\Lowkoder.Tests.Fixtures\obj\Debug\netstandard2.1\RazorDeclaration\BasicInputSiteExample.razor.g.cs

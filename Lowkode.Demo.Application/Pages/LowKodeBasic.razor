@@ -16,15 +16,24 @@
     <ValidationSummary />
 
     @{
-        var modelType= Scope.GetService<ITypeDescriptorService>().GetTypeDescriptor<Starship>();
+        var modelType = Scope.GetService<ITypeDescriptorService>().GetTypeDescriptor<Starship>();
         foreach (var property in modelType.Properties)
         {
             <Scope Context="FieldScope">
                 @{
-                    FieldScope.Insert(new SiteSpecification() { 
-                        ModelType= modelType,
+                    FieldScope.Add(new SiteSpecification()
+                    {
+                        ModelType = modelType,
                         ModelMember = property.ToMemberPath()
                     });
+
+                    //do this to add values to an existing object instead of replacing an existing object
+                    //FieldScope.Update(s => new SiteSpecification(s)
+                    //{
+                    //    ModelType = modelType,
+                    //    ModelMember = property.ToMemberPath()
+                    //});
+
                     <p>
                         <label>
                             <DisplayName />:

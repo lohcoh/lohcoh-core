@@ -9,6 +9,7 @@ LOS makes context data available to drive rules/customization.
 ## Should context data be stored as cascading parameters?
 At 1st blush, Context data is application data and it doesn't belong in LOS.
 But context data needs to be in LOS so that it's available to rules.
+But it seems possible to do both, add context data using IComponentSite *and*
 
 ## Is it possible to store data in LOS AND as CascadingParameters?
 At 1st blush that seems doable.  
